@@ -43,12 +43,15 @@ Route::get('country/list', [CountryMasterController::class, 'getList']);
 Route::get('country/list/{savedcountry}', [CountryMasterController::class, 'getListofcountry']);
 Route::get('customersubcategory/list/{profileid}', [CustomerSubCategoryController::class, 'getList']);
 Route::get('state/list/{id}', [StateMasterController::class, 'getStateList']);
+Route::get('state-list/{id}', [StateMasterController::class, 'getStates']);
+
 Route::get('state/list/{id}/{category}/{savedstate}', [StateMasterController::class, 'getStateListOptions']);
 
 Route::get('district/list/{countryid}/{stateid}', [DistrictMasterController::class, 'getDistrictList']);
 Route::get('district/list/{countryid}/{stateid}/{saveddistrict}', [DistrictMasterController::class, 'getDistrictListofstate']);
 
 Route::get('city/list/{countryid}/{stateid}/{districtid}/{savedcity}', [CityMasterController::class, 'getCityList']);
+Route::get('ulb-list/{savedulb}', [CustomerCreationProfileController::class, 'getUlbs']);
 Route::post('customercreationmain/getmainid', [CustomerCreationMainController :: class, 'getMainid']);
 Route::post('customercreation/profile', [CustomerCreationProfileController::class, 'getProfileFromData']);
 Route::get('customercreation/getcustno/{stateid}', [CustomerCreationProfileController::class, 'getCustNo']);
@@ -60,6 +63,7 @@ Route::post('customercreationsmwprojectstatus/getlist', [CustomerCreationSWMProj
 Route::get('projecttype/list/{profileid}', [ProjectTypeController::class, 'getList']);
 Route::get('projectstatus/list/{profileid}', [ProjectStatusController::class, 'getList']);
 Route::get('competitorprofile/getcompno/{compid}', [CompetitorProfileCreationController::class, 'getCompNo']);
+Route::get('competitorbranch/branchlist/{compid}', [CompetitorDetailsBranchesController::class, 'getbranchList']);
 /*
 ## Resource Laravel Routes Example
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StateMaster;
+use App\Models\CountryMaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -207,6 +208,29 @@ class StateMasterController extends Controller
     public function getStateList($countryId){
         
         $states = StateMaster::where("country_id",$countryId)->where("state_status", "=", "Active")->get();
+        //dd($states);
+        $stateList = array();
+        foreach($states as $state){
+            $stateList[] = ["value" => $state['id'], "label" =>  $state['state_name']] ;
+        }
+        return  response()->json([
+            'stateList' =>  $stateList
+        ]);
+    }
+
+    public function getStates($savedstate){
+
+        $country = CountryMaster::where("country_status", "=", "Active")
+        ->where('country_name','like','india')
+        ->first();
+
+        $countryid = $country['id'];
+        
+        $states = StateMaster::where("country_id",$countryid)
+        ->where("state_status", "=", "Active")
+        ->orWhere("id",$savedstate)
+        ->orderBy('state_name', 'ASC')
+        ->get();
         //dd($states);
         $stateList = array();
         foreach($states as $state){

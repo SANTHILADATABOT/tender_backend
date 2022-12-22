@@ -307,4 +307,18 @@ class CustomerCreationProfileController extends Controller
         }
            
     }
+
+    public function getUlbs($savedulb){
+        $ulbs = CustomerCreationProfile::orderBy('id', 'desc')
+        ->get();
+        
+        $ulbList= [];
+        foreach($ulbs as $ulb){
+            $ulbList[] = ["value" => $ulb['id'], "label" =>  $ulb['customer_name']] ;
+        }
+        return  response()->json([
+            'ulbList' =>  $ulbList,
+
+        ]);
+    }
 }

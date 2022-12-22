@@ -126,5 +126,26 @@ class CompetitorDetailsBranchesController extends Controller
             ]);
         }
     }
+    public function getbranchList($compid)
+    {
+        $branch = CompetitorDetailsBranches::where("compId",$compid)
+        ->join("city_masters",'competitor_details_branches.city','city_masters.id')
+        ->join("district_masters",'competitor_details_branches.district','district_masters.id')
+        ->join("state_masters",'state_masters.id','competitor_details_branches.state')
+        ->join("country_masters",'country_masters.id','competitor_details_branches.country')
+        ->select('competitor_details_branches.*','city_masters.city_name','district_masters.district_name','state_masters.state_name','country_masters.country_name')
+        ->get();
+        if ($branch)
+            return response()->json([
+                'status' => 200,
+                'branch' => $branch
+            ]);
+        else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.'
+            ]);
+        }
+    }
    
 }
