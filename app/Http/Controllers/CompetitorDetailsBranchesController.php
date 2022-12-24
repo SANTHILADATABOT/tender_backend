@@ -95,9 +95,51 @@ class CompetitorDetailsBranchesController extends Controller
     }
 
     
-    public function update(Request $request, CompetitorDetailsBranches $competitorDetailsBranches)
+    public function update(Request $request, $branchid)
     {
-        //
+        // echo "token ID:" . $curr_token=$request->tokenId;
+        $user = Token::where("tokenid", $request->tokenId)->first();
+        //We doesn't have user id in $request, so we get by using tokenId, then add Userid to $request Insert into table directly without assigning variables       
+        $request->request->add(['edited_userid' => $user['userid']]);
+        //Here is no need of token id when insert $request into table, so remove it form $request
+        $request->request->remove('tokenId');
+
+        $branch = CompetitorDetailsBranches::where([
+            'city' => $request->city,
+            'state' => $request->state,
+            'district' => $request->district,
+            'country' => $request->country,
+        ])
+        ->where('id', '!=', $branchid)
+        ->where('compid', '!=', $request->compId)
+        ->exists();
+        if ($branch) {
+            return response()->json([
+                'status' => 404,
+                'errors' => 'Branch Already Exists'
+            ]);
+        }
+        $validator = Validator::make($request->all(), ['city' => 'required|integer', 'country'=>'required|integer','state'=>'required|integer', 'district'=>'required|integer']);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 404,
+                'errors' => $validator->messages(),
+            ]);
+        }
+
+
+        $branch = CompetitorDetailsBranches::findOrFail($branchid)->update($request->all());
+        if ($branch)
+            return response()->json([
+                'status' => 200,
+                'message' => "Updated Successfully!"
+            ]);
+        else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.'
+            ]);
+        }
     }
 
     

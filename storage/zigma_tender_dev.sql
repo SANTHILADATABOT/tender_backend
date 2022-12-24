@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2022 at 02:05 PM
+-- Generation Time: Dec 24, 2022 at 09:11 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -20,6 +20,45 @@ SET time_zone = "+00:00";
 --
 -- Database: `zigma_tender_dev`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bid_creation__creations`
+--
+
+CREATE TABLE `bid_creation__creations` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `bidno` varchar(255) NOT NULL DEFAULT '',
+  `customername` varchar(255) NOT NULL DEFAULT '',
+  `bidcall` varchar(255) NOT NULL DEFAULT '',
+  `tenderid` varchar(255) NOT NULL DEFAULT '',
+  `tenderinvtauth` varchar(255) NOT NULL DEFAULT '',
+  `tenderref` varchar(255) NOT NULL DEFAULT '',
+  `state` bigint(20) UNSIGNED NOT NULL,
+  `ulb` bigint(20) UNSIGNED NOT NULL,
+  `TenderDescription` varchar(255) NOT NULL DEFAULT '',
+  `NITdate` date DEFAULT NULL,
+  `submissiondate` date DEFAULT NULL,
+  `quality` varchar(255) NOT NULL DEFAULT '',
+  `unit` varchar(255) NOT NULL,
+  `tenderevalutionsysytem` varchar(255) NOT NULL,
+  `projectperioddate1` date DEFAULT NULL,
+  `projectperioddate2` date DEFAULT NULL,
+  `estprojectvalue` double NOT NULL,
+  `tenderfeevalue` double NOT NULL,
+  `priceperunit` double NOT NULL,
+  `emdmode` varchar(255) NOT NULL,
+  `emdamt` double NOT NULL,
+  `dumpsiter` varchar(255) NOT NULL DEFAULT '',
+  `prebiddate` date DEFAULT NULL,
+  `EMD` varchar(255) NOT NULL DEFAULT '',
+  `location` varchar(255) NOT NULL DEFAULT '',
+  `createdby_userid` int(11) NOT NULL,
+  `updatedby_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -6005,10 +6044,12 @@ CREATE TABLE `competitor_details_branches` (
 --
 
 INSERT INTO `competitor_details_branches` (`id`, `compId`, `compNo`, `country`, `state`, `district`, `city`, `cr_userid`, `edited_userid`, `created_at`, `updated_at`) VALUES
-(1, 2, 'TNCMP0002', 105, 1, 673, 5918, '42', NULL, '2022-12-21 00:26:17', '2022-12-21 00:26:17'),
-(2, 2, 'TNCMP0002', 105, 4, 337, 2112, '42', NULL, '2022-12-21 01:34:02', '2022-12-21 01:34:02'),
+(1, 2, 'TNCMP0002', 105, 1, 674, 5920, '42', '42', '2022-12-21 00:26:17', '2022-12-24 02:34:18'),
+(2, 2, 'TNCMP0002', 105, 2, 568, 5304, '42', '42', '2022-12-21 01:34:02', '2022-12-24 02:31:10'),
 (3, 3, 'TNCMP0003', 105, 5, 240, 1476, '42', NULL, '2022-12-22 05:38:22', '2022-12-22 11:08:41'),
-(4, 2, 'TNCMP0002', 105, 5, 240, 1476, '42', NULL, '2022-12-22 05:38:59', '2022-12-22 05:38:59');
+(4, 2, 'TNCMP0002', 105, 5, 240, 1479, '42', '42', '2022-12-22 05:38:59', '2022-12-24 01:42:12'),
+(5, 2, 'TNCMP0002', 105, 17, 591, 5542, '42', NULL, '2022-12-24 00:46:29', '2022-12-24 00:46:29'),
+(6, 2, 'TNCMP0002', 105, 3, 280, 1736, '42', NULL, '2022-12-24 01:46:02', '2022-12-24 01:46:02');
 
 -- --------------------------------------------------------
 
@@ -7233,7 +7274,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (34, '2022_11_29_053305_create_customer_creation_s_w_m_project_statuses_table', 16),
 (40, '2022_12_20_084719_create_u_l_b_details_table', 22),
 (41, '2022_12_20_053501_create_competitor_details_branches_table', 23),
-(42, '2022_12_21_050931_create_customer_creation_bank_details_table', 24);
+(42, '2022_12_21_050931_create_customer_creation_bank_details_table', 24),
+(43, '2022_12_24_064642_create_bid_creation__creations_table', 25);
 
 -- --------------------------------------------------------
 
@@ -7428,7 +7470,12 @@ INSERT INTO `tokens` (`id`, `tokenid`, `userid`, `isLoggedIn`, `created_at`, `up
 (15, '3a2acaa0c7e53f6613adc06d078344df1671691430733', 42, 1, '2022-12-22 01:13:50', '2022-12-22 01:13:50'),
 (16, '5da6e6a73991d447bb9bd19b4effba4b1671691614184', 42, 1, '2022-12-22 01:16:54', '2022-12-22 01:16:54'),
 (17, '20384d716bdb8eabe314faf8fb489ca41671700418382', 42, 1, '2022-12-22 03:43:38', '2022-12-22 03:43:38'),
-(18, '4e0778c5fc83e9c534690ab0a72dfe8f1671713315582', 42, 1, '2022-12-22 07:18:35', '2022-12-22 07:18:35');
+(18, '4e0778c5fc83e9c534690ab0a72dfe8f1671713315582', 42, 1, '2022-12-22 07:18:35', '2022-12-22 07:18:35'),
+(19, '6718f96abd2ee17ef698a6984a0046161671767290844', 42, 1, '2022-12-22 22:18:11', '2022-12-22 22:18:11'),
+(20, 'e4d98acfcec8abca1ee73fd3032d7cc31671767291452', 42, 1, '2022-12-22 22:18:11', '2022-12-22 22:18:11'),
+(21, '24c6c3e3eae687b0d695ac28a1ebd0561671769650934', 42, 1, '2022-12-22 22:57:30', '2022-12-22 22:57:30'),
+(22, '51eac87223f8f0ad47e48b0da795d4451671855707229', 42, 1, '2022-12-23 22:51:47', '2022-12-23 22:51:47'),
+(23, '085f59cd5b4e9758b551f785ba2847ff1671855748210', 42, 1, '2022-12-23 22:52:28', '2022-12-23 22:52:28');
 
 -- --------------------------------------------------------
 
@@ -8107,6 +8154,14 @@ INSERT INTO `u_l_b_details` (`id`, `area`, `population2011`, `presentpopulation`
 --
 
 --
+-- Indexes for table `bid_creation__creations`
+--
+ALTER TABLE `bid_creation__creations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bid_creation__creations_state_foreign` (`state`),
+  ADD KEY `bid_creation__creations_ulb_foreign` (`ulb`);
+
+--
 -- Indexes for table `city_masters`
 --
 ALTER TABLE `city_masters`
@@ -8292,6 +8347,12 @@ ALTER TABLE `u_l_b_details`
 --
 
 --
+-- AUTO_INCREMENT for table `bid_creation__creations`
+--
+ALTER TABLE `bid_creation__creations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `city_masters`
 --
 ALTER TABLE `city_masters`
@@ -8301,7 +8362,7 @@ ALTER TABLE `city_masters`
 -- AUTO_INCREMENT for table `competitor_details_branches`
 --
 ALTER TABLE `competitor_details_branches`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `competitor_profile_creations`
@@ -8367,7 +8428,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -8397,7 +8458,7 @@ ALTER TABLE `state_masters`
 -- AUTO_INCREMENT for table `tokens`
 --
 ALTER TABLE `tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `ulb_masters`
@@ -8432,6 +8493,13 @@ ALTER TABLE `u_l_b_details`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `bid_creation__creations`
+--
+ALTER TABLE `bid_creation__creations`
+  ADD CONSTRAINT `bid_creation__creations_state_foreign` FOREIGN KEY (`state`) REFERENCES `state_masters` (`id`) ON UPDATE NO ACTION,
+  ADD CONSTRAINT `bid_creation__creations_ulb_foreign` FOREIGN KEY (`ulb`) REFERENCES `customer_creation_profiles` (`id`) ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `city_masters`

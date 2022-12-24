@@ -20,7 +20,7 @@ use App\Http\Controllers\ProjectStatusController;
 use App\Http\Controllers\ULBDetailsController;
 use App\Http\Controllers\CompetitorDetailsBranchesController;
 use App\Http\Controllers\CustomerCreationBankDetailsController;
-
+use App\Http\Controllers\BidCreationCreationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -93,4 +93,5 @@ Route::resources([
     'projectstatus'=> ProjectStatusController::class,
     'customercreationulbdetails'=> ULBDetailsController::class,
     'customercreationbankdetails'=> CustomerCreationBankDetailsController::class,
+    'bidcreation/creation'=> BidCreationCreationController::class,
 ]);
