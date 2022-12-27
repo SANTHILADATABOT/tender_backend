@@ -21,6 +21,7 @@ use App\Http\Controllers\ULBDetailsController;
 use App\Http\Controllers\CompetitorDetailsBranchesController;
 use App\Http\Controllers\CustomerCreationBankDetailsController;
 use App\Http\Controllers\BidCreationCreationController;
+use App\Http\Controllers\CompetitorDetailsTurnOverController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -64,6 +65,7 @@ Route::get('projecttype/list/{profileid}', [ProjectTypeController::class, 'getLi
 Route::get('projectstatus/list/{profileid}', [ProjectStatusController::class, 'getList']);
 Route::get('competitorprofile/getcompno/{compid}', [CompetitorProfileCreationController::class, 'getCompNo']);
 Route::get('competitorbranch/branchlist/{compid}', [CompetitorDetailsBranchesController::class, 'getbranchList']);
+Route::get('competitordetails/turnoverlist/{compid}', [CompetitorDetailsTurnOverController::class, 'getTurnOverList']);
 /*
 ## Resource Laravel Routes Example
 
@@ -88,6 +90,7 @@ Route::resources([
     'customercreationsmwprojectstatus' => CustomerCreationSWMProjectStatusController::class,
     'competitorprofile' => CompetitorProfileCreationController::class,
     'competitorbranch' => CompetitorDetailsBranchesController::class,
+    'competitorturnover' => CompetitorDetailsTurnOverController::class,
     'projecttype'=>ProjectTypeController::class,
     'customersubcategory'=>CustomerSubCategoryController::class,
     'projectstatus'=> ProjectStatusController::class,
