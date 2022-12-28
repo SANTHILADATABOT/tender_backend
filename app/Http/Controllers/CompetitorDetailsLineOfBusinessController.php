@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompetitorDetailsTurnOver;
+use App\Models\CompetitorDetailsLineOfBusiness;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Token;
 
-class CompetitorDetailsTurnOverController extends Controller
+
+class CompetitorDetailsLineOfBusinessController extends Controller
 {
+    
     
     public function index()
     {
-       
+    
     }
 
     
@@ -21,7 +23,6 @@ class CompetitorDetailsTurnOverController extends Controller
         //
     }
 
-    
     public function store(Request $request)
     {      
         // echo "token ID:" . $curr_token=$request->tokenId;
@@ -31,7 +32,7 @@ class CompetitorDetailsTurnOverController extends Controller
         //Here is no need of token id when insert $request into table, so remove it form $request
         $request->request->remove('tokenId');
 
-        $existence = CompetitorDetailsTurnOver::where("compNo", $request->compNo)
+        $existence = CompetitorDetailsLineOfBusiness::where("compNo", $request->compNo)
             ->where("compId", $request->compId)
             ->where("accountYear", $request->accountYear)->exists();
             
@@ -49,8 +50,8 @@ class CompetitorDetailsTurnOverController extends Controller
                 'message' =>"Not able to Add Turn Over details now..!",
             ]);
         }
-        $turn_over = CompetitorDetailsTurnOver::firstOrCreate($request->all());
-        if ($turn_over) {
+        $buz_line = CompetitorDetailsLineOfBusiness::firstOrCreate($request->all());
+        if ($buz_line) {
             return response()->json([
                 'status' => 200,
                 'message' => 'Created Succssfully!',
@@ -61,11 +62,11 @@ class CompetitorDetailsTurnOverController extends Controller
     
     public function show($id)
     {
-        $turn_over= CompetitorDetailsTurnOver::find($id);
-        if ($turn_over)
+        $buz_line= CompetitorDetailsLineOfBusiness::find($id);
+        if ($buz_line)
             return response()->json([
                 'status' => 200,
-                'turn_over' => $turn_over
+                'buz_line' => $buz_line
             ]);
         else {
             return response()->json([
@@ -90,7 +91,7 @@ class CompetitorDetailsTurnOverController extends Controller
         //Here is no need of token id when insert $request into table, so remove it form $request
         $request->request->remove('tokenId');
 
-        $turn_over = CompetitorDetailsTurnOver::where([
+        $buz_line = CompetitorDetailsLineOfBusiness::where([
             'compId' => $request->compId,
             'compNo' => $request->compNo,
             'accValue'=> $request->accValue,
@@ -98,7 +99,7 @@ class CompetitorDetailsTurnOverController extends Controller
         ])
         ->where('id', '!=', $id)
         ->exists();
-        if ($turn_over) {
+        if ($buz_line) {
             return response()->json([
                 'status' => 404,
                 'errors' => 'Branch Already Exists'
@@ -113,8 +114,8 @@ class CompetitorDetailsTurnOverController extends Controller
         }
 
 
-        $turn_over = CompetitorDetailsTurnOver::findOrFail($id)->update($request->all());
-        if ($turn_over)
+        $buz_line = CompetitorDetailsLineOfBusiness::findOrFail($id)->update($request->all());
+        if ($buz_line)
             return response()->json([
                 'status' => 200,
                 'message' => "Updated Successfully!"
@@ -130,8 +131,8 @@ class CompetitorDetailsTurnOverController extends Controller
     public function destroy($id)
     {
         try{
-            $turn_over = CompetitorDetailsTurnOver::destroy($id);
-            if($turn_over)    
+            $buz_line = CompetitorDetailsLineOfBusiness::destroy($id);
+            if($buz_line)    
             {
                 return response()->json([
                 'status' => 200,
@@ -154,17 +155,17 @@ class CompetitorDetailsTurnOverController extends Controller
     }
 
 
-    public function getTurnOverList($compid)
+    public function getLineOfBusinessList($compid)
     {
-        $turn_over = CompetitorDetailsTurnOver::where("compId",$compid)
+        $buz_line = CompetitorDetailsLineOfBusiness::where("compId",$compid)
         ->select('id', 'compNo', 'compId', 'accValue', 'accountYear',)
         ->orderBy('accountYear','DESC')
         ->get();
 
-    if ($turn_over)
+    if ($buz_line)
         return response()->json([
             'status' => 200,
-            'turn_over' => $turn_over
+            'buz_line' => $buz_line
         ]);
     else {
         return response()->json([
