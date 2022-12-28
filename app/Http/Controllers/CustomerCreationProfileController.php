@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\CustomerCreationProfile;
 use App\Models\CustomerCreationMain;
-use App\Models\Token;
 use App\Models\StateMaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Token;
 
 class CustomerCreationProfileController extends Controller
 {
