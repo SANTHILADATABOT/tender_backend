@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\BidCreation_Creation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Token;
 
 class BidCreationCreationController extends Controller
 {
@@ -41,8 +43,49 @@ class BidCreationCreationController extends Controller
          $userid = $user['userid'];
 
          if($userid){
-            
-         }
+            $bidCreation = new BidCreation_Creation;
+            $bidCreation -> bidno = $request->bidcreationData['bidno'];
+            $bidCreation -> customername = $request->bidcreationData['customername'];
+            $bidCreation -> bidcall = $request->bidcreationData['bidcall'];
+            $bidCreation -> tenderid = $request->bidcreationData['tenderid'];
+            $bidCreation -> tenderinvtauth = $request->bidcreationData['tenderinvtauth'];
+            $bidCreation -> tenderref = $request->bidcreationData['tenderref'];
+            $bidCreation -> state = $request->bidcreationData['state']['value'];
+            $bidCreation -> ulb = $request->bidcreationData['ulb']['value'];
+            $bidCreation -> TenderDescription = $request->bidcreationData['TenderDescription'];
+            $bidCreation -> NITdate = $request->bidcreationData['NITdate'];
+            $bidCreation -> submissiondate = $request->bidcreationData['submissiondate'];
+            $bidCreation -> quality = $request->bidcreationData['quality'];
+            $bidCreation -> unit = $request->bidcreationData['unit'];
+            $bidCreation -> tenderevalutionsysytem = $request->bidcreationData['tenderevalutionsysytem'];
+            $bidCreation -> projectperioddate1 = $request->bidcreationData['projectperioddate1'];
+            $bidCreation -> projectperioddate2 = $request->bidcreationData['projectperioddate2'];
+            $bidCreation -> estprojectvalue = $request->bidcreationData['estprojectvalue'];
+            $bidCreation -> tenderfeevalue = $request->bidcreationData['tenderfeevalue'];
+            $bidCreation -> priceperunit = $request->bidcreationData['priceperunit'];
+            $bidCreation -> emdmode = $request->bidcreationData['emdmode'];
+            $bidCreation -> emdamt = $request->bidcreationData['emdamt'];
+            $bidCreation -> dumpsiter = $request->bidcreationData['dumpsiter'];
+            $bidCreation -> prebiddate = $request->bidcreationData['prebiddate'];
+            $bidCreation -> EMD = $request->bidcreationData['EMD'];
+            $bidCreation->location = $request->bidcreationData['location'];
+            $bidCreation -> createdby_userid = $userid ;
+            $bidCreation -> updatedby_userid = 0 ;
+            $bidCreation -> save();
+        }
+
+        if ($bidCreation) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Bid Has created Succssfully!',
+                'id' => $bidCreation['id'],
+            ]);
+        }else{
+            return response()->json([
+                'status' => 400,
+                'message' => 'Unable to save!'
+            ]);
+        }
     }
 
     /**
