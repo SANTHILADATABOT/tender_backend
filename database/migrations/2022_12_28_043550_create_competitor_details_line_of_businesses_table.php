@@ -18,8 +18,8 @@ return new class extends Migration
             $table->bigInteger("compId")->unsigned();
             $table->foreign("compId")->references("id")->on("competitor_profile_creations")->onDelete("cascade")->onUpdate("NO ACTION");
             $table->string('compNo');
-            $table->string('business_line');
-            $table->string('remark');
+            $table->string('bizLineValue');
+            $table->string('remark')->nullable();
             $table->integer('cr_userid');
             $table->integer('edited_userid')->nullable()->default(null);
             $table->timestamp('created_at')->useCurrent();

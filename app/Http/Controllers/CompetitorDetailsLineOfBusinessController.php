@@ -34,7 +34,7 @@ class CompetitorDetailsLineOfBusinessController extends Controller
 
         $existence = CompetitorDetailsLineOfBusiness::where("compNo", $request->compNo)
             ->where("compId", $request->compId)
-            ->where("accountYear", $request->accountYear)->exists();
+            ->where("bizLineValue", $request->bizLineValue)->exists();
             
         if ($existence) {
             return response()->json([
@@ -43,18 +43,18 @@ class CompetitorDetailsLineOfBusinessController extends Controller
             ]);
         }
 
-        $validator = Validator::make($request->all(), ['compId' => 'required|integer','compNo' => 'required|string','accountYear'=>'required|string', 'accValue'=>'required|between:1.00,99999999999.99','cr_userid'=>'required|integer']);
+        $validator = Validator::make($request->all(), ['compId' => 'required|integer','compNo' => 'required|string','bizLineValue'=>'required|string', 'cr_userid'=>'required|integer']);
         if ($validator->fails()) {
             return response()->json([
                 'status' => 404,
-                'message' =>"Not able to Add Turn Over details now..!",
+                'message' =>"Not able to Add Line of Business details now..!",
             ]);
         }
         $buz_line = CompetitorDetailsLineOfBusiness::firstOrCreate($request->all());
         if ($buz_line) {
             return response()->json([
                 'status' => 200,
-                'message' => 'Created Succssfully!',
+                'message' => 'Added Succssfully!',
             ]);
         }
     }
@@ -94,8 +94,7 @@ class CompetitorDetailsLineOfBusinessController extends Controller
         $buz_line = CompetitorDetailsLineOfBusiness::where([
             'compId' => $request->compId,
             'compNo' => $request->compNo,
-            'accValue'=> $request->accValue,
-            'accountYear'=> $request->accountYear
+            'bizLineValue'=> $request->bizLineValue,
         ])
         ->where('id', '!=', $id)
         ->exists();
@@ -105,7 +104,7 @@ class CompetitorDetailsLineOfBusinessController extends Controller
                 'errors' => 'Branch Already Exists'
             ]);
         }
-        $validator = Validator::make($request->all(), ['compId' => 'required|integer','compNo' => 'required|string','accountYear'=>'required|string', 'accValue'=>'required|between:1.00,99999999999.99','edited_userid'=>'required|integer']);
+        $validator = Validator::make($request->all(), ['compId' => 'required|integer','compNo' => 'required|string','bizLineValue'=>'required|string', 'edited_userid'=>'required|integer']);
         if ($validator->fails()) {
             return response()->json([
                 'status' => 404,
@@ -158,8 +157,8 @@ class CompetitorDetailsLineOfBusinessController extends Controller
     public function getLineOfBusinessList($compid)
     {
         $buz_line = CompetitorDetailsLineOfBusiness::where("compId",$compid)
-        ->select('id', 'compNo', 'compId', 'accValue', 'accountYear',)
-        ->orderBy('accountYear','DESC')
+        ->select('id', 'compNo', 'compId', 'bizLineValue', 'remark',)
+        ->orderBy('id','DESC')
         ->get();
 
     if ($buz_line)

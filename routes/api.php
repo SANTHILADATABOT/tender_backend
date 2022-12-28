@@ -25,7 +25,7 @@ use App\Http\Controllers\CompetitorDetailsTurnOverController;
 use App\Http\Controllers\CompetitorDetailsCompanyNetWorthController;
 use App\Http\Controllers\CompetitorDetailsLineOfBusinessController;
 use App\Http\Controllers\BidCreationCreationDocsController;
-
+use App\Http\Controllers\CompetitorDetailsProsConsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -72,6 +72,7 @@ Route::get('competitorbranch/branchlist/{compid}', [CompetitorDetailsBranchesCon
 Route::get('competitordetails/turnoverlist/{compid}', [CompetitorDetailsTurnOverController::class, 'getTurnOverList']);
 Route::get('competitordetails/networthlist/{compid}', [CompetitorDetailsCompanyNetWorthController::class, 'getNetWorthList']);
 Route::get('competitordetails/lineofbusinesslist/{compid}', [CompetitorDetailsLineOfBusinessController::class, 'getLineOfBusinessList']);
+Route::get('competitordetails/prosconslist/{compid}', [CompetitorDetailsProsConsController::class, 'getProsConsList']);
 
 /*
 ## Resource Laravel Routes Example
@@ -100,6 +101,7 @@ Route::resources([
     'competitorturnover' => CompetitorDetailsTurnOverController::class,
     'competitornetworth' => CompetitorDetailsCompanyNetWorthController::class,
     'competitorlineofbusiness' => CompetitorDetailsLineOfBusinessController::class,
+    'competitorproscons' => CompetitorDetailsProsConsController::class,
     'projecttype'=>ProjectTypeController::class,
     'customersubcategory'=>CustomerSubCategoryController::class,
     'projectstatus'=> ProjectStatusController::class,
