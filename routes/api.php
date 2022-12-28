@@ -21,6 +21,7 @@ use App\Http\Controllers\ULBDetailsController;
 use App\Http\Controllers\CompetitorDetailsBranchesController;
 use App\Http\Controllers\CustomerCreationBankDetailsController;
 use App\Http\Controllers\BidCreationCreationController;
+use App\Http\Controllers\BidCreationCreationDocsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -94,4 +95,5 @@ Route::resources([
     'customercreationulbdetails'=> ULBDetailsController::class,
     'customercreationbankdetails'=> CustomerCreationBankDetailsController::class,
     'bidcreation/creation'=> BidCreationCreationController::class,
+    'bidcreation/creation/docupload'=> BidCreationCreationDocsController::class,
 ]);
