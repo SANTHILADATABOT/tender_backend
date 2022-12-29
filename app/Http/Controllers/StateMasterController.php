@@ -23,11 +23,11 @@ class StateMasterController extends Controller
         $state = DB::table('state_masters')
         ->join('country_masters','country_masters.id','=','state_masters.country_id')
         ->where('country_masters.country_status','=','Active')
-        ->select('country_masters.*','state_masters.*') 
+        ->select('country_masters.*','state_masters.*')
         ->orderBy('country_masters.country_name', 'asc')
-        ->orderBy('state_masters.state_name', 'asc')       
+        ->orderBy('state_masters.state_name', 'asc')
         ->get();
-    
+
         if ($state)
             return response()->json([
                 'status' => 200,
@@ -59,7 +59,7 @@ class StateMasterController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $ulbRes = StateMaster::where('state_name', '=', $request->state_name)
         ->where('country_id', '=', $request->country_id)
         ->exists();
@@ -69,7 +69,7 @@ class StateMasterController extends Controller
                 'errors' => 'State Name Already Exists'
             ]);
         }
-        
+
         $validator = Validator::make($request->all(), ['state_name' => 'required|string', 'state_status' => 'required', 'country_id' => 'required', 'state_code' => 'required']);
         if ($validator->fails()) {
             return response()->json([
@@ -96,7 +96,7 @@ class StateMasterController extends Controller
     public function show($id)
     {
         $state = StateMaster::find($id);
-      
+
         if ($state)
             return response()->json([
                 'status' => 200,
@@ -130,7 +130,7 @@ class StateMasterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $ulbRes = StateMaster::where('state_name', '=', $request->state_name)
         ->where('id', '!=', $id)
         ->where('country_id', '=', $request->country_id)
@@ -141,8 +141,8 @@ class StateMasterController extends Controller
                 'errors' => 'State Name Already Exists'
             ]);
         }
-        
-        $validator = Validator::make($request->all(), 
+
+        $validator = Validator::make($request->all(),
         ['state_name' => 'required|string',
         'country_id' => 'required' ,
         'state_status' => 'required',
@@ -155,8 +155,8 @@ class StateMasterController extends Controller
             ]);
         }
 
-        
-        
+
+
         $state = StateMaster::findOrFail($id)->update($request->all());
         if ($state)
             return response()->json([
@@ -179,10 +179,10 @@ class StateMasterController extends Controller
      */
     public function destroy($id)
     {
-        
+
         try{
             $state = StateMaster::destroy($id);
-            if($state)    
+            if($state)
             {
                 return response()->json([
                 'status' => 200,
@@ -195,8 +195,8 @@ class StateMasterController extends Controller
                 "errormessage" => "",
             ]);}
         }catch(\Illuminate\Database\QueryException $ex){
-            $error = $ex->getMessage(); 
-            
+            $error = $ex->getMessage();
+
             return response()->json([
                 'status' => 404,
                 'message' => 'Unable to delete! This data is used in another file/form/table.',
@@ -206,7 +206,7 @@ class StateMasterController extends Controller
     }
 
     public function getStateList($countryId){
-        
+
         $states = StateMaster::where("country_id",$countryId)->where("state_status", "=", "Active")->get();
         //dd($states);
         $stateList = array();
@@ -225,7 +225,7 @@ class StateMasterController extends Controller
         ->first();
 
         $countryid = $country['id'];
-        
+
         $states = StateMaster::where("country_id",$countryid)
         ->where("state_status", "=", "Active")
         ->orWhere("id",$savedstate)
@@ -245,14 +245,14 @@ class StateMasterController extends Controller
         if($category === "state"){$cat = "State";}
         if($category === "unionterritory"){$cat = "Union Territory";}
 
-        DB::enableQueryLog(); 
+        DB::enableQueryLog();
         $states = StateMaster::where("country_id",$countryId)
         ->where("category",$cat)
         ->whereIn("country_id",function($query){
             $query->select('id')
             ->from('country_masters')
             ->where('country_status',"Active");
-        }) 
+        })
         ->where("state_status", "=", "Active")
         ->orWhere("id", function($query) use ($countryId, $savedstate){
             $query->select('id')
@@ -264,7 +264,7 @@ class StateMasterController extends Controller
         //dd($states);
 
         $sqlquery = DB::getQueryLog();
-        
+
         $query = str_replace(array('?'), array('\'%s\''),  $sqlquery[0]['query']);
         $query = vsprintf($query, $sqlquery[0]['bindings']);
 
@@ -279,5 +279,5 @@ class StateMasterController extends Controller
         ]);
     }
 
-    
+
 }

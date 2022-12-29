@@ -26,6 +26,7 @@ use App\Http\Controllers\CompetitorDetailsCompanyNetWorthController;
 use App\Http\Controllers\CompetitorDetailsLineOfBusinessController;
 use App\Http\Controllers\BidCreationCreationDocsController;
 use App\Http\Controllers\CompetitorDetailsProsConsController;
+use App\Http\Controllers\TenderTypeMasterController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -80,15 +81,16 @@ Route::get('competitordetails/prosconslist/{compid}', [CompetitorDetailsProsCons
 Route::post(['ulb',[UlbMasterController::class,'store']]);//
 Route::get(['ulb/{id}',[UlbMasterController::class,'show']]);
 Route::get(['ulb/edit/{id}',[UlbMasterController::class,'edit']]);//
-Route::put/patch(['ulb/{id}',[UlbMasterController::class,'update']]); 
-    ## put=>If the record exists then update else create a new record 
-    ## Patch =>update/modify 
+Route::put/patch(['ulb/{id}',[UlbMasterController::class,'update']]);
+    ## put=>If the record exists then update else create a new record
+    ## Patch =>update/modify
 Route::delete(['ulb/{id}',[UlbMasterController::class,'destroy']]);
 */
 Route::resources([
     'ulb' => UlbMasterController::class,
     'state' => StateMasterController::class,
     'country' => CountryMasterController::class,
+    'tendertype'=> TenderTypeMasterController::class,
     'unit' => UnitMasterController::class,
     'city' => CityMasterController::class,
     'district' => DistrictMasterController::class,

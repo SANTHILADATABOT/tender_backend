@@ -15,7 +15,15 @@ return new class extends Migration
     {
         Schema::create('competitor_details_pros_cons', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->bigInteger("compId")->unsigned();
+            $table->foreign("compId")->references("id")->on("competitor_profile_creations")->onDelete("cascade")->onUpdate("NO ACTION");
+            $table->string('compNo');
+            $table->string('strength')->nullable();;
+            $table->string('weakness')->nullable();
+            $table->integer('cr_userid');
+            $table->integer('edited_userid')->nullable()->default(null);
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
     }
 
