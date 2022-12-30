@@ -27,6 +27,8 @@ use App\Http\Controllers\CompetitorDetailsLineOfBusinessController;
 use App\Http\Controllers\BidCreationCreationDocsController;
 use App\Http\Controllers\CompetitorDetailsProsConsController;
 use App\Http\Controllers\TenderTypeMasterController;
+use App\Http\Controllers\CompetitorDetailsQualityCertificatesController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -104,6 +106,7 @@ Route::resources([
     'competitornetworth' => CompetitorDetailsCompanyNetWorthController::class,
     'competitorlineofbusiness' => CompetitorDetailsLineOfBusinessController::class,
     'competitorproscons' => CompetitorDetailsProsConsController::class,
+    'competitorqcertificate' => CompetitorDetailsQualityCertificatesController::class,
     'projecttype'=>ProjectTypeController::class,
     'customersubcategory'=>CustomerSubCategoryController::class,
     'projectstatus'=> ProjectStatusController::class,
