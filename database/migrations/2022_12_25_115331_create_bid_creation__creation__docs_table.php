@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('bid_creation__creation__docs', function (Blueprint $table) {
             $table->id();
+            $table->string('docname');
+            $table->string('file');
             $table->timestamps();
         });
     }

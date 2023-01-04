@@ -58,7 +58,7 @@ class TenderTypeMasterController extends Controller
             ]);
         }
 
-        $validator = Validator::make($request->all(), ['tendertype' => 'required|string', 'tendertypeStatus' => 'required']);
+        $validator = Validator::make($request->all(), ['tendertype' => 'required|string', 'description' => 'required']);
         if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
@@ -81,7 +81,7 @@ class TenderTypeMasterController extends Controller
      * @param  \App\Models\TenderTypeMaster  $tenderTypeMaster
      * @return \Illuminate\Http\Response
      */
-    public function show(TenderTypeMaster $tenderTypeMaster)
+    public function show($id)
     {
         $tendertype = TenderTypeMaster::find($id);
         if ($tendertype)
@@ -115,18 +115,23 @@ class TenderTypeMasterController extends Controller
      * @param  \App\Models\TenderTypeMaster  $tenderTypeMaster
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TenderTypeMaster $tenderTypeMaster)
+    public function update(Request $request, $id)
     {
-        $tendertype = TenderTypeMaster::where('tendertype', '=', $request->tendertype)
+
+        $tenderType = TenderTypeMaster::where('tendertype', '=', $request->tendertype)
         ->where('id', '!=', $id)->exists();
-        if ($tendertype) {
+        if ($tenderType) {
             return response()->json([
                 'status' => 400,
                 'errors' => 'TenderType Name Already Exists'
             ]);
         }
 
-        $validator = Validator::make($request->all(), ['tendertype' => 'required|string', 'tendertypeStatus' => 'required']);
+        $validator = Validator::make($request->all(),
+        ['tendertype' => 'required|string',
+        'description' => 'required' ,
+
+        ]);
         if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
@@ -134,8 +139,10 @@ class TenderTypeMasterController extends Controller
             ]);
         }
 
-        $tendertype = TenderTypeMaster::findOrFail($id)->update($request->all());
-        if ($tendertype)
+
+
+        $tenderType = TenderTypeMaster::findOrFail($id)->update($request->all());
+        if ($tenderType)
             return response()->json([
                 'status' => 200,
                 'message' => "Updated Successfully!"
@@ -154,19 +161,21 @@ class TenderTypeMasterController extends Controller
      * @param  \App\Models\TenderTypeMaster  $tenderTypeMaster
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TenderTypeMaster $tenderTypeMaster)
+    public function destroy($id)
     {
+
         try{
-            $tendertype = TenderTypeMaster::destroy($id);
-            if($tendertype)
-            {return response()->json([
+            $tenderType = TenderTypeMaster::destroy($id);
+            if($tenderType)
+            {
+                return response()->json([
                 'status' => 200,
-                'message' => "Deleted Successfully!"
+                'message' => "Deleted Successfully!",
             ]);}
             else
             {return response()->json([
                 'status' => 404,
-                'message' => 'The provided credentials are incorrect.',
+                'message' => 'The provided credentials are incorrect!?',
                 "errormessage" => "",
             ]);}
         }catch(\Illuminate\Database\QueryException $ex){
@@ -183,7 +192,7 @@ class TenderTypeMasterController extends Controller
 
     public function getList(){
 
-        $tendertypes = TenderTypeMaster::where("tendertypeStatus", "=", "Active")->get();
+        $tendertypes = TenderTypeMaster::where("tendertype", "!=", "")->get();
 
         $tendertypeList= [];
         foreach($tendertypes as $tendertype){
@@ -196,19 +205,19 @@ class TenderTypeMasterController extends Controller
     }
 
 
-    public function getListofcountry($savedcountry){
-        $tendertypes = TenderTypeMaster::where("tendertypeStatus", "=", "Active")
-        ->orWhere("id",$savedcountry)->get();
+    // public function getListofcountry($savedcountry){
+    //     $tendertypes = TenderTypeMaster::where("description", "=", "Active")
+    //     ->orWhere("id",$savedcountry)->get();
 
-        $tendertypeList= [];
-        foreach($tendertypes as $tendertype){
-            $tendertypeList[] = ["value" => $tendertype['id'], "label" =>  $tendertype['tendertype']] ;
-        }
-        return  response()->json([
-            'tendertypeList' =>  $tendertypeList,
+    //     $tendertypeList= [];
+    //     foreach($tendertypes as $tendertype){
+    //         $tendertypeList[] = ["value" => $tendertype['id'], "label" =>  $tendertype['tendertype']] ;
+    //     }
+    //     return  response()->json([
+    //         'tendertypeList' =>  $tendertypeList,
 
-        ]);
-    }
+    //     ]);
+    // }
 
 
 

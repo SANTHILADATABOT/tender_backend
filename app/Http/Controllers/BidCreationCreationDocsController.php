@@ -40,8 +40,9 @@ class BidCreationCreationDocsController extends Controller
             $file = $request->file('file');
             $filename = $file->getClientOriginalName();
             $fileName = date('His') . $filename;
-
             $file->storeAs('BidDocs/', $fileName, 'public');
+
+            
             return response() -> json([
                 'status' => 200,
                 'message' => 'Uploaded Succcessfully'
@@ -52,7 +53,6 @@ class BidCreationCreationDocsController extends Controller
                 'message' => 'Unable to save!'
             ]);
         }
-
     }
 
     /**

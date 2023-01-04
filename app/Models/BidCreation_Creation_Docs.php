@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class BidCreation_Creation_Docs extends Model
 {
     use HasFactory;
+    protected $fillable = ['docname','file'];
 }

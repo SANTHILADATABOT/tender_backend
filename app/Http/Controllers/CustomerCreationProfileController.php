@@ -38,7 +38,7 @@ class CustomerCreationProfileController extends Controller
         ->get();
 
         return response()->json([
-            'customercreationList' =>   $customercreationList 
+            'customercreationList' =>   $customercreationList
         ]);
     }
 
@@ -60,10 +60,10 @@ class CustomerCreationProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //get the user id 
-        $user = Token::where('tokenid', $request->tokenid)->first();   
+        //get the user id
+        $user = Token::where('tokenid', $request->tokenid)->first();
         $userid = $user['userid'];
-        // $CustomerCreation = CustomerCreationProfile::firstOrCreate($request->profileData); 
+        // $CustomerCreation = CustomerCreationProfile::firstOrCreate($request->profileData);
         if($userid){
 
             $CustomerCreation = new CustomerCreationProfile;
@@ -90,7 +90,7 @@ class CustomerCreationProfileController extends Controller
             $CustomerCreation -> createdby_userid = $userid ;
             $CustomerCreation -> updatedby_userid = 0 ;
             $CustomerCreation -> save();
-        } 
+        }
 
         if ($CustomerCreation) {
             return response()->json([
@@ -151,7 +151,7 @@ class CustomerCreationProfileController extends Controller
     public function update(Request $request, $id )
     {
         //
-        $user = Token::where('tokenid', $request->tokenid)->first();   
+        $user = Token::where('tokenid', $request->tokenid)->first();
         $userid = $user['userid'];
 
         if($userid){
@@ -162,7 +162,7 @@ class CustomerCreationProfileController extends Controller
             if($savedData['state'] !=  $updatedata['state']){
                 $updatedata['customer_no']  = $this->getCustNo1( $updatedata['state'], $updatedata['smart_city']);
             }
-          
+
             $CustomerCreation = CustomerCreationProfile::findOrFail($id)->update($updatedata);
         }
 
@@ -200,7 +200,7 @@ class CustomerCreationProfileController extends Controller
 
         try{
             $deleteCustomer = CustomerCreationProfile::destroy($id);
-            if($deleteCustomer)    
+            if($deleteCustomer)
             {return response()->json([
                 'status' => 200,
                 'message' => "Deleted Successfully!"
@@ -212,24 +212,24 @@ class CustomerCreationProfileController extends Controller
                 "errormessage" => "",
             ]);}
         }catch(\Illuminate\Database\QueryException $ex){
-            $error = $ex->getMessage(); 
-            
+            $error = $ex->getMessage();
+
             return response()->json([
                 'status' => 404,
                 'message' => 'Unable to delete! This data is used in another file/form/table.',
                 "errormessage" => $error,
             ]);
-        }    
+        }
     }
 
     public function getProfileFromData(Request $request){
 
-        $user = Token::where('tokenid', $request->tokenid)->first();   
+        $user = Token::where('tokenid', $request->tokenid)->first();
         $profileFormData = null;
         if($user){
-            $userid = $user['userid']; 
+            $userid = $user['userid'];
 
-            $userid = $user['userid']; 
+            $userid = $user['userid'];
             $customercreation = CustomerCreationMain::where([
             ['user_id', $userid ],
             ['isCustCreationProcessCompleted',0],
@@ -257,7 +257,7 @@ class CustomerCreationProfileController extends Controller
             ['isProfileFormCompleted',1],
             ['delete_status',0]
         ])->orderBy('id', 'desc')->first();
-        
+
         if($profileFormData){
             $form_no = $profileFormData['form_no'];
         }else{
@@ -265,7 +265,7 @@ class CustomerCreationProfileController extends Controller
         }
 
         return response()->json([
-            'form_no' =>   ($form_no + 1) 
+            'form_no' =>   ($form_no + 1)
         ]);
     }
 
@@ -281,7 +281,7 @@ class CustomerCreationProfileController extends Controller
             ['state', $stateid],
             ['delete_status',0]
         ])->orderBy('id', 'desc')->first();
-          
+
         if($custno){
             $lastNo = $custno['customer_no'];
             $lastNoarr = explode("-",$lastNo);
@@ -305,19 +305,34 @@ class CustomerCreationProfileController extends Controller
         //    return ( $state );
 
         }
-           
+
     }
 
     public function getUlbs($savedulb){
         $ulbs = CustomerCreationProfile::orderBy('id', 'desc')
         ->get();
-        
+
         $ulbList= [];
         foreach($ulbs as $ulb){
             $ulbList[] = ["value" => $ulb['id'], "label" =>  $ulb['customer_name']] ;
         }
         return  response()->json([
             'ulbList' =>  $ulbList,
+
+        ]);
+    }
+
+
+    public function getList(){
+
+        $countrys = CustomerCreationProfile::where("customer_name", "!=", "")->get();
+
+        $customerList= [];
+        foreach($countrys as $country){
+            $customerList[] = ["value" => $country['id'], "label" =>  $country['customer_name']] ;
+        }
+        return  response()->json([
+            'customerList' =>  $customerList,
 
         ]);
     }

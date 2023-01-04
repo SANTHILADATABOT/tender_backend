@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tender_type_masters', function (Blueprint $table) {
+        Schema::create('tender_creations', function (Blueprint $table) {
             $table->id();
             $table->string('tendertype')->unique();
-            $table->string('description');
+            $table->string('organization');
+            $table->string('customername');
+            $table->date('nitdate');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
 
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tender_type_masters');
+        Schema::dropIfExists('tender_creations');
     }
 };

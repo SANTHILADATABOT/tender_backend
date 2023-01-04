@@ -74,6 +74,7 @@ return [
         public_path('biddocs') => storage_path('app/public/BidDocs'),
         public_path('competitorQC') => storage_path('app/public/uploads/image/competitor/qc'),
         
+        
     ],
 
 ];

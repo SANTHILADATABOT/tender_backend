@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TenderTypeMaster extends Model
+class MobilizationAdvance extends Model
 {
     use HasFactory;
-    protected $fillable = ['tendertype','description'];
 }

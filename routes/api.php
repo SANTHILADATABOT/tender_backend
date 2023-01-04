@@ -28,6 +28,9 @@ use App\Http\Controllers\BidCreationCreationDocsController;
 use App\Http\Controllers\CompetitorDetailsProsConsController;
 use App\Http\Controllers\TenderTypeMasterController;
 use App\Http\Controllers\CompetitorDetailsQualityCertificatesController;
+use App\Http\Controllers\CommunicationFilesController;
+use App\Http\Controllers\TenderCreationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -50,10 +53,30 @@ Route::post('createState', [UserControllerTemp::class, 'login1']);
 Route::get('country/list', [CountryMasterController::class, 'getList']);
 Route::get('country/list/{savedcountry}', [CountryMasterController::class, 'getListofcountry']);
 Route::get('customersubcategory/list/{profileid}', [CustomerSubCategoryController::class, 'getList']);
+
 Route::get('state/list/{id}', [StateMasterController::class, 'getStateList']);
 Route::get('state-list/{id}', [StateMasterController::class, 'getStates']);
-
 Route::get('state/list/{id}/{category}/{savedstate}', [StateMasterController::class, 'getStateListOptions']);
+
+
+Route::get('tendercreation/list/{id}', [TenderCreationController::class, 'getTenderList']);
+Route::get('tendercreation-list/{id}', [TenderCreationController::class, 'getTender']);
+
+
+// Route::get('customer/list', [CustomerCreationMainController::class, 'getList']);
+
+
+
+// Route::get('state/list/{id}', [StateMasterController::class, 'getStateList']);
+
+Route::get('tendertype/{id}', [TenderTypeMasterController::class, 'show']);
+
+
+
+
+
+// Route::get('state/list/{id}/{category}/{savedstate}', [StateMasterController::class, 'getStateListOptions']);
+
 
 Route::get('district/list/{countryid}/{stateid}', [DistrictMasterController::class, 'getDistrictList']);
 Route::get('district/list/{countryid}/{stateid}/{saveddistrict}', [DistrictMasterController::class, 'getDistrictListofstate']);
@@ -61,9 +84,17 @@ Route::get('district/list/{countryid}/{stateid}/{saveddistrict}', [DistrictMaste
 Route::get('city/list/{countryid}/{stateid}/{districtid}/{savedcity}', [CityMasterController::class, 'getCityList']);
 Route::get('ulb-list/{savedulb}', [CustomerCreationProfileController::class, 'getUlbs']);
 Route::post('customercreationmain/getmainid', [CustomerCreationMainController :: class, 'getMainid']);
+
 Route::post('customercreation/profile', [CustomerCreationProfileController::class, 'getProfileFromData']);
 Route::get('customercreation/getcustno/{stateid}', [CustomerCreationProfileController::class, 'getCustNo']);
 Route::get('customercreation/profile/getFormNo', [CustomerCreationProfileController::class, 'getFormNo']);
+
+Route::get('customer/list', [CustomerCreationProfileController::class, 'getList']);
+Route::get('tendercreation/list', [TenderTypeMasterController::class, 'getList']);
+
+
+
+
 // Route::get('customercreation/contact/getFormNo', [CustomerCreationContactPersonController::class, 'getFormNo']);
 Route::post('customercreationcontact/getlist', [CustomerCreationContactPersonController::class, 'getlist']);
 Route::post('customercreationbankdetails/getlist', [CustomerCreationBankDetailsController::class, 'getlist']);
@@ -76,6 +107,8 @@ Route::get('competitordetails/turnoverlist/{compid}', [CompetitorDetailsTurnOver
 Route::get('competitordetails/networthlist/{compid}', [CompetitorDetailsCompanyNetWorthController::class, 'getNetWorthList']);
 Route::get('competitordetails/lineofbusinesslist/{compid}', [CompetitorDetailsLineOfBusinessController::class, 'getLineOfBusinessList']);
 Route::get('competitordetails/prosconslist/{compid}', [CompetitorDetailsProsConsController::class, 'getProsConsList']);
+Route::get('competitordetails/qclist/{compid}', [CompetitorDetailsQualityCertificatesController::class, 'getQCList']);
+// Route::post('competitordetails/competitorqcertificate/updatewithimage', [CompetitorDetailsQualityCertificatesController::class, 'updateWithImage']);
 
 /*
 ## Resource Laravel Routes Example
@@ -93,6 +126,7 @@ Route::resources([
     'state' => StateMasterController::class,
     'country' => CountryMasterController::class,
     'tendertype'=> TenderTypeMasterController::class,
+    'tendercreation'=>TenderCreationController::class,
     'unit' => UnitMasterController::class,
     'city' => CityMasterController::class,
     'district' => DistrictMasterController::class,
@@ -114,4 +148,7 @@ Route::resources([
     'customercreationbankdetails'=> CustomerCreationBankDetailsController::class,
     'bidcreation/creation'=> BidCreationCreationController::class,
     'bidcreation/creation/docupload'=> BidCreationCreationDocsController::class,
+    'workorder/creation/communicationfiles' => CommunicationFilesController::class,
+
+
 ]);
