@@ -30,6 +30,7 @@ use App\Http\Controllers\TenderTypeMasterController;
 use App\Http\Controllers\CompetitorDetailsQualityCertificatesController;
 use App\Http\Controllers\CommunicationFilesController;
 use App\Http\Controllers\TenderCreationController;
+use App\Http\Controllers\MobilizationAdvanceController;
 
 
 /*
@@ -149,6 +150,7 @@ Route::resources([
     'bidcreation/creation'=> BidCreationCreationController::class,
     'bidcreation/creation/docupload'=> BidCreationCreationDocsController::class,
     'workorder/creation/communicationfiles' => CommunicationFilesController::class,
+    'mobilization/creation' => MobilizationAdvanceController::class,
 
 
 ]);

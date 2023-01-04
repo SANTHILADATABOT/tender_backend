@@ -19,8 +19,8 @@ return new class extends Migration
             $table -> string('bankName')->default(''); 
             $table -> string('bankBranch')->default(''); 
             $table -> string('mobAdvMode')->default(''); 
-            $table -> date('dateMobAdv')->default(''); 
-            $table -> date('validUpto')->default(''); 
+            $table -> date('dateMobAdv')->nullable(); 
+            $table -> date('validUpto')->nullable(); 
             $table -> integer('createdby_userid');
             $table -> integer('updatedby_userid')->nullable(); 
             $table->timestamps();

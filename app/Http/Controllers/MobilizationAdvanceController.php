@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\MobilizationAdvance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Token;
 
 class MobilizationAdvanceController extends Controller
 {
@@ -35,7 +37,33 @@ class MobilizationAdvanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Token::where('tokenid', $request->tokenid)->first();   
+        $userid = $user['userid'];
+        
+        if($userid){
+        $MobilizationAdvance = new MobilizationAdvance;
+        $MobilizationAdvance -> mobAdvance = $request->mobilizationData['mobAdvance'];
+        $MobilizationAdvance -> bankName = $request->mobilizationData['bankName'];
+        $MobilizationAdvance -> bankBranch = $request->mobilizationData['bankBranch'];
+        $MobilizationAdvance -> mobAdvMode = $request->mobilizationData['mobAdvMode'];
+        $MobilizationAdvance -> dateMobAdv = $request->mobilizationData['dateMobAdv'];
+        $MobilizationAdvance -> validUpto = $request->mobilizationData['validUpto'];
+        $MobilizationAdvance -> createdby_userid = $userid ;
+        $MobilizationAdvance -> updatedby_userid = 0 ;
+        $MobilizationAdvance -> save();
+        }
+        if ($MobilizationAdvance) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Bid Has created Succssfully!',
+                'id' => $MobilizationAdvance['id'],
+            ]);
+        }else{
+            return response()->json([
+                'status' => 400,
+                'message' => 'Unable to save!'
+            ]);
+        }
     }
 
     /**
@@ -67,8 +95,10 @@ class MobilizationAdvanceController extends Controller
      * @param  \App\Models\MobilizationAdvance  $mobilizationAdvance
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MobilizationAdvance $mobilizationAdvance)
+    public function update(Request $request,$id)
     {
+
+        return "saran";
         //
     }
 
