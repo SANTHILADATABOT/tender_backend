@@ -72,9 +72,20 @@ class MobilizationAdvanceController extends Controller
      * @param  \App\Models\MobilizationAdvance  $mobilizationAdvance
      * @return \Illuminate\Http\Response
      */
-    public function show(MobilizationAdvance $mobilizationAdvance)
+    public function show($id)
     {
-        //
+        $MobilizationAdvance = MobilizationAdvance::find($id);
+        if ($MobilizationAdvance)
+            return response()->json([
+                'status' => 200,
+                'MobilizationAdvance' => $MobilizationAdvance
+            ]);
+        else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.'
+            ]);
+        }
     }
 
     /**
@@ -97,9 +108,28 @@ class MobilizationAdvanceController extends Controller
      */
     public function update(Request $request,$id)
     {
+        
+        $user = Token::where('tokenid', $request->tokenid)->first();   
+        $userid = $user['userid'];
 
-        return "saran";
-        //
+        if($userid){
+            $updatedata = $request->mobilizationData;
+            $updatedata['updatedby_userid']= $userid;
+
+            $MobilizationAdvance = MobilizationAdvance::findOrFail($id)->update($updatedata);
+            $MobilizationAdvance -> updatedby_userid = $userid ;
+            if ($MobilizationAdvance)
+            return response()->json([
+                'status' => 200,
+                'MobilizationAdvance' => $MobilizationAdvance
+            ]);
+        else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.'
+            ]);
+        }
+        }
     }
 
     /**
