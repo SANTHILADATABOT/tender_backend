@@ -29,16 +29,24 @@ class CompetitorDetailsQualityCertificatesController extends Controller
         if($request->hasFile('file')){
             $file = $request->file('file');
             $fileExt = $file->getClientOriginalExtension();
-            $fileName=$file->hashName();
+            //received File extentions sometimes converted by browsers
+            //Have to set orignal file extention before save
+            $fileName1=$file->hashName();
+            $filenameSplited=explode(".",$fileName1);
+            if($filenameSplited[1]!=$fileExt)
+            {
+            $fileName=$filenameSplited[0].".".$fileExt;
+            }
+            else{
+                $fileName=$fileName1;   
+            }
             $file->storeAs('uploads/image/competitor/qc', $fileName, 'public');
-            
-            
             $user = Token::where("tokenid", $request->tokenId)->first();   
             
             $request->request->add(['cr_userid' => $user['userid']]);
-
             $request->request->add(['filepath' => $fileName]);
             $request->request->remove('tokenId');
+            $request->request->add(['filetype' => $fileExt]);
             // print_r($request['file']);
             // $request->request->remove('file');
             $dataToInsert = $request->except(['file']);
@@ -117,12 +125,12 @@ class CompetitorDetailsQualityCertificatesController extends Controller
         $data = CompetitorDetailsQualityCertificates::find($id);
         $image_path = public_path('competitorQC').'/'.$data->filepath;
         unlink($image_path);
-        $data->delete();        
        
         $user = Token::where("tokenid", $request->tokenId)->first();   
         $request->request->add(['edited_userid' => $user['userid']]);
         $request->request->remove('tokenId');
         $request->request->add(['filepath' => $fileName]);
+        $request->request->add(['filetype' => $fileExt]);
 
         $validator = Validator::make($request->all(), ['compId' => 'required|integer','compNo' => 'required|string','cerName'=>'required|string', 'filepath'=>'required|string','remark'=>'nullable|string','edited_userid'=>'required|integer']);
         

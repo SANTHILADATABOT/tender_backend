@@ -22,7 +22,7 @@ return new class extends Migration
             $table -> date('dateMobAdv')->nullable(); 
             $table -> date('validUpto')->nullable(); 
             $table -> integer('createdby_userid');
-            $table -> integer('updatedby_userid')->nullable(); 
+            $table -> integer('updatedby_userid'); 
             $table->timestamps();
         });
     }
