@@ -31,7 +31,7 @@ use App\Http\Controllers\CompetitorDetailsQualityCertificatesController;
 use App\Http\Controllers\CommunicationFilesController;
 use App\Http\Controllers\TenderCreationController;
 use App\Http\Controllers\MobilizationAdvanceController;
-
+use App\Http\Controllers\CompetitorDetailsWorkOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +58,7 @@ Route::get('customersubcategory/list/{profileid}', [CustomerSubCategoryControlle
 Route::get('state/list/{id}', [StateMasterController::class, 'getStateList']);
 Route::get('state-list/{id}', [StateMasterController::class, 'getStates']);
 Route::get('state/list/{id}/{category}/{savedstate}', [StateMasterController::class, 'getStateListOptions']);
+Route::get('unit/list', [UnitMasterController::class, 'getunitList']);
 
 
 Route::get('tendercreation/list/{id}', [TenderCreationController::class, 'getTenderList']);
@@ -102,6 +103,8 @@ Route::post('customercreationbankdetails/getlist', [CustomerCreationBankDetailsC
 Route::post('customercreationsmwprojectstatus/getlist', [CustomerCreationSWMProjectStatusController::class, 'getlist']);
 Route::get('projecttype/list/{profileid}', [ProjectTypeController::class, 'getList']);
 Route::get('projectstatus/list/{profileid}', [ProjectStatusController::class, 'getList']);
+
+
 Route::get('competitorprofile/getcompno/{compid}', [CompetitorProfileCreationController::class, 'getCompNo']);
 Route::get('competitorbranch/branchlist/{compid}', [CompetitorDetailsBranchesController::class, 'getbranchList']);
 Route::get('competitordetails/turnoverlist/{compid}', [CompetitorDetailsTurnOverController::class, 'getTurnOverList']);
@@ -109,7 +112,10 @@ Route::get('competitordetails/networthlist/{compid}', [CompetitorDetailsCompanyN
 Route::get('competitordetails/lineofbusinesslist/{compid}', [CompetitorDetailsLineOfBusinessController::class, 'getLineOfBusinessList']);
 Route::get('competitordetails/prosconslist/{compid}', [CompetitorDetailsProsConsController::class, 'getProsConsList']);
 Route::get('competitordetails/qclist/{compid}', [CompetitorDetailsQualityCertificatesController::class, 'getQCList']);
-// Route::post('competitordetails/competitorqcertificate/updatewithimage', [CompetitorDetailsQualityCertificatesController::class, 'updateWithImage']);
+Route::get('competitordetails/wolist/{compid}', [CompetitorDetailsWorkOrderController::class, 'getWOList']);
+
+
+Route::get('moilization/getMobList/{mobId}',[MobilizationAdvanceController::class,'getMobList']);
 
 /*
 ## Resource Laravel Routes Example
@@ -127,8 +133,8 @@ Route::resources([
     'state' => StateMasterController::class,
     'country' => CountryMasterController::class,
     'tendertype'=> TenderTypeMasterController::class,
-    'tendercreation'=>TenderCreationController::class,
     'unit' => UnitMasterController::class,
+    'tendercreation'=>TenderCreationController::class,
     'city' => CityMasterController::class,
     'district' => DistrictMasterController::class,
     'customercreationmain' => CustomerCreationMainController::class,
@@ -142,6 +148,7 @@ Route::resources([
     'competitorlineofbusiness' => CompetitorDetailsLineOfBusinessController::class,
     'competitorproscons' => CompetitorDetailsProsConsController::class,
     'competitorqcertificate' => CompetitorDetailsQualityCertificatesController::class,
+    'competitorworkorder' => CompetitorDetailsWorkOrderController::class,
     'projecttype'=>ProjectTypeController::class,
     'customersubcategory'=>CustomerSubCategoryController::class,
     'projectstatus'=> ProjectStatusController::class,

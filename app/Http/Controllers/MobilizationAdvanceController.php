@@ -38,13 +38,25 @@ class MobilizationAdvanceController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), ['mobAdvance' => 'required|integer']);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                // 'message' =>"Not able to Add Strength/Weakness details now..!",
+                'errors' => $validator->messages(),
+            ]);
+        }
+
         $user = Token::where('tokenid', $request->tokenid)->first();   
         $userid = $user['userid'];
 
-        $request->request->remove('tokenId');
+        $request->request->remove('tokenid');
 
-        if($userid){
+    if($userid)
+    {
         $MobilizationAdvance = new MobilizationAdvance;
+        $MobilizationAdvance -> bidid = $request->bidid;
         $MobilizationAdvance -> mobAdvance = $request->mobilizationData['mobAdvance'];
         $MobilizationAdvance -> bankName = $request->mobilizationData['bankName'];
         $MobilizationAdvance -> bankBranch = $request->mobilizationData['bankBranch'];
@@ -54,12 +66,13 @@ class MobilizationAdvanceController extends Controller
         $MobilizationAdvance -> createdby_userid = $userid ;
         $MobilizationAdvance -> updatedby_userid = 0 ;
         $MobilizationAdvance -> save();
-        }
-        
+    }
         if ($MobilizationAdvance) {
             return response()->json([
                 'status' => 200,
                 'message' => 'Bid Has created Succssfully!',
+                'Mobilization' => $MobilizationAdvance,
+                'bidid' => $MobilizationAdvance['bidid'],
                 'id' => $MobilizationAdvance['id'],
             ]);
         }else{
@@ -78,11 +91,11 @@ class MobilizationAdvanceController extends Controller
      */
     public function show($id)
     {
-        $MobilizationAdvance = MobilizationAdvance::find($id);
+        $MobilizationAdvance = MobilizationAdvance::where('bidid','=',$id)->get();
         if ($MobilizationAdvance){
             return response()->json([
                 'status' => 200,
-                'MobilizationAdvance' => $MobilizationAdvance
+                'MobilizationAdvance' => $MobilizationAdvance,
             ]);
         }
         else {
@@ -116,13 +129,11 @@ class MobilizationAdvanceController extends Controller
         $user = Token::where('tokenid', $request->tokenid)->first();   
         $userid = $user['userid'];
         if($userid){
-            $request->mobilizationData;
             $request->request->add(['updatedby_userid' => $user['userid']]);
             $request->request->remove('tokenid');
+            $update = $request->request->except('bidid');
+            $MobilizationAdvance = MobilizationAdvance::findOrFail($id)->update($update);
         }
-            $updatedata = $request->except(['createdby_userid']);
-            $MobilizationAdvance = MobilizationAdvance::findOrFail($id)->update($updatedata);
-           
             if ($MobilizationAdvance){
                 return response()->json([
                     'status' => 200,
@@ -146,5 +157,21 @@ class MobilizationAdvanceController extends Controller
     public function destroy(MobilizationAdvance $mobilizationAdvance)
     {
         //
+    }
+
+    public function getMobList($mobId){
+        $Mobilization = MobilizationAdvance::where('id','=',$mobId)->get();
+        if ($Mobilization){
+            return response()->json([
+                'status' => 200,
+                'Mobilization' => $Mobilization,
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.'
+            ]);
+        }
     }
 }

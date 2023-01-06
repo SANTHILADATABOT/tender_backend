@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('unit_masters', function (Blueprint $table) {
-            $table->id();
+            $table->id()->unsigned();
             $table->string('unit_name')->unique();
             $table->string('unit_status');
             $table->timestamp('created_at')->useCurrent();
