@@ -38,8 +38,9 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            // 'root' => storage_path('app/public'), default code
+            'root' => public_path()."/uploads", // Modified code
+            'url' => env('APP_URL'),
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -70,7 +71,10 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        // base_path('/public_html/uploads') => storage_path('app/public'),
+        // public_path('storage') => storage_path('app/public'),
+        // public_path('biddocs') => storage_path('app/public/BidDocs'),
+        // public_path('') => storage_path('/uploads/image'),        
     ],
 
 ];

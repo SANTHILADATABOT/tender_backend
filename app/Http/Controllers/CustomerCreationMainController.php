@@ -22,11 +22,11 @@ class CustomerCreationMainController extends Controller
         ])->get();
 
         return response()->json([
-            'customercreationList' =>   $customercreationList 
+            'customercreationList' =>   $customercreationList
         ]);
     }
 
-    /**
+     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -45,12 +45,12 @@ class CustomerCreationMainController extends Controller
     public function store(Request $request)
     {
         //
-        $user = Token::where('tokenid', $request->tokenid)->first();   
+        $user = Token::where('tokenid', $request->tokenid)->first();
         $customercreation  = null;
         $createCustomer = null;
         if($user){
-            $userid = $user['userid']; 
-            $customercreation = CustomerCreationMain::where([
+            $userid = $user['userid'];
+            $customercreation = $CustomerCreationMain::where([
             ['user_id', $userid ],
             ['isCustCreationProcessCompleted',0],
             ['delete_status',0]
@@ -66,13 +66,13 @@ class CustomerCreationMainController extends Controller
         }
 
         return response()->json([
-            'customercreation' =>   $createCustomer 
+            'customercreation' =>   $createCustomer
         ]);
     }
 
     /**
      * Display the specified resource.
-     *
+      *
      * @param  \App\Models\CustomerCreationMain  $customerCreationMain
      * @return \Illuminate\Http\Response
      */
@@ -116,20 +116,20 @@ class CustomerCreationMainController extends Controller
     }
 
     public function getMainid(Request $request){
-        $user = Token::where('tokenid', $request->tokenid)->first();   
+        $user = Token::where('tokenid', $request->tokenid)->first();
         $customercreation  = null ;
 
         if($user){
-            $userid = $user['userid']; 
+            $userid = $user['userid'];
             $customercreation = CustomerCreationMain::where([
             ['user_id', $userid ],
-            ['isCustCreationProcessCompleted',0],
+            ['isCustCrea tionProcessCompleted',0],
             ['delete_status',0]
            ])->orderBy('id', 'desc')->first();
         }
 
         return response()->json([
-            'customercreation' =>   $customercreation 
+            'customercreation' =>   $customercreation
         ]);
 
     }

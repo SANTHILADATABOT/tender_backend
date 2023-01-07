@@ -158,7 +158,7 @@ class CompetitorDetailsTurnOverController extends Controller
     {
         $turn_over = CompetitorDetailsTurnOver::where("compId",$compid)
         ->select('id', 'compNo', 'compId', 'accValue', 'accountYear',)
-        ->orderBy('id')
+        ->orderBy('accountYear','DESC')
         ->get();
 
     if ($turn_over)

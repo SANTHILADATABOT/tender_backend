@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Validator;
 
 class CountryMasterController extends Controller
 {
-    
+
     public function index()
     {
-        
+
         $country = CountryMaster::orderBy('created_at', 'desc')->get();
         //->paginate(4)->appends(['sort'=>'ulb_name']);
-    
+
         if ($country)
             return response()->json([
                 'status' => 200,
@@ -30,13 +30,13 @@ class CountryMasterController extends Controller
         }
     }
 
-   
+
     public function create()
     {
         //
     }
 
-   
+
     public function store(Request $request)
     {
         //
@@ -67,7 +67,7 @@ class CountryMasterController extends Controller
 
     }
 
-   
+
     public function show($id)
     {
         //
@@ -90,7 +90,7 @@ class CountryMasterController extends Controller
         //
     }
 
-    
+
     public function update(Request $request, $id)
     {
         //
@@ -102,7 +102,7 @@ class CountryMasterController extends Controller
                 'errors' => 'Country Name Already Exists'
             ]);
         }
-        
+
         $validator = Validator::make($request->all(), ['country_name' => 'required|string', 'country_status' => 'required']);
         if ($validator->fails()) {
             return response()->json([
@@ -125,14 +125,14 @@ class CountryMasterController extends Controller
         }
     }
 
-    
+
     public function destroy($id)
     {
         //
-      
+
         try{
             $country = CountryMaster::destroy($id);
-            if($country)    
+            if($country)
             {return response()->json([
                 'status' => 200,
                 'message' => "Deleted Successfully!"
@@ -144,26 +144,26 @@ class CountryMasterController extends Controller
                 "errormessage" => "",
             ]);}
         }catch(\Illuminate\Database\QueryException $ex){
-            $error = $ex->getMessage(); 
-            
+            $error = $ex->getMessage();
+
             return response()->json([
                 'status' => 404,
                 'message' => 'Unable to delete! This data is used in another file/form/table.',
                 "errormessage" => $error,
             ]);
         }
-       
 
-    
-           
-        
-        
+
+
+
+
+
     }
 
     public function getList(){
-        
+
         $countrys = CountryMaster::where("country_status", "=", "Active")->get();
-        
+
         $countryList= [];
         foreach($countrys as $country){
             $countryList[] = ["value" => $country['id'], "label" =>  $country['country_name']] ;
@@ -178,7 +178,7 @@ class CountryMasterController extends Controller
     public function getListofcountry($savedcountry){
         $countrys = CountryMaster::where("country_status", "=", "Active")
         ->orWhere("id",$savedcountry)->get();
-        
+
         $countryList= [];
         foreach($countrys as $country){
             $countryList[] = ["value" => $country['id'], "label" =>  $country['country_name']] ;
