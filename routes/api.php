@@ -32,6 +32,7 @@ use App\Http\Controllers\CommunicationFilesController;
 use App\Http\Controllers\TenderCreationController;
 use App\Http\Controllers\MobilizationAdvanceController;
 use App\Http\Controllers\CompetitorDetailsWorkOrderController;
+use App\Http\Controllers\BidManagementWorkOrderProjectDetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,6 +118,8 @@ Route::get('competitordetails/wolist/{compid}', [CompetitorDetailsWorkOrderContr
 
 Route::get('moilization/getMobList/{mobId}',[MobilizationAdvanceController::class,'getMobList']);
 
+Route::get('ProjectDetails/getProList/{proid}',[BidManagementWorkOrderProjectDetailsController::class,'getProList']);
+
 /*
 ## Resource Laravel Routes Example
 
@@ -158,6 +161,15 @@ Route::resources([
     'bidcreation/creation/docupload'=> BidCreationCreationDocsController::class,
     'workorder/creation/communicationfiles' => CommunicationFilesController::class,
     'mobilization/creation' => MobilizationAdvanceController::class,
-
+    'ProjectDetails/Creation'=>BidManagementWorkOrderProjectDetailsController::class,
 
 ]);
+
+
+
+
+//File uplaod Default location has been set by below line in config/filesystems.php file
+//'root' => public_path()."/uploads",
+
+//Can create a new folder inside public/uploads path
+//$file->storeAs('competitor/qc', $fileName, 'public');  

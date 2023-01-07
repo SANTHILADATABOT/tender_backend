@@ -28,7 +28,7 @@ class CompetitorDetailsWorkOrderController extends Controller
             else{
                 $woFileName=$woFileName1;   
             }
-            $woFile->storeAs('uploads/image/competitor/wo/woFile', $woFileName, 'public');
+            $woFile->storeAs('competitor/woFile', $woFileName, 'public');
             $user = Token::where("tokenid", $request->tokenId)->first();   
             $request->request->add(['cr_userid' => $user['userid']]);
             // $request->request->remove('woFile');
@@ -38,8 +38,9 @@ class CompetitorDetailsWorkOrderController extends Controller
             $request->woFile=$woFileName;
             
 
-
-        if($request->completionFile!=''){
+        // if($request->completionFile!=''){
+            
+            if($request->hasFile(completionFile)){
             
             $completionFile = $request->completionFile;
             $completionFileExt = $completionFile->getClientOriginalExtension();
@@ -54,13 +55,13 @@ class CompetitorDetailsWorkOrderController extends Controller
             else{
                 $completionFileName=$completionFileName1;   
             }
-            $completionFile->storeAs('uploads/image/competitor/wo/completedFile', $completionFileName, 'public');         
-            $request->completionFile= $completionFileName;
-            $request->request->add(['completionFileType' => $completionFileExt]);
+            $completionFile->storeAs('competitor/woCompletionFile', $completionFileName, 'public');         
+            // $request->completionFile= $completionFileName;
+            // $request->request->add(['completionFileType' => $completionFileExt]);
         }
         else{
             $completionFileExt='';
-            $completionFile='';
+            $completionFileName='';
         }
             
 
@@ -85,8 +86,8 @@ class CompetitorDetailsWorkOrderController extends Controller
                 ]);
                 }
             // $datatostore=$request->except(['woFile','completionFile']);
-                // echo $request->compId;
-                $datatostore = new CompetitorDetailsWorkOrder;
+            // echo $request->compId;
+            $datatostore = new CompetitorDetailsWorkOrder;
             $datatostore->compId=$request->compId;
             $datatostore->compNo=$request->compNo;
             $datatostore->projectName=$request->projectName;
@@ -135,37 +136,80 @@ class CompetitorDetailsWorkOrderController extends Controller
 
     public function update(Request $request, $id)
     {
-    
-    if($request->hasFile('file')){
-        $file = $request->file('file');
-        $fileExt = $file->getClientOriginalExtension();
-        $fileName1=$file->hashName();
-        //received File extentions sometimes converted by browsers
-        //Have to set orignal file extention before save
-        $filenameSplited=explode(".",$fileName1);
-        if($filenameSplited[1]!=$fileExt)
-        {
-        $fileName=$filenameSplited[0].".".$fileExt;
+    $data = CompetitorDetailsWorkOrder::find($id);
+    if($request->hasFile('woFile')){
+        //Update WO File
+            $woFile = $request->woFile;
+            $woFileExt = $woFile->getClientOriginalExtension();
+            //received File extentions sometimes converted by browsers
+            //Have to set orignal file extention before save
+            $woFileName1=$woFile->hashName();
+            $woFilenameSplited=explode(".",$woFileName1);
+            if($woFilenameSplited[1]!=$woFileExt)
+            {
+            $woFileName=$woFilenameSplited[0].".".$woFileExt;
+            }
+            else{
+                $woFileName=$woFileName1;   
+            }
+            $woFile->storeAs('competitor/woFile', $woFileName, 'public');
+    //to delete Existing Image from storage, if image Updated 
+            if($data['woFile'])
+            {
+                $image_path = public_path()."/uploads/competitor/woFile/".$data->woFile;
+                unlink($image_path);
+            }
         }
         else{
-            $fileName=$fileName1;   
+            if($data['woFile']=='' || $data['woFile'] ==null){
+                return response()->json([
+                    'status' => 404,
+                    'message' =>"Wo file is Missing, Add it before submit..!",
+                ]);
+            }
+            else{
+
+            }
         }
-        $file->storeAs('uploads/image/competitor/wo', $fileName, 'public');
-        
-        
-        //to delete Existing Image from storage
-        $data = CompetitorDetailsWorkOrder::find($id);
-        $image_path = public_path('competitorQC').'/'.$data->filepath;
-        unlink($image_path);
+        //Update completionFile
+        if($request->hasFile('completionFile')){
+            
+            $completionFile = $request->completionFile;
+            $completionFileExt = $completionFile->getClientOriginalExtension();
+            //received File extentions sometimes converted by browsers
+            //Have to set orignal file extention before save
+            $completionFileName1=$completionFile->hashName();
+            $completionFilenameSplited=explode(".",$completionFileName1);
+            if($completionFilenameSplited[1]!=$completionFileExt)
+            {
+            $completionFileName=$completionFilenameSplited[0].".".$completionFileExt;
+            }
+            else{
+                $completionFileName=$completionFileName1;   
+            }
+            $completionFile->storeAs('competitor/woCompletionFile', $completionFileName, 'public');         
+            // $request->completionFile= $completionFileName;
+            // $request->request->add(['completionFileType' => $completionFileExt]);
+            
+
+
+    //to delete Existing Image from storage, if image Updated
+            if($data['completionFile'])
+            {
+                $image_path = public_path()."/uploads/competitor/woCompletionFile/".$data->completionFile;
+                unlink($image_path);
+            }
+        }
+        else{
+            $completionFileExt='';
+            $completionFileName='';
+        }       
        
+
         $user = Token::where("tokenid", $request->tokenId)->first();   
         $request->request->add(['edited_userid' => $user['userid']]);
-        $request->request->remove('tokenId');
-        $request->request->add(['filepath' => $fileName]);
-        $request->request->add(['filetype' => $fileExt]);
+        $validator = Validator::make($request->all(), ['compId' => 'required|integer','compNo' => 'required|string','custName'=>'required|string','projectName'=>'required|string','tnederId'=>'required|string','state'=>'required|integer','woDate'=>'required|date','quantity'=>'required|string','unit'=>'required|integer','projectValue'=>'required|string','perTonRate'=>'required|string','qualityCompleted'=>'required|string','date'=>'required|date','edited_userid'=>'required|integer']);
 
-        $validator = Validator::make($request->all(), ['compId' => 'required|integer','compNo' => 'required|string','cerName'=>'required|string', 'filepath'=>'required|string','remark'=>'nullable|string','edited_userid'=>'required|integer']);
-        
         if ($validator->fails()) {
             return response()->json([
                 'status' => 404,
@@ -173,9 +217,40 @@ class CompetitorDetailsWorkOrderController extends Controller
                 'error'=> $validator->messages(),
             ]);
             }
-    $dataToUpdate = $request->except(['file']);
-    $qcedit = CompetitorDetailsWorkOrder::findOrFail($id)->update($dataToUpdate);
-    if ($qcedit)
+
+    
+            $datatostore = new CompetitorDetailsWorkOrder;
+            $datatostore->compId=$request->compId;
+            $datatostore->compNo=$request->compNo;
+            $datatostore->projectName=$request->projectName;
+            $datatostore->custName=$request->custName;
+            $datatostore->tnederId=$request->tnederId;
+            $datatostore->state=$request->state;
+            $datatostore->woDate=$request->woDate;
+            $datatostore->quantity=$request->quantity;
+            $datatostore->unit=$request->unit;
+            $datatostore->projectValue=$request->projectValue;
+            $datatostore->perTonRate=$request->perTonRate;
+            $datatostore->qualityCompleted=$request->qualityCompleted;
+            $datatostore->date=$request->date;
+            // $datatostore->cr_userid=$data['cr_userid'];
+            $datatostore->edited_userid=$user['userid'];
+    if($request->hasFile('woFile')){
+            $datatostore->woFile=$woFileName;
+            $datatostore->woFileType=$woFileExt;
+    }
+    else{
+            $datatostore->woFile=$data->woFile;
+            $datatostore->woFileType=$data->woFileType;
+    }
+
+            $datatostore->completionFile=$completionFileName;
+            $datatostore->completionFileType=$completionFileExt;
+            // $woedit=$datatostore->save();
+
+    
+    $woedit = CompetitorDetailsWorkOrder::findOrFail($id)->update($datatostore->all());
+    if ($woedit)
         return response()->json([
             'status' => 200,
             'message' => "Updated Successfully!"
@@ -186,42 +261,42 @@ class CompetitorDetailsWorkOrderController extends Controller
             'message' => 'The provided credentials are incorrect.'
         ]);
     }
-}
-    else{
-        
-            $user = Token::where("tokenid", $request->tokenId)->first();  
-            
-            $request->request->add(['edited_userid' => $user['userid']]);
-            // $request->request->add(['filepath' => $fileName]);
-            $request->request->remove('tokenId');
-        
-            $validator = Validator::make($request->all(), ['compId' => 'required|integer','compNo' => 'required|string','cerName'=>'required|string', 'remark'=>'nullable|string','edited_userid'=>'required|integer']);
-            
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => 404,
-                    'message' =>"Not able to update details now..!",
-                    'error'=> $validator->messages(),
-                ]);
-                }
-        
-        $qcedit = CompetitorDetailsWorkOrder::findOrFail($id)->update($request->all());
-        if ($qcedit)
-            return response()->json([
-                'status' => 200,
-                'message' => "Updated Successfully!"
-            ]);
-        else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'The provided credentials are incorrect.'
-            ]);
-        }
-        }
-        
 
-    }
-       
+
+    // else{
+        
+    //         $user = Token::where("tokenid", $request->tokenId)->first();  
+            
+    //         $request->request->add(['edited_userid' => $user['userid']]);
+    //         // $request->request->add(['filepath' => $fileName]);
+    //         $request->request->remove('tokenId');
+        
+    //         $validator = Validator::make($request->all(), ['compId' => 'required|integer','compNo' => 'required|string','cerName'=>'required|string', 'remark'=>'nullable|string','edited_userid'=>'required|integer']);
+            
+    //         if ($validator->fails()) {
+    //             return response()->json([
+    //                 'status' => 404,
+    //                 'message' =>"Not able to update details now..!",
+    //                 'error'=> $validator->messages(),
+    //             ]);
+    //             }
+        
+    //     $woedit = CompetitorDetailsWorkOrder::findOrFail($id)->update($request->all());
+    //     if ($woedit)
+    //         return response()->json([
+    //             'status' => 200,
+    //             'message' => "Updated Successfully!"
+    //         ]);
+    //     else {
+    //         return response()->json([
+    //             'status' => 404,
+    //             'message' => 'The provided credentials are incorrect.'
+    //         ]);
+    //     }
+    //     }     
+    // }
+
+}       
 
 
    
@@ -231,12 +306,16 @@ class CompetitorDetailsWorkOrderController extends Controller
         
         //to delete Existing Image from storage
         $data = CompetitorDetailsWorkOrder::find($id);
-        $image_path = public_path('competitorQC').'/'.$data->filepath;
+         //to delete Existing Image from storage
+        $data = CompetitorDetailsWorkOrder::find($id);
+        $image_path = public_path()."/uploads/competitor/woCompletionFile/".$data->completionFile;
         unlink($image_path);
-        $data->delete();    
+        
+        $image_path = public_path()."/uploads/competitor/woFile/".$data->woFile;
+        unlink($image_path);
 
-            $qc = CompetitorDetailsWorkOrder::destroy($id);
-            if($qc)    
+            $wo = CompetitorDetailsWorkOrder::destroy($id);
+            if($wo)    
             {
                 return response()->json([
                 'status' => 200,
@@ -262,14 +341,16 @@ class CompetitorDetailsWorkOrderController extends Controller
     
     public function getWOList($compid)
     {
-        $qc = CompetitorDetailsWorkOrder::where("compId",$compid)
-        ->select('*')
+        $wo = CompetitorDetailsWorkOrder::where("compId",$compid)
+        ->select('competitor_details_work_orders.*','state_masters.state_name','unit_masters.unit_name')
+        ->join('state_masters','state_masters.id','competitor_details_work_orders.state')
+        ->join('unit_masters','unit_masters.id','competitor_details_work_orders.unit')
         ->get();
-        if ($qc)
+        if ($wo)
         {
             return response()->json([
                 'status' => 200,
-                'qc' => $qc
+                'wo' => $wo
             ]);
         }
             else {  

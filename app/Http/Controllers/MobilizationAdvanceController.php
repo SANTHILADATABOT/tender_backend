@@ -38,21 +38,27 @@ class MobilizationAdvanceController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), ['mobAdvance' => 'required|integer']);
+        $data= $request->mobilizationData;   
+        
+        $validator = Validator::make($data, [
+            'mobAdvance' => 'required|integer',
+            'bankName' => 'required|string',
+            'bankBranch' => 'required|string',
+            'mobAdvMode' => 'required|string',
+            'dateMobAdv' => 'required|date',
+            'validUpto' => 'required|date'
+        ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 // 'message' =>"Not able to Add Strength/Weakness details now..!",
-                'errors' => $validator->messages(),
+                'message' => $validator->messages(),
             ]);
         }
-
         $user = Token::where('tokenid', $request->tokenid)->first();   
         $userid = $user['userid'];
-
         $request->request->remove('tokenid');
-
     if($userid)
     {
         $MobilizationAdvance = new MobilizationAdvance;
@@ -70,7 +76,7 @@ class MobilizationAdvanceController extends Controller
         if ($MobilizationAdvance) {
             return response()->json([
                 'status' => 200,
-                'message' => 'Bid Has created Succssfully!',
+                'message' => 'Mobilzation Advance Has created Succssfully!',
                 'Mobilization' => $MobilizationAdvance,
                 'bidid' => $MobilizationAdvance['bidid'],
                 'id' => $MobilizationAdvance['id'],
@@ -91,7 +97,7 @@ class MobilizationAdvanceController extends Controller
      */
     public function show($id)
     {
-        $MobilizationAdvance = MobilizationAdvance::where('bidid','=',$id)->get();
+        $MobilizationAdvance = MobilizationAdvance::where('id','=',$id)->get();
         if ($MobilizationAdvance){
             return response()->json([
                 'status' => 200,
@@ -126,13 +132,35 @@ class MobilizationAdvanceController extends Controller
      */
     public function update(Request $request,$id)
     {
+        $data= $request->mobilizationData;
+        $validator = Validator::make($data, [
+            'mobAdvance' => 'required|integer',
+            'bankName' => 'required|string',
+            'bankBranch' => 'required|string',
+            'mobAdvMode' => 'required|string',
+            'dateMobAdv' => 'required|date',
+            'validUpto' => 'required|date'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                // 'message' =>"Not able to Add Strength/Weakness details now..!",
+                'errors' => $validator->messages(),
+            ]);
+        }
         $user = Token::where('tokenid', $request->tokenid)->first();   
         $userid = $user['userid'];
+        $request->request->remove('tokenid');
         if($userid){
-            $request->request->add(['updatedby_userid' => $user['userid']]);
-            $request->request->remove('tokenid');
-            $update = $request->request->except('bidid');
-            $MobilizationAdvance = MobilizationAdvance::findOrFail($id)->update($update);
+            $MobilizationAdvance = MobilizationAdvance::findOrFail($id)->update([
+                'mobAdvance' => $request->mobilizationData['mobAdvance'],
+                'bankName' => $request->mobilizationData['bankName'],
+                'bankBranch' => $request->mobilizationData['bankBranch'],
+                'mobAdvMode' => $request->mobilizationData['mobAdvMode'],
+                'dateMobAdv' => $request->mobilizationData['dateMobAdv'],
+                'validUpto' => $request->mobilizationData['validUpto'],
+                'updatedby_userid'=>  $userid 
+            ]);
         }
             if ($MobilizationAdvance){
                 return response()->json([
