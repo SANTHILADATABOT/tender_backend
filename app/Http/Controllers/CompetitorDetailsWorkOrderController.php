@@ -35,12 +35,12 @@ class CompetitorDetailsWorkOrderController extends Controller
             // $request->request->add(['woFile' => $woFileName]);
             $request->request->remove('tokenId');
             $request->request->add(['woFileType' => $woFileExt]);
-            $request->woFile=$woFileName;
+            // $request->woFile=$woFileName;
             
 
         // if($request->completionFile!=''){
             
-            if($request->hasFile(completionFile)){
+            if($request->hasFile('completionFile')){
             
             $completionFile = $request->completionFile;
             $completionFileExt = $completionFile->getClientOriginalExtension();
@@ -220,36 +220,36 @@ class CompetitorDetailsWorkOrderController extends Controller
 
     
             $datatostore = new CompetitorDetailsWorkOrder;
-            $datatostore->compId=$request->compId;
-            $datatostore->compNo=$request->compNo;
-            $datatostore->projectName=$request->projectName;
-            $datatostore->custName=$request->custName;
-            $datatostore->tnederId=$request->tnederId;
-            $datatostore->state=$request->state;
-            $datatostore->woDate=$request->woDate;
-            $datatostore->quantity=$request->quantity;
-            $datatostore->unit=$request->unit;
-            $datatostore->projectValue=$request->projectValue;
-            $datatostore->perTonRate=$request->perTonRate;
-            $datatostore->qualityCompleted=$request->qualityCompleted;
-            $datatostore->date=$request->date;
+            $datatostore['compId']=$request->compId;
+            $datatostore['compNo']=$request->compNo;
+            $datatostore['projectName']=$request->projectName;
+            $datatostore['custName']=$request->custName;
+            $datatostore['tnederId']=$request->tnederId;
+            $datatostore['state']=$request->state;
+            $datatostore['woDate']=$request->woDate;
+            $datatostore['quantity']=$request->quantity;
+            $datatostore['unit']=$request->unit;
+            $datatostore['projectValue']=$request->projectValue;
+            $datatostore['perTonRate']=$request->perTonRate;
+            $datatostore['qualityCompleted']=$request->qualityCompleted;
+            $datatostore['date']=$request->date;
             // $datatostore->cr_userid=$data['cr_userid'];
-            $datatostore->edited_userid=$user['userid'];
+            $datatostore['edited_userid']=$user['userid'];
     if($request->hasFile('woFile')){
-            $datatostore->woFile=$woFileName;
-            $datatostore->woFileType=$woFileExt;
+            $datatostore['woFile']=$woFileName;
+            $datatostore['woFileType']=$woFileExt;
     }
     else{
-            $datatostore->woFile=$data->woFile;
-            $datatostore->woFileType=$data->woFileType;
+            $datatostore['woFile']=$data->woFile;
+            $datatostore['woFileType']=$data->woFileType;
     }
 
-            $datatostore->completionFile=$completionFileName;
-            $datatostore->completionFileType=$completionFileExt;
+            $datatostore['completionFile']=$completionFileName;
+            $datatostore['completionFileType']=$completionFileExt;
             // $woedit=$datatostore->save();
-
-    
-    $woedit = CompetitorDetailsWorkOrder::findOrFail($id)->update($datatostore->all());
+        $datatoupdate=$datatostore->except(['']);
+    // return "data".$datatostore; 
+    $woedit = CompetitorDetailsWorkOrder::findOrFail($id)->update($datatoupdate);
     if ($woedit)
         return response()->json([
             'status' => 200,
