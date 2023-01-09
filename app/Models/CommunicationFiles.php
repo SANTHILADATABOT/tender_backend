@@ -11,3 +11,4 @@ class CommunicationFiles extends Model
     protected $fillable = ['bidid','Date','RefrenceNo','From','To','Subject','Medium','Filepath','Filetype','cr_userid','edited_userid'];
 
 }
+    
