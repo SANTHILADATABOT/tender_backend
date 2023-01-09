@@ -6,6 +6,7 @@ use App\Models\MobilizationAdvance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Token;
+use Illuminate\Support\Facades\Validator;
 
 class MobilizationAdvanceController extends Controller
 {
@@ -37,11 +38,31 @@ class MobilizationAdvanceController extends Controller
      */
     public function store(Request $request)
     {
+        $data= $request->mobilizationData;   
+        
+        $validator = Validator::make($data, [
+            'mobAdvance' => 'required|integer',
+            'bankName' => 'required|string',
+            'bankBranch' => 'required|string',
+            'mobAdvMode' => 'required|string',
+            'dateMobAdv' => 'required|date',
+            'validUpto' => 'required|date'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                // 'message' =>"Not able to Add Strength/Weakness details now..!",
+                'message' => $validator->messages(),
+            ]);
+        }
         $user = Token::where('tokenid', $request->tokenid)->first();   
         $userid = $user['userid'];
-        
-        if($userid){
+        $request->request->remove('tokenid');
+    if($userid)
+    {
         $MobilizationAdvance = new MobilizationAdvance;
+        $MobilizationAdvance -> bidid = $request->bidid;
         $MobilizationAdvance -> mobAdvance = $request->mobilizationData['mobAdvance'];
         $MobilizationAdvance -> bankName = $request->mobilizationData['bankName'];
         $MobilizationAdvance -> bankBranch = $request->mobilizationData['bankBranch'];
@@ -51,11 +72,13 @@ class MobilizationAdvanceController extends Controller
         $MobilizationAdvance -> createdby_userid = $userid ;
         $MobilizationAdvance -> updatedby_userid = 0 ;
         $MobilizationAdvance -> save();
-        }
+    }
         if ($MobilizationAdvance) {
             return response()->json([
                 'status' => 200,
-                'message' => 'Bid Has created Succssfully!',
+                'message' => 'Mobilzation Advance Has created Succssfully!',
+                'Mobilization' => $MobilizationAdvance,
+                'bidid' => $MobilizationAdvance['bidid'],
                 'id' => $MobilizationAdvance['id'],
             ]);
         }else{
@@ -74,12 +97,13 @@ class MobilizationAdvanceController extends Controller
      */
     public function show($id)
     {
-        $MobilizationAdvance = MobilizationAdvance::find($id);
-        if ($MobilizationAdvance)
+        $MobilizationAdvance = MobilizationAdvance::where('id','=',$id)->get();
+        if ($MobilizationAdvance){
             return response()->json([
                 'status' => 200,
-                'MobilizationAdvance' => $MobilizationAdvance
+                'MobilizationAdvance' => $MobilizationAdvance,
             ]);
+        }
         else {
             return response()->json([
                 'status' => 404,
@@ -108,28 +132,48 @@ class MobilizationAdvanceController extends Controller
      */
     public function update(Request $request,$id)
     {
-        
+        $data= $request->mobilizationData;
+        $validator = Validator::make($data, [
+            'mobAdvance' => 'required|integer',
+            'bankName' => 'required|string',
+            'bankBranch' => 'required|string',
+            'mobAdvMode' => 'required|string',
+            'dateMobAdv' => 'required|date',
+            'validUpto' => 'required|date'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                // 'message' =>"Not able to Add Strength/Weakness details now..!",
+                'errors' => $validator->messages(),
+            ]);
+        }
         $user = Token::where('tokenid', $request->tokenid)->first();   
         $userid = $user['userid'];
-
+        $request->request->remove('tokenid');
         if($userid){
-            $updatedata = $request->mobilizationData;
-            $updatedata['updatedby_userid']= $userid;
-
-            $MobilizationAdvance = MobilizationAdvance::findOrFail($id)->update($updatedata);
-            $MobilizationAdvance -> updatedby_userid = $userid ;
-            if ($MobilizationAdvance)
-            return response()->json([
-                'status' => 200,
-                'MobilizationAdvance' => $MobilizationAdvance
-            ]);
-        else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'The provided credentials are incorrect.'
+            $MobilizationAdvance = MobilizationAdvance::findOrFail($id)->update([
+                'mobAdvance' => $request->mobilizationData['mobAdvance'],
+                'bankName' => $request->mobilizationData['bankName'],
+                'bankBranch' => $request->mobilizationData['bankBranch'],
+                'mobAdvMode' => $request->mobilizationData['mobAdvMode'],
+                'dateMobAdv' => $request->mobilizationData['dateMobAdv'],
+                'validUpto' => $request->mobilizationData['validUpto'],
+                'updatedby_userid'=>  $userid 
             ]);
         }
-        }
+            if ($MobilizationAdvance){
+                return response()->json([
+                    'status' => 200,
+                    'MobilizationAdvance' => $MobilizationAdvance
+                ]);
+            }
+            else {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'The provided credentials are incorrect.'
+                ]);
+            }
     }
 
     /**
@@ -141,5 +185,21 @@ class MobilizationAdvanceController extends Controller
     public function destroy(MobilizationAdvance $mobilizationAdvance)
     {
         //
+    }
+
+    public function getMobList($mobId){
+        $Mobilization = MobilizationAdvance::where('id','=',$mobId)->get();
+        if ($Mobilization){
+            return response()->json([
+                'status' => 200,
+                'Mobilization' => $Mobilization,
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.'
+            ]);
+        }
     }
 }

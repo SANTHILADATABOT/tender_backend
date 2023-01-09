@@ -41,6 +41,7 @@ class BidCreationCreationDocsController extends Controller
     public function store(Request $request)
     {
         //
+ 
         if($request ->hasFile('file')){
             $file = $request->file('file');
             $filename_original = $file->getClientOriginalName();
@@ -78,6 +79,7 @@ class BidCreationCreationDocsController extends Controller
                     'message' => 'Unable to save!'
                 ]);
             }
+
 
         }
     }

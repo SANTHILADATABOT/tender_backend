@@ -40,8 +40,10 @@ class CompetitorDetailsQualityCertificatesController extends Controller
             else{
                 $fileName=$fileName1;   
             }
-            $file->storeAs('competitor/qc', $fileName, 'public');  
-            $user = Token::where("tokenid", $request->tokenId)->first(); 
+            
+            $file->storeAs('/competitor/qc', $fileName, ['disk' =>'public_upload']);
+            $user = Token::where("tokenid", $request->tokenId)->first();   
+            
             $request->request->add(['cr_userid' => $user['userid']]);
             $request->request->add(['filepath' => $fileName]);
             $request->request->remove('tokenId');
@@ -60,7 +62,6 @@ class CompetitorDetailsQualityCertificatesController extends Controller
                     'message' => 'Certificate Name Already Exists!'
                 ]);
             }
-           
             $validator = Validator::make($request->all(), ['compId' => 'required|integer','compNo' => 'required|string','cerName'=>'required|string', 'remark'=>'nullable|string','cr_userid'=>'required|integer','filepath'=>'required|string']);
             // foreach ($validator as $key => $value)
             // {
@@ -117,13 +118,12 @@ class CompetitorDetailsQualityCertificatesController extends Controller
         else{
             $fileName=$fileName1;   
         }
-        $file->storeAs('competitor/qc', $fileName, 'public');  
-        // $file->storeAs('uploads/image/competitor/qc', $fileName, 'public');
+        $file->storeAs('uploads/image/competitor/qc', $fileName, 'public');
         
         
         //to delete Existing Image from storage
         $data = CompetitorDetailsQualityCertificates::find($id);
-        $image_path = public_path()."/uploads/competitor/qc/".$data->filepath;
+        $image_path = public_path('competitorQC').'/'.$data->filepath;
         unlink($image_path);
        
         $user = Token::where("tokenid", $request->tokenId)->first();   
@@ -199,9 +199,9 @@ class CompetitorDetailsQualityCertificatesController extends Controller
         
         //to delete Existing Image from storage
         $data = CompetitorDetailsQualityCertificates::find($id);
-        // $image_path = public_path('competitorQC').'/'.$data->filepath;
-        $image_path = public_path()."/uploads/competitor/qc/".$data->filepath;
+        $image_path = public_path('competitorQC').'/'.$data->filepath;
         unlink($image_path);
+        $data->delete();    
 
             $qc = CompetitorDetailsQualityCertificates::destroy($id);
             if($qc)    

@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('mobilization_advances', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('bidid')->unsigned();
+            $table->foreign('bidid')->references('id')->on('bid_creation__creations')->OnDelete('cascade')->onUpdate("NO ACTION");
             $table -> string('mobAdvance')->default(''); 
             $table -> string('bankName')->default(''); 
             $table -> string('bankBranch')->default(''); 
@@ -22,7 +24,7 @@ return new class extends Migration
             $table -> date('dateMobAdv')->nullable(); 
             $table -> date('validUpto')->nullable(); 
             $table -> integer('createdby_userid');
-            $table -> integer('updatedby_userid')->nullable(); 
+            $table -> integer('updatedby_userid'); 
             $table->timestamps();
         });
     }

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class CompetitorDetailsQualityCertificates extends Model    
 {
     use HasFactory;
-    protected $fillable = ['compId','compNo','cerName','filepath','remark','cr_userid','edited_userid'];
+    protected $fillable = ['compId','compNo','cerName','filepath','filetype','remark','cr_userid','edited_userid'];
 }

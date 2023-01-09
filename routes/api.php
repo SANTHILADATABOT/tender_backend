@@ -31,7 +31,8 @@ use App\Http\Controllers\CompetitorDetailsQualityCertificatesController;
 use App\Http\Controllers\CommunicationFilesController;
 use App\Http\Controllers\TenderCreationController;
 use App\Http\Controllers\MobilizationAdvanceController;
-
+use App\Http\Controllers\CompetitorDetailsWorkOrderController;
+use App\Http\Controllers\BidManagementWorkOrderProjectDetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,7 @@ Route::get('customersubcategory/list/{profileid}', [CustomerSubCategoryControlle
 Route::get('state/list/{id}', [StateMasterController::class, 'getStateList']);
 Route::get('state-list/{id}', [StateMasterController::class, 'getStates']);
 Route::get('state/list/{id}/{category}/{savedstate}', [StateMasterController::class, 'getStateListOptions']);
+Route::get('unit/list', [UnitMasterController::class, 'getunitList']);
 
 
 Route::get('tendercreation/list/{id}', [TenderCreationController::class, 'getTenderList']);
@@ -102,6 +104,8 @@ Route::post('customercreationbankdetails/getlist', [CustomerCreationBankDetailsC
 Route::post('customercreationsmwprojectstatus/getlist', [CustomerCreationSWMProjectStatusController::class, 'getlist']);
 Route::get('projecttype/list/{profileid}', [ProjectTypeController::class, 'getList']);
 Route::get('projectstatus/list/{profileid}', [ProjectStatusController::class, 'getList']);
+
+
 Route::get('competitorprofile/getcompno/{compid}', [CompetitorProfileCreationController::class, 'getCompNo']);
 Route::get('competitorbranch/branchlist/{compid}', [CompetitorDetailsBranchesController::class, 'getbranchList']);
 Route::get('competitordetails/turnoverlist/{compid}', [CompetitorDetailsTurnOverController::class, 'getTurnOverList']);
@@ -109,14 +113,14 @@ Route::get('competitordetails/networthlist/{compid}', [CompetitorDetailsCompanyN
 Route::get('competitordetails/lineofbusinesslist/{compid}', [CompetitorDetailsLineOfBusinessController::class, 'getLineOfBusinessList']);
 Route::get('competitordetails/prosconslist/{compid}', [CompetitorDetailsProsConsController::class, 'getProsConsList']);
 Route::get('competitordetails/qclist/{compid}', [CompetitorDetailsQualityCertificatesController::class, 'getQCList']);
-
-
 Route::post('bidcreation/creation/docupload/list', [BidCreationCreationDocsController::class, 'getUplodedDocList']);
 Route::post('bidcreation/creation/docupload/{id}', [BidCreationCreationDocsController::class, 'update']);
-
 Route::get('download/BidDocs/{fileName}', [BidCreationCreationDocsController::class, 'download']);
-
 // Route::post('competitordetails/competitorqcertificate/updatewithimage', [CompetitorDetailsQualityCertificatesController::class, 'updateWithImage']);
+Route::get('competitordetails/wolist/{compid}', [CompetitorDetailsWorkOrderController::class, 'getWOList']);
+Route::get('moilization/getMobList/{mobId}',[MobilizationAdvanceController::class,'getMobList']);
+Route::get('ProjectDetails/getProList/{proid}',[BidManagementWorkOrderProjectDetailsController::class,'getProList']);
+
 
 /*
 ## Resource Laravel Routes Example
@@ -134,8 +138,8 @@ Route::resources([
     'state' => StateMasterController::class,
     'country' => CountryMasterController::class,
     'tendertype'=> TenderTypeMasterController::class,
-    'tendercreation'=>TenderCreationController::class,
     'unit' => UnitMasterController::class,
+    'tendercreation'=>TenderCreationController::class,
     'city' => CityMasterController::class,
     'district' => DistrictMasterController::class,
     'customercreationmain' => CustomerCreationMainController::class,
@@ -149,6 +153,7 @@ Route::resources([
     'competitorlineofbusiness' => CompetitorDetailsLineOfBusinessController::class,
     'competitorproscons' => CompetitorDetailsProsConsController::class,
     'competitorqcertificate' => CompetitorDetailsQualityCertificatesController::class,
+    'competitorworkorder' => CompetitorDetailsWorkOrderController::class,
     'projecttype'=>ProjectTypeController::class,
     'customersubcategory'=>CustomerSubCategoryController::class,
     'projectstatus'=> ProjectStatusController::class,
@@ -158,6 +163,15 @@ Route::resources([
     'bidcreation/creation/docupload'=> BidCreationCreationDocsController::class,
     'workorder/creation/communicationfiles' => CommunicationFilesController::class,
     'mobilization/creation' => MobilizationAdvanceController::class,
-
+    'ProjectDetails/Creation'=>BidManagementWorkOrderProjectDetailsController::class,
 
 ]);
+
+
+
+
+//File uplaod Default location has been set by below line in config/filesystems.php file
+//'root' => public_path()."/uploads",
+
+//Can create a new folder inside public/uploads path
+//$file->storeAs('competitor/qc', $fileName, 'public');  

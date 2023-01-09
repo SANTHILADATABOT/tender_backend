@@ -136,4 +136,20 @@ class UnitMasterController extends Controller
             ]);
         }
     }
+
+
+    public function getunitList(){
+
+        $units = UnitMaster::where("unit_status", "=", "Active")
+        ->get();
+
+        
+        $unitList = array();
+        foreach($units as $unit){
+            $unitList[] = ["value" => $unit['id'], "label" =>  $unit['unit_name']] ;
+        }
+        return  response()->json([
+            'unitList' =>  $unitList
+        ]);
+    }
 }

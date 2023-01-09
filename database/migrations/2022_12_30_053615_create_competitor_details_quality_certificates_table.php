@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('compNo');
             $table->string('cerName');
             $table->string('filepath');
+            $table->string('filetype');
             $table->string('remark')->nullable();
             $table->integer('cr_userid');
             $table->integer('edited_userid')->nullable()->default(null);

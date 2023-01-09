@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class CommunicationFiles extends Model
 {
     use HasFactory;
-    protected $fillable = ['Date','RefrenceNo','From','To','Subject','Medium','FileDetails','cr_userid','edited_userid'];
+    protected $fillable = ['bidid','Date','RefrenceNo','From','To','Subject','Medium','Filepath','Filetype','cr_userid','edited_userid'];
 
 }
