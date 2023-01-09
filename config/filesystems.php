@@ -74,7 +74,7 @@ return [
         // base_path('/public_html/uploads') => storage_path('app/public'),
         // public_path('storage') => storage_path('app/public'),
         // public_path('biddocs') => storage_path('app/public/BidDocs'),
-        // public_path('') => storage_path('/uploads/image'),        
+        // public_path('') => storage_path('/uploads/image'),
     ],
 
 ];

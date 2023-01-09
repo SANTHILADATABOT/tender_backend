@@ -167,9 +167,7 @@ class CompetitorDetailsWorkOrderController extends Controller
                     'message' =>"Wo file is Missing, Add it before submit..!",
                 ]);
             }
-            else{
-
-            }
+           
         }
         //Update completionFile
         if($request->hasFile('completionFile')){
@@ -247,8 +245,8 @@ class CompetitorDetailsWorkOrderController extends Controller
             $datatostore['completionFile']=$completionFileName;
             $datatostore['completionFileType']=$completionFileExt;
             // $woedit=$datatostore->save();
-        $datatoupdate=$datatostore->except(['']);
-    // return "data".$datatostore; 
+        $datatoupdate=(array)$datatostore;
+    
     $woedit = CompetitorDetailsWorkOrder::findOrFail($id)->update($datatoupdate);
     if ($woedit)
         return response()->json([

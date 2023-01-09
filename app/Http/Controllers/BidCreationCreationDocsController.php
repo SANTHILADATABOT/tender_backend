@@ -36,13 +36,13 @@ class BidCreationCreationDocsController extends Controller
     public function store(Request $request)
     {
         //
+ 
         if($request ->hasFile('file')){
             $file = $request->file('file');
             $filename = $file->getClientOriginalName();
             $fileName = date('His') . $filename;
             $file->storeAs('BidDocs/', $fileName, 'public');
 
-            
             return response() -> json([
                 'status' => 200,
                 'message' => 'Uploaded Succcessfully'

@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Storage;
+
 use App\Models\CommunicationFiles;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+// use Illuminate\Support\Facades\Validator;
 use App\Models\Token;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+// use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
 class CommunicationFilesController extends Controller
@@ -39,23 +39,39 @@ class CommunicationFilesController extends Controller
      */
     public function store(Request $request)
     {
-            if($request ->hasFile('file')){
-                $file = $request->file('file');
-                $filename = $file->getClientOriginalName();
-                $fileName = date('His') . $filename;
-                $file->storeAs('uploads/image/bidmanagement/workorder/communicationFiles/', $fileName, 'public');
-                
-                return response() -> json([
-                    'status' => 200,
-                    'message' => 'Uploaded Succcessfully'
-                ]);
-            }else{
-                return response()->json([
-                    'status' => 400,
-                    'message' => 'Unable to save!'
-                ]);
+        if($request ->hasFile('file')){
+            $file = $request->file('file');
+            $fileExt = $file->getClientOriginalName();
+            $fileName1=$file->hashName();
+            $filenameSplited=explode(".",$fileName1);
+            if($filenameSplited[1]!=$fileExt)
+            {
+            $fileName=$filenameSplited[0].".".$fileExt;
             }
-        
+            else{
+                $fileName=$fileName1;   
+            }
+            $file->storeAs('BidManagement/WorkOrder/CommunicationFiles/', $fileName, 'public');
+            $user = Token::where('tokenid', $request->tokenid)->first();   
+            $request->request->add(['cr_userid' => $user['userid']]);
+            $request->request->add(['filepath' => $fileName]);
+            $request->request->remove('tokenId');
+            $request->request->add(['filetype' => $fileExt]);
+            $dataToInsert = $request->except(['file']);
+            return $dataToInsert;
+            if($userid){
+                $CommunicationFiles = CommunicationFiles::firstOrCreate($dataToInsert);
+            }
+            return response() -> json([
+                'status' => 200,
+                'message' => 'Uploaded Succcessfully'
+            ]);
+        }else{
+            return response()->json([
+                'status' => 400,
+                'message' => 'Unable to save!'
+            ]);
+        }
     }
 
     /**

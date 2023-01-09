@@ -117,7 +117,6 @@ Route::get('competitordetails/wolist/{compid}', [CompetitorDetailsWorkOrderContr
 
 
 Route::get('moilization/getMobList/{mobId}',[MobilizationAdvanceController::class,'getMobList']);
-
 Route::get('ProjectDetails/getProList/{proid}',[BidManagementWorkOrderProjectDetailsController::class,'getProList']);
 
 /*

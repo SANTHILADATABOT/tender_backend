@@ -41,8 +41,7 @@ class CompetitorDetailsQualityCertificatesController extends Controller
                 $fileName=$fileName1;   
             }
             $file->storeAs('competitor/qc', $fileName, 'public');  
-            $user = Token::where("tokenid", $request->tokenId)->first();   
-            
+            $user = Token::where("tokenid", $request->tokenId)->first(); 
             $request->request->add(['cr_userid' => $user['userid']]);
             $request->request->add(['filepath' => $fileName]);
             $request->request->remove('tokenId');
