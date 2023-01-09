@@ -14,9 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('bid_creation__creation__docs', function (Blueprint $table) {
-            $table->id();
-            $table->string('docname');
-            $table->string('file');
+            $table -> id();
+            $table -> string('docname');
+            $table -> string('file_original_name');
+            $table -> string('file_new_name');
+            $table -> string('file_type');
+            $table -> double('file_size');
+            $table -> string('ext');
+            $table -> bigInteger("bidCreationMainId")->unsigned();
+            $table -> foreign("bidCreationMainId")->references("id")->on("bid_creation__creations")->onDelete("cascade")->onUpdate("NO ACTION");
+            $table -> integer('createdby_userid');
+            $table -> integer('updatedby_userid')->nullable(); 
             $table->timestamps();
         });
     }

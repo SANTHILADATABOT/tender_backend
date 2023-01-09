@@ -6,6 +6,8 @@ use App\Models\BidCreation_Creation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Token;
+use App\Models\StateMaster;
+use App\Models\CustomerCreationProfile;
 
 class BidCreationCreationController extends Controller
 {
@@ -94,9 +96,34 @@ class BidCreationCreationController extends Controller
      * @param  \App\Models\BidCreation_Creation  $bidCreation_Creation
      * @return \Illuminate\Http\Response
      */
-    public function show(BidCreation_Creation $bidCreation_Creation)
+    public function show($id)
     {
         //
+        $bidCreation_Creation = BidCreation_Creation::find($id);
+        if ($bidCreation_Creation){
+
+            $state = StateMaster::find($bidCreation_Creation['state']);
+            $stateValue = ["value" => $state['id'], "label" =>  $state['state_name']];
+
+
+            $ulb = CustomerCreationProfile::find($bidCreation_Creation['ulb']);
+            $ulbValue = ["value" => $ulb['id'], "label" =>  $ulb['customer_name']];
+
+            $bidCreation_Creation['state'] = $stateValue;
+            $bidCreation_Creation['ulb'] = $ulbValue;
+
+            return response()->json([
+                'status' => 200,
+                'bidcreationdata' => $bidCreation_Creation
+            ]);
+        }
+
+        else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are Invalid'
+            ]);
+        }
     }
 
     /**
@@ -117,9 +144,32 @@ class BidCreationCreationController extends Controller
      * @param  \App\Models\BidCreation_Creation  $bidCreation_Creation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BidCreation_Creation $bidCreation_Creation)
+    public function update(Request $request,  $id)
     {
         //
+        $user = Token::where('tokenid', $request->tokenid)->first();
+        $userid = $user['userid'];
+
+        if($userid){
+            $updatedata = $request->bidcreationData;
+            $updatedata['updatedby_userid']= $userid;
+            $updatedata['state']= $request->bidcreationData['state']['value'];
+            $updatedata['ulb']= $request->bidcreationData['ulb']['value'];
+
+            $bidcreationData = BidCreation_Creation::findOrFail($id)->update($updatedata);
+        }
+
+        if ($bidcreationData)
+            return response()->json([
+                'status' => 200,
+                'message' => "Updated Successfully!"
+            ]);
+        else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Unable to save!'
+            ]);
+        }
     }
 
     /**
