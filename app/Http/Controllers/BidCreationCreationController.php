@@ -69,7 +69,7 @@ class BidCreationCreationController extends Controller
             $bidCreation -> emdamt = $request->bidcreationData['emdamt'];
             $bidCreation -> dumpsiter = $request->bidcreationData['dumpsiter'];
             $bidCreation -> prebiddate = $request->bidcreationData['prebiddate'];
-            $bidCreation -> EMD = $request->bidcreationData['EMD'];
+            $bidCreation -> EMD = $request->bidcreationData['EMD']; 
             $bidCreation->location = $request->bidcreationData['location'];
             $bidCreation -> createdby_userid = $userid ;
             $bidCreation -> updatedby_userid = 0 ;
@@ -104,7 +104,6 @@ class BidCreationCreationController extends Controller
 
             $state = StateMaster::find($bidCreation_Creation['state']);
             $stateValue = ["value" => $state['id'], "label" =>  $state['state_name']];
-
 
             $ulb = CustomerCreationProfile::find($bidCreation_Creation['ulb']);
             $ulbValue = ["value" => $ulb['id'], "label" =>  $ulb['customer_name']];

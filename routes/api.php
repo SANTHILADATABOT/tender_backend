@@ -33,6 +33,7 @@ use App\Http\Controllers\TenderCreationController;
 use App\Http\Controllers\MobilizationAdvanceController;
 use App\Http\Controllers\CompetitorDetailsWorkOrderController;
 use App\Http\Controllers\BidManagementWorkOrderProjectDetailsController;
+use App\Http\Controllers\BidManagementWorkOrderWorkOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,10 +75,6 @@ Route::get('tendercreation-list/{id}', [TenderCreationController::class, 'getTen
 
 Route::get('tendertype/{id}', [TenderTypeMasterController::class, 'show']);
 
-
-
-
-
 // Route::get('state/list/{id}/{category}/{savedstate}', [StateMasterController::class, 'getStateListOptions']);
 
 
@@ -104,7 +101,6 @@ Route::post('customercreationbankdetails/getlist', [CustomerCreationBankDetailsC
 Route::post('customercreationsmwprojectstatus/getlist', [CustomerCreationSWMProjectStatusController::class, 'getlist']);
 Route::get('projecttype/list/{profileid}', [ProjectTypeController::class, 'getList']);
 Route::get('projectstatus/list/{profileid}', [ProjectStatusController::class, 'getList']);
-
 
 Route::get('competitorprofile/getcompno/{compid}', [CompetitorProfileCreationController::class, 'getCompNo']);
 Route::get('competitorbranch/branchlist/{compid}', [CompetitorDetailsBranchesController::class, 'getbranchList']);
@@ -164,7 +160,7 @@ Route::resources([
     'workorder/creation/communicationfiles' => CommunicationFilesController::class,
     'mobilization/creation' => MobilizationAdvanceController::class,
     'ProjectDetails/Creation'=>BidManagementWorkOrderProjectDetailsController::class,
-
+    'workorder/creation/Workorder'=>BidManagementWorkOrderWorkOrderController::class,
 ]);
 
 

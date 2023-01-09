@@ -39,7 +39,6 @@ class CommunicationFilesController extends Controller
      */
     public function store(Request $request)
     {
-        
         if($request ->hasFile('file')){
             $file = $request->file('file');
             $fileExt = $file->getClientOriginalName();
@@ -59,10 +58,7 @@ class CommunicationFilesController extends Controller
             $request->request->remove('tokenid');
             $request->request->add(['filetype' => $fileExt]);
             $request->except(['file']);
-            return $request;
-            
-            $CommunicationFiles = CommunicationFiles::firstOrCreate($$request->all());
-
+            $CommunicationFiles = CommunicationFiles::firstOrCreate($request->all());
             return response() -> json([
                 'status' => 200,
                 'message' => 'Uploaded Succcessfully'

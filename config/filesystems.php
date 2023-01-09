@@ -36,10 +36,18 @@ return [
             'throw' => false,
         ],
 
+        // 'public' => [
+        //     'driver' => 'local',
+        //     'root' => storage_path('app/public'),
+        //     'url' => env('APP_URL').'/storage',
+        //     'visibility' => 'public',
+        //     'throw' => false,
+        // ],
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            // 'root' => storage_path('app/public'), default code
+            'root' => public_path()."/uploads", // Modified code
+            'url' => env('APP_URL'),
             'visibility' => 'public',
             'throw' => false,
         ],
