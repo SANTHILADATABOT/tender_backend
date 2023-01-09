@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\BidManagementWorkOrderWorkOrder;
 use Illuminate\Http\Request;
+use App\Models\Token;
 
 class BidManagementWorkOrderWorkOrderController extends Controller
 {
@@ -35,33 +35,81 @@ class BidManagementWorkOrderWorkOrderController extends Controller
      */
     public function store(Request $request)
     {
-       
-
         if($request->hasFile('file2') && $request->hasFile('file1') && $request->hasFile('file')){
+           //image one upload 
 
             $file_I = $request->file('file');
+            $fileExt_I = $file_I->getClientOriginalName();
+            $fileName_I=$file_I->hashName();
+            $filenameSplited_I=explode(".",$fileName_I);
+            if($filenameSplited_I[1]!=$fileExt_I)
+            {
+            // $FileName_I=$filenameSplited_I[0].".".$fileExt_I;
+            $FileName_I=$filenameSplited_I[0];
+            }
+            else{
+                $FileName_I=$fileName_I;   
+            }
+            $file_I->storeAs('BidManagement/WorkOrder/WorkOrder/workorderDocument/', $FileName_I, 'public');
+            //image two upload
+           
             $file_II = $request->file('file1');
+            $fileExt_II = $file_II->getClientOriginalName();
+            $fileName_II=$file_II->hashName();
+            $filenameSplited_II=explode(".",$fileName_II);
+            if($filenameSplited_II[1]!=$fileExt_II)
+            {
+            // $FileName_II=$filenameSplited_II[0].".".$fileExt_II;
+            $FileName_II=$filenameSplited_II[0];
+            }
+            else{
+                $FileName_II=$fileName_II;   
+            }
+            $file_II->storeAs('BidManagement/WorkOrder/WorkOrder/agreementDocument/', $FileName_II, 'public');
+            //image three upload
+
             $file_III = $request->file('file2');
-
-            $fileExt_I = $file_I->getClientOriginalExtension();
-            $fileExt_II = $file_II->getClientOriginalExtension();
-            $fileExt_III = $file_III->getClientOriginalExtension();
-
-            $file_I->storeAs('uploads/BidManagement/WorkOrder/WorkOrder/workorderDocument/', $fileExt_I, 'public');
-            $file_II->storeAs('uploads/BidManagement/WorkOrder/WorkOrder/agreementDocument/', $fileExt_II, 'public');
-            $file_III->storeAs('uploads/BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/', $fileExt_III, 'public');
+            $fileExt_III = $file_III->getClientOriginalName();
+            $fileName_III=$file_III->hashName();
+            $filenameSplited_III=explode(".",$fileName_III);
+            if($filenameSplited_III[1]!=$fileExt_III)
+            {
+            // $FileName_III=$filenameSplited_III[0].".".$fileExt_III;
+            $FileName_III=$filenameSplited_III[0];
+            }
+            else{
+                $FileName_III=$fileName_III;   
+            }
+            $file_III->storeAs('BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/', $FileName_III, 'public');
+            $user = Token::where('tokenid', $request->tokenid)->first();   
+            $userid =$user['userid'];
+            $request->request->remove('tokenid');
+            if($userid){
+                $WorkOrder = new BidManagementWorkOrderWorkOrder;
+                $WorkOrder -> bidid = $request->bidid;
+                $WorkOrder -> orderQuantity = $request->orderQuantity;
+                $WorkOrder -> PricePerUnit = $request->PricePerUnit;
+                $WorkOrder -> LoaDate = $request->LoaDate;
+                $WorkOrder -> OrderDate = $request->OrderDate;
+                $WorkOrder -> AgreeDate = $request->AgreeDate;
+                $WorkOrder -> SiteHandOverDate = $request->SiteHandOverDate;
+                $WorkOrder -> filetype_I = $fileExt_I;
+                $WorkOrder -> filetype_II = $fileExt_II;
+                $WorkOrder -> filetype_III = $fileExt_III;
+                $WorkOrder -> createdby_userid = $userid ;
+                $WorkOrder -> updatedby_userid = 0 ;
+                $WorkOrder -> save();
+            }
             return response()-> json([
                     'status' => 200,
                     'message' => 'Uploaded Succcessfully',
             ]);
-        } else{
+        }else{
             return response()->json([
                 'status' => 400,
                 'message' => 'Unable to save!'
             ]);
         }
-
-        
     }
 
     /**
