@@ -71,10 +71,18 @@ return [
     */
 
     'links' => [
+
+        public_path('storage') => storage_path('app/public'),
+        public_path('BidDocs') => storage_path('app/public/BidDocs'),
+        public_path('competitorQC') => storage_path('app/public/uploads/image/competitor/qc'),
+        
+        
+
         // base_path('/public_html/uploads') => storage_path('app/public'),
         // public_path('storage') => storage_path('app/public'),
         // public_path('biddocs') => storage_path('app/public/BidDocs'),
         // public_path('') => storage_path('/uploads/image'),
+
     ],
 
 ];

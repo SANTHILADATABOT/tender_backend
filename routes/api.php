@@ -113,11 +113,14 @@ Route::get('competitordetails/networthlist/{compid}', [CompetitorDetailsCompanyN
 Route::get('competitordetails/lineofbusinesslist/{compid}', [CompetitorDetailsLineOfBusinessController::class, 'getLineOfBusinessList']);
 Route::get('competitordetails/prosconslist/{compid}', [CompetitorDetailsProsConsController::class, 'getProsConsList']);
 Route::get('competitordetails/qclist/{compid}', [CompetitorDetailsQualityCertificatesController::class, 'getQCList']);
+Route::post('bidcreation/creation/docupload/list', [BidCreationCreationDocsController::class, 'getUplodedDocList']);
+Route::post('bidcreation/creation/docupload/{id}', [BidCreationCreationDocsController::class, 'update']);
+Route::get('download/BidDocs/{fileName}', [BidCreationCreationDocsController::class, 'download']);
+// Route::post('competitordetails/competitorqcertificate/updatewithimage', [CompetitorDetailsQualityCertificatesController::class, 'updateWithImage']);
 Route::get('competitordetails/wolist/{compid}', [CompetitorDetailsWorkOrderController::class, 'getWOList']);
-
-
 Route::get('moilization/getMobList/{mobId}',[MobilizationAdvanceController::class,'getMobList']);
 Route::get('ProjectDetails/getProList/{proid}',[BidManagementWorkOrderProjectDetailsController::class,'getProList']);
+
 
 /*
 ## Resource Laravel Routes Example
