@@ -51,7 +51,7 @@ class MobilizationAdvanceController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
-                // 'message' =>"Not able to Add Strength/Weakness details now..!",
+                'message' =>"Not able to Add Strength/Weakness details now..!",
                 'message' => $validator->messages(),
             ]);
         }
@@ -143,7 +143,7 @@ class MobilizationAdvanceController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
-                // 'message' =>"Not able to Add Strength/Weakness details now..!",
+                'message' =>"Not able to Add Strength/Weakness details now..!",
                 'errors' => $validator->messages(),
             ]);
         }

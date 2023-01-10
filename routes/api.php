@@ -114,9 +114,10 @@ Route::post('bidcreation/creation/docupload/{id}', [BidCreationCreationDocsContr
 Route::get('download/BidDocs/{fileName}', [BidCreationCreationDocsController::class, 'download']);
 // Route::post('competitordetails/competitorqcertificate/updatewithimage', [CompetitorDetailsQualityCertificatesController::class, 'updateWithImage']);
 Route::get('competitordetails/wolist/{compid}', [CompetitorDetailsWorkOrderController::class, 'getWOList']);
+
 Route::get('moilization/getMobList/{mobId}',[MobilizationAdvanceController::class,'getMobList']);
 Route::get('ProjectDetails/getProList/{proid}',[BidManagementWorkOrderProjectDetailsController::class,'getProList']);
-
+Route::get('workorder/getWorkList/{workId}',[BidManagementWorkOrderWorkOrderController::class,'getWorkList']);   
 
 /*
 ## Resource Laravel Routes Example

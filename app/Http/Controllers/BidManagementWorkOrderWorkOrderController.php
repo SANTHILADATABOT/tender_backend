@@ -40,12 +40,12 @@ class BidManagementWorkOrderWorkOrderController extends Controller
 
             $file_I = $request->file('file');
             $fileExt_I = $file_I->getClientOriginalName();
+            $FileExt_I = $file_I->getClientOriginalExtension();
             $fileName_I=$file_I->hashName();
             $filenameSplited_I=explode(".",$fileName_I);
             if($filenameSplited_I[1]!=$fileExt_I)
             {
-            // $FileName_I=$filenameSplited_I[0].".".$fileExt_I;
-            $FileName_I=$filenameSplited_I[0];
+            $FileName_I=$filenameSplited_I[0].".".$FileExt_I;
             }
             else{
                 $FileName_I=$fileName_I;   
@@ -55,12 +55,12 @@ class BidManagementWorkOrderWorkOrderController extends Controller
            
             $file_II = $request->file('file1');
             $fileExt_II = $file_II->getClientOriginalName();
+            $FileExt_II = $file_II->getClientOriginalExtension();
             $fileName_II=$file_II->hashName();
             $filenameSplited_II=explode(".",$fileName_II);
             if($filenameSplited_II[1]!=$fileExt_II)
             {
-            // $FileName_II=$filenameSplited_II[0].".".$fileExt_II;
-            $FileName_II=$filenameSplited_II[0];
+            $FileName_II=$filenameSplited_II[0].".".$FileExt_II;
             }
             else{
                 $FileName_II=$fileName_II;   
@@ -70,12 +70,12 @@ class BidManagementWorkOrderWorkOrderController extends Controller
 
             $file_III = $request->file('file2');
             $fileExt_III = $file_III->getClientOriginalName();
+            $FieExt_III = $file_III->getClientOriginalExtension();
             $fileName_III=$file_III->hashName();
             $filenameSplited_III=explode(".",$fileName_III);
             if($filenameSplited_III[1]!=$fileExt_III)
             {
-            // $FileName_III=$filenameSplited_III[0].".".$fileExt_III;
-            $FileName_III=$filenameSplited_III[0];
+            $FileName_III=$filenameSplited_III[0].".".$FileExt_III;
             }
             else{
                 $FileName_III=$fileName_III;   
@@ -93,9 +93,9 @@ class BidManagementWorkOrderWorkOrderController extends Controller
                 $WorkOrder -> OrderDate = $request->OrderDate;
                 $WorkOrder -> AgreeDate = $request->AgreeDate;
                 $WorkOrder -> SiteHandOverDate = $request->SiteHandOverDate;
-                $WorkOrder -> filetype_I = $fileExt_I;
-                $WorkOrder -> filetype_II = $fileExt_II;
-                $WorkOrder -> filetype_III = $fileExt_III;
+                $WorkOrder -> filetype_I = $FileName_I;
+                $WorkOrder -> filetype_II = $FileName_II;
+                $WorkOrder -> filetype_III = $FileName_III;
                 $WorkOrder -> createdby_userid = $userid ;
                 $WorkOrder -> updatedby_userid = 0 ;
                 $WorkOrder -> save();
@@ -118,9 +118,21 @@ class BidManagementWorkOrderWorkOrderController extends Controller
      * @param  \App\Models\BidManagementWorkOrderWorkOrder  $bidManagementWorkOrderWorkOrder
      * @return \Illuminate\Http\Response
      */
-    public function show(BidManagementWorkOrderWorkOrder $bidManagementWorkOrderWorkOrder)
+    public function show($id)
     {
-        //
+        $WorkOrder = BidManagementWorkOrderWorkOrder::where('id','=',$id)->get();
+        if ($WorkOrder){
+            return response()->json([
+                'status' => 200,
+                'WorkOrder' => $WorkOrder,
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.'
+            ]);
+        }
     }
 
     /**
@@ -143,7 +155,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
      */
     public function update(Request $request, BidManagementWorkOrderWorkOrder $bidManagementWorkOrderWorkOrder)
     {
-        //
+        
     }
 
     /**
@@ -155,5 +167,26 @@ class BidManagementWorkOrderWorkOrderController extends Controller
     public function destroy(BidManagementWorkOrderWorkOrder $bidManagementWorkOrderWorkOrder)
     {
         //
+    }
+
+    public function getWorkList($workid)
+    {
+        $WorkOrder = BidManagementWorkOrderWorkOrder::where("id",$workid)
+        ->select('*')
+        ->get();
+        
+        if ($WorkOrder)
+        {
+            return response()->json([
+                'status' => 200,
+                'WorkOrder' => $WorkOrder
+            ]);
+        }
+            else {  
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.'
+            ]);
+        }
     }
 }
