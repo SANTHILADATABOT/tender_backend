@@ -35,7 +35,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->hasFile('file2') && $request->hasFile('file1') && $request->hasFile('file')){
+        if($request->hasFile('wofile') && $request->hasFile('agfile') && $request->hasFile('shofile')){
            //image one upload 
 
             $wofile = $request->file('wofile');
@@ -70,7 +70,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
 
             $shofile = $request->file('shofile');
             $fileExt_III = $shofile->getClientOriginalName();
-            $FieExt_III = $shofile->getClientOriginalExtension();
+            $FileExt_III = $shofile->getClientOriginalExtension();
             $fileName_III=$shofile->hashName();
             $filenameSplited_III=explode(".",$fileName_III);
             if($filenameSplited_III[1]!=$fileExt_III)
@@ -111,6 +111,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
                 'message' => 'Unable to save!'
             ]);
         }
+        
     }
 
     /**
@@ -121,7 +122,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
      */
     public function show($id)
     {
-        $WorkOrder = BidManagementWorkOrderWorkOrder::where('id','=',$id)->get();
+        $WorkOrder = BidManagementWorkOrderWorkOrder::where('bidid','=',$id)->get();
         if ($WorkOrder){
             return response()->json([
                 'status' => 200,
@@ -172,10 +173,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
 
     public function getWorkList($workid)
     {
-        $WorkOrder = BidManagementWorkOrderWorkOrder::where("id",$workid)
-        ->select('*')
-        ->get();
-        
+        $WorkOrder = BidManagementWorkOrderWorkOrder::where("id","=",$workid)->get();
         if ($WorkOrder)
         {
             return response()->json([

@@ -9,5 +9,5 @@ class BidManagementWorkOrderWorkOrder extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['bidid','orderQuantity','PricePerUnit','LoaDate','OrderDate','AgreeDate','SiteHandOverDate','filetype_I','filetype_II','filetype_III','createdby_userid','updatedby_userids'];
+    protected $fillable = ['bidid','orderQuantity','PricePerUnit','LoaDate','OrderDate','AgreeDate','SiteHandOverDate','woFile','agFile','shoFile','createdby_userid','updatedby_userids'];
 }

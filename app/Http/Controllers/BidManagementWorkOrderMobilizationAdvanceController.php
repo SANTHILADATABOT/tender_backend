@@ -72,7 +72,8 @@ class BidManagementWorkOrderMobilizationAdvanceController extends Controller
         $MobilizationAdvance -> updatedby_userid = 0 ;
         $MobilizationAdvance -> save();
     }
-        if ($MobilizationAdvance) {
+        if ($MobilizationAdvance) 
+        {
             return response()->json([
                 'status' => 200,
                 'message' => 'Mobilzation Advance Has created Succssfully!',
@@ -80,7 +81,9 @@ class BidManagementWorkOrderMobilizationAdvanceController extends Controller
                 'bidid' => $MobilizationAdvance['bidid'],
                 'id' => $MobilizationAdvance['id'],
             ]);
-        }else{
+        }
+        else
+        {
             return response()->json([
                 'status' => 400,
                 'message' => 'Unable to save!'
