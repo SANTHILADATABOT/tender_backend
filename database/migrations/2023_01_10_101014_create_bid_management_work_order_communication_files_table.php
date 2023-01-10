@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('communication_files', function (Blueprint $table) {
+        Schema::create('bid_management_work_order_communication_files', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('bidid')->unsigned();
             $table->foreign('bidid')->references('id')->on('bid_creation__creations')->OnDelete("cascade")->onUpdate("NO ACTION");
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('communication_files');
+        Schema::dropIfExists('bid_management_work_order_communication_files');
     }
 };

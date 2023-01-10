@@ -13,21 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bid_management_work_order_work_orders', function (Blueprint $table) {
+        Schema::create('bid_management_work_order_mobilization_advances', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('bidid')->unsigned();
             $table->foreign('bidid')->references('id')->on('bid_creation__creations')->onDelete("cascade")->onUpdate("NO ACTION");
-            $table->string('orderQuantity');
-            $table->string('PricePerUnit');
-            $table->date('LoaDate');
-            $table->date('OrderDate');
-            $table->date('AgreeDate');
-            $table->date('SiteHandOverDate');
-            $table->string('woFile');
-            $table->string('agFile');
-            $table->string('shoFile');
-            $table->string('createdby_userid');
-            $table->string('updatedby_userid');
+            $table -> string('mobAdvance')->default(''); 
+            $table -> string('bankName')->default(''); 
+            $table -> string('bankBranch')->default(''); 
+            $table -> string('mobAdvMode')->default(''); 
+            $table -> date('dateMobAdv')->nullable(); 
+            $table -> date('validUpto')->nullable(); 
+            $table -> integer('createdby_userid');
+            $table -> integer('updatedby_userid'); 
             $table->timestamps();
         });
     }
@@ -39,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bid_management_work_order_work_orders');
+        Schema::dropIfExists('bid_management_work_order_mobilization_advances');
     }
 };

@@ -28,12 +28,13 @@ use App\Http\Controllers\BidCreationCreationDocsController;
 use App\Http\Controllers\CompetitorDetailsProsConsController;
 use App\Http\Controllers\TenderTypeMasterController;
 use App\Http\Controllers\CompetitorDetailsQualityCertificatesController;
-use App\Http\Controllers\CommunicationFilesController;
 use App\Http\Controllers\TenderCreationController;
-use App\Http\Controllers\MobilizationAdvanceController;
 use App\Http\Controllers\CompetitorDetailsWorkOrderController;
+
+use App\Http\Controllers\BidManagementWorkOrderMobilizationAdvanceController;
 use App\Http\Controllers\BidManagementWorkOrderProjectDetailsController;
 use App\Http\Controllers\BidManagementWorkOrderWorkOrderController;
+use App\Http\Controllers\BidManagementWorkOrderCommunicationFilesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,19 +81,14 @@ Route::get('tendertype/{id}', [TenderTypeMasterController::class, 'show']);
 
 Route::get('district/list/{countryid}/{stateid}', [DistrictMasterController::class, 'getDistrictList']);
 Route::get('district/list/{countryid}/{stateid}/{saveddistrict}', [DistrictMasterController::class, 'getDistrictListofstate']);
-
 Route::get('city/list/{countryid}/{stateid}/{districtid}/{savedcity}', [CityMasterController::class, 'getCityList']);
 Route::get('ulb-list/{savedulb}', [CustomerCreationProfileController::class, 'getUlbs']);
 Route::post('customercreationmain/getmainid', [CustomerCreationMainController :: class, 'getMainid']);
-
 Route::post('customercreation/profile', [CustomerCreationProfileController::class, 'getProfileFromData']);
 Route::get('customercreation/getcustno/{stateid}', [CustomerCreationProfileController::class, 'getCustNo']);
 Route::get('customercreation/profile/getFormNo', [CustomerCreationProfileController::class, 'getFormNo']);
-
 Route::get('customer/list', [CustomerCreationProfileController::class, 'getList']);
 Route::get('tendercreation/list', [TenderTypeMasterController::class, 'getList']);
-
-
 
 
 // Route::get('customercreation/contact/getFormNo', [CustomerCreationContactPersonController::class, 'getFormNo']);
@@ -101,7 +97,6 @@ Route::post('customercreationbankdetails/getlist', [CustomerCreationBankDetailsC
 Route::post('customercreationsmwprojectstatus/getlist', [CustomerCreationSWMProjectStatusController::class, 'getlist']);
 Route::get('projecttype/list/{profileid}', [ProjectTypeController::class, 'getList']);
 Route::get('projectstatus/list/{profileid}', [ProjectStatusController::class, 'getList']);
-
 Route::get('competitorprofile/getcompno/{compid}', [CompetitorProfileCreationController::class, 'getCompNo']);
 Route::get('competitorbranch/branchlist/{compid}', [CompetitorDetailsBranchesController::class, 'getbranchList']);
 Route::get('competitordetails/turnoverlist/{compid}', [CompetitorDetailsTurnOverController::class, 'getTurnOverList']);
@@ -114,10 +109,8 @@ Route::post('bidcreation/creation/docupload/{id}', [BidCreationCreationDocsContr
 Route::get('download/BidDocs/{fileName}', [BidCreationCreationDocsController::class, 'download']);
 // Route::post('competitordetails/competitorqcertificate/updatewithimage', [CompetitorDetailsQualityCertificatesController::class, 'updateWithImage']);
 Route::get('competitordetails/wolist/{compid}', [CompetitorDetailsWorkOrderController::class, 'getWOList']);
-
-Route::get('moilization/getMobList/{mobId}',[MobilizationAdvanceController::class,'getMobList']);
+Route::get('moilization/getMobList/{mobId}',[BidManagementWorkOrderMobilizationAdvanceController::class,'getMobList']);
 Route::get('ProjectDetails/getProList/{proid}',[BidManagementWorkOrderProjectDetailsController::class,'getProList']);
-
 Route::post('bidcreation/creation/bidlist',[BidCreationCreationController::class,'getBidList']);
 Route::get('workorder/getWorkList/{workId}',[BidManagementWorkOrderWorkOrderController::class,'getWorkList']);   
 
@@ -160,8 +153,8 @@ Route::resources([
     'customercreationbankdetails'=> CustomerCreationBankDetailsController::class,
     'bidcreation/creation'=> BidCreationCreationController::class,
     'bidcreation/creation/docupload'=> BidCreationCreationDocsController::class,
-    'workorder/creation/communicationfiles' => CommunicationFilesController::class,
-    'mobilization/creation' => MobilizationAdvanceController::class,
+    'workorder/creation/communicationfiles' => BidManagementWorkOrderCommunicationFilesController::class,
+    'mobilization/creation' => BidManagementWorkOrderMobilizationAdvanceController::class,
     'ProjectDetails/Creation'=>BidManagementWorkOrderProjectDetailsController::class,
     'workorder/creation/Workorder'=>BidManagementWorkOrderWorkOrderController::class,
 ]);

@@ -38,10 +38,10 @@ class BidManagementWorkOrderWorkOrderController extends Controller
         if($request->hasFile('file2') && $request->hasFile('file1') && $request->hasFile('file')){
            //image one upload 
 
-            $file_I = $request->file('file');
-            $fileExt_I = $file_I->getClientOriginalName();
-            $FileExt_I = $file_I->getClientOriginalExtension();
-            $fileName_I=$file_I->hashName();
+            $wofile = $request->file('wofile');
+            $fileExt_I = $wofile->getClientOriginalName();
+            $FileExt_I = $wofile->getClientOriginalExtension();
+            $fileName_I=$wofile->hashName();
             $filenameSplited_I=explode(".",$fileName_I);
             if($filenameSplited_I[1]!=$fileExt_I)
             {
@@ -50,13 +50,13 @@ class BidManagementWorkOrderWorkOrderController extends Controller
             else{
                 $FileName_I=$fileName_I;   
             }
-            $file_I->storeAs('BidManagement/WorkOrder/WorkOrder/workorderDocument/', $FileName_I, 'public');
+            $wofile->storeAs('BidManagement/WorkOrder/WorkOrder/workorderDocument/', $FileName_I, 'public');
             //image two upload
            
-            $file_II = $request->file('file1');
-            $fileExt_II = $file_II->getClientOriginalName();
-            $FileExt_II = $file_II->getClientOriginalExtension();
-            $fileName_II=$file_II->hashName();
+            $agfile = $request->file('agfile');
+            $fileExt_II = $agfile->getClientOriginalName();
+            $FileExt_II = $agfile->getClientOriginalExtension();
+            $fileName_II=$agfile->hashName();
             $filenameSplited_II=explode(".",$fileName_II);
             if($filenameSplited_II[1]!=$fileExt_II)
             {
@@ -65,13 +65,13 @@ class BidManagementWorkOrderWorkOrderController extends Controller
             else{
                 $FileName_II=$fileName_II;   
             }
-            $file_II->storeAs('BidManagement/WorkOrder/WorkOrder/agreementDocument/', $FileName_II, 'public');
+            $agfile->storeAs('BidManagement/WorkOrder/WorkOrder/agreementDocument/', $FileName_II, 'public');
             //image three upload
 
-            $file_III = $request->file('file2');
-            $fileExt_III = $file_III->getClientOriginalName();
-            $FieExt_III = $file_III->getClientOriginalExtension();
-            $fileName_III=$file_III->hashName();
+            $shofile = $request->file('shofile');
+            $fileExt_III = $shofile->getClientOriginalName();
+            $FieExt_III = $shofile->getClientOriginalExtension();
+            $fileName_III=$shofile->hashName();
             $filenameSplited_III=explode(".",$fileName_III);
             if($filenameSplited_III[1]!=$fileExt_III)
             {
@@ -80,7 +80,8 @@ class BidManagementWorkOrderWorkOrderController extends Controller
             else{
                 $FileName_III=$fileName_III;   
             }
-            $file_III->storeAs('BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/', $FileName_III, 'public');
+            $shofile->storeAs('BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/', $FileName_III, 'public');
+            
             $user = Token::where('tokenid', $request->tokenid)->first();   
             $userid =$user['userid'];
             $request->request->remove('tokenid');
@@ -93,9 +94,9 @@ class BidManagementWorkOrderWorkOrderController extends Controller
                 $WorkOrder -> OrderDate = $request->OrderDate;
                 $WorkOrder -> AgreeDate = $request->AgreeDate;
                 $WorkOrder -> SiteHandOverDate = $request->SiteHandOverDate;
-                $WorkOrder -> filetype_I = $FileName_I;
-                $WorkOrder -> filetype_II = $FileName_II;
-                $WorkOrder -> filetype_III = $FileName_III;
+                $WorkOrder -> woFile = $FileName_I;
+                $WorkOrder -> agFile = $FileName_II;
+                $WorkOrder -> shoFile = $FileName_III;
                 $WorkOrder -> createdby_userid = $userid ;
                 $WorkOrder -> updatedby_userid = 0 ;
                 $WorkOrder -> save();

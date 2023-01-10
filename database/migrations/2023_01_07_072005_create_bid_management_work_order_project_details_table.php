@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('bid_management_work_order_project_details', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('bidid')->unsigned();
-            $table->foreign('bidid')->references('id')->on('bid_creation__creations')->OnDelete('cascade')->onUpdate("NO ACTION");
+            $table->foreign('bidid')->references('id')->on('bid_creation__creations')->onDelete("cascade")->onUpdate("NO ACTION");
             $table -> string('ProPeriod')->default(''); 
             $table -> string('mobPeriod')->default(''); 
             $table -> string('monsoonPeriod')->default(''); 
