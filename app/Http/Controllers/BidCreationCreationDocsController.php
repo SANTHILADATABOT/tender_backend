@@ -46,7 +46,7 @@ class BidCreationCreationDocsController extends Controller
             $file = $request->file('file');
             $filename_original = $file->getClientOriginalName();
             $fileName =intval(microtime(true) * 1000) . $filename_original;
-            $file->storeAs('biddocs/', $fileName, 'public');
+            $file->storeAs('BidManagement/biddocs', $fileName, 'public');
             $mimeType =  $file->getMimeType();
             $filesize = ($file->getSize())/1000;
             $ext =  $file->extension();
@@ -121,7 +121,8 @@ class BidCreationCreationDocsController extends Controller
         if($request ->hasFile('file')){
             $document = BidCreation_Creation_Docs::find($id);
             $filename = $document['file_new_name'];
-            $file_path =  storage_path('app/public/BidDocs/'.$filename);
+            $file_path = public_path()."/uploads/BidManagement/biddocs/".$filename;
+            // $file_path =  storage_path('app/public/BidDocs/'.$filename);
             
             if(File::exists($file_path)) {
                 if(File::delete($file_path)){
@@ -129,7 +130,7 @@ class BidCreationCreationDocsController extends Controller
                     $file = $request->file('file');
                     $filename_original = $file->getClientOriginalName();
                     $fileName =intval(microtime(true) * 1000) . $filename_original;
-                    $file->storeAs('biddocs/', $fileName, 'public');
+                    $file->storeAs('BidManagement/biddocs', $fileName, 'public');
                     $mimeType =  $file->getMimeType();
                     $filesize = ($file->getSize())/1000;
                     $ext =  $file->extension();
@@ -180,7 +181,8 @@ class BidCreationCreationDocsController extends Controller
             $document = BidCreation_Creation_Docs::find($id);
 
             $filename = $document['file_new_name'];
-            $file_path =  storage_path('app/public/BidDocs/'.$filename);
+            $file_path = public_path()."/uploads/BidManagement/biddocs/".$filename;
+            // $file_path =  storage_path('app/public/BidDocs/'.$filename);
 
             if(File::exists($file_path)) {
                 File::delete($file_path);
@@ -235,7 +237,8 @@ class BidCreationCreationDocsController extends Controller
 
         if($doc){
             $filename = $doc['file_new_name'];
-            $file =  storage_path('app/public/BidDocs/'.$filename);
+            $file = public_path()."/uploads/BidManagement/biddocs/".$filename;
+            // $file =  storage_path('app/public/BidDocs/'.$filename);
             // return response()->json([
             //     'file' =>  $file,
             //     'message' => 'The provided credentials are incorrect.'
