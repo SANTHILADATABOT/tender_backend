@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\BidCreation_Creation;
+use App\Models\BidCreation_Creation_Docs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Token;
 use App\Models\StateMaster;
 use App\Models\CustomerCreationProfile;
+use Illuminate\Support\Facades\File;
+
 
 class BidCreationCreationController extends Controller
 {
@@ -19,6 +22,13 @@ class BidCreationCreationController extends Controller
     public function index()
     {
         //
+        $bidCreation = DB::table('bid_creation__creations')->select('*')->orderBy('id', 'DESC')->get();
+
+        return response()->json([
+            'bidcreationList' =>   $bidCreation
+        ]);
+
+
     }
 
     /**
@@ -177,8 +187,65 @@ class BidCreationCreationController extends Controller
      * @param  \App\Models\BidCreation_Creation  $bidCreation_Creation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BidCreation_Creation $bidCreation_Creation)
+    public function destroy($id)
     {
         //
+        try{
+            $docs = BidCreation_Creation_Docs::where("bidCreationMainId",$id)->get();
+
+            if($docs){
+                foreach($docs as $doc){
+                    $document = BidCreation_Creation_Docs::find($doc['id']);
+
+                    $filename = $document['file_new_name'];
+                    $file_path = public_path()."/uploads/BidManagement/biddocs/".$filename;
+                    // $file_path =  storage_path('app/public/BidDocs/'.$filename);
+        
+                    if(File::exists($file_path)) {
+                        File::delete($file_path);
+                    }
+                }
+            }
+
+
+            $deleteBid = BidCreation_Creation::destroy($id);
+
+            if($deleteBid)
+            {return response()->json([
+                'status' => 200,
+                'message' => "Deleted Successfully!"
+            ]);}
+            else
+            {return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.',
+                "errormessage" => "",
+            ]);}
+        }catch(\Illuminate\Database\QueryException $ex){
+            $error = $ex->getMessage();
+
+            return response()->json([
+                'status' => 404,
+                'message' => 'Unable to delete! This data is used in another file/form/table.',
+                "errormessage" => $error,
+            ]);
+        }
+    }
+
+    public function getBidList(Request $request){
+
+          //
+          if($request->fromdate && $request->todate){
+            $bidCreation = DB::table('bid_creation__creations')
+            ->whereBetween('NITdate', [$request->fromdate, $request->todate])
+            ->select('*')
+            ->orderBy('NITdate', 'DESC')
+            ->get();
+          }
+
+          return response()->json([
+              'bidcreationList' => $bidCreation 
+          ]);
+
     }
 }
