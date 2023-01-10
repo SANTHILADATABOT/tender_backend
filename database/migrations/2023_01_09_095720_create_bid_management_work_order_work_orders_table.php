@@ -17,19 +17,17 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('bidid')->unsigned();
             $table->foreign('bidid')->references('id')->on('bid_creation__creations')->OnDelete('cascade')->onUpdate("NO ACTION");
-            $table -> string('ProPeriod')->default(''); 
             $table->string('orderQuantity');
             $table->string('PricePerUnit');
-            $table->string('LoaDate');
-            $table->string('OrderDate');
-            $table->string('AgreeDate');
-            $table->string('SiteHandOverDate');
-            $table->string('filepath_I');
+            $table->date('LoaDate');
+            $table->date('OrderDate');
+            $table->date('AgreeDate');
+            $table->date('SiteHandOverDate');
             $table->string('filetype_I');
-            $table->string('filepath_II');
             $table->string('filetype_II');
-            $table->string('filepath_III');
             $table->string('filetype_III');
+            $table->string('createdby_userid');
+            $table->string('updatedby_userid');
             $table->timestamps();
         });
     }

@@ -43,7 +43,6 @@ class CompetitorDetailsQualityCertificatesController extends Controller
             
             $file->storeAs('/competitor/qc', $fileName, ['disk' =>'public_upload']);
             $user = Token::where("tokenid", $request->tokenId)->first();   
-            
             $request->request->add(['cr_userid' => $user['userid']]);
             $request->request->add(['filepath' => $fileName]);
             $request->request->remove('tokenId');
@@ -62,6 +61,7 @@ class CompetitorDetailsQualityCertificatesController extends Controller
                     'message' => 'Certificate Name Already Exists!'
                 ]);
             }
+
             $validator = Validator::make($request->all(), ['compId' => 'required|integer','compNo' => 'required|string','cerName'=>'required|string', 'remark'=>'nullable|string','cr_userid'=>'required|integer','filepath'=>'required|string']);
             // foreach ($validator as $key => $value)
             // {

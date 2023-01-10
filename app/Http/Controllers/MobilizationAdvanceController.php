@@ -39,7 +39,6 @@ class MobilizationAdvanceController extends Controller
     public function store(Request $request)
     {
         $data= $request->mobilizationData;   
-        
         $validator = Validator::make($data, [
             'mobAdvance' => 'required|integer',
             'bankName' => 'required|string',
@@ -52,7 +51,7 @@ class MobilizationAdvanceController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
-                // 'message' =>"Not able to Add Strength/Weakness details now..!",
+                'message' =>"Not able to Add Strength/Weakness details now..!",
                 'message' => $validator->messages(),
             ]);
         }
@@ -144,14 +143,15 @@ class MobilizationAdvanceController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
-                // 'message' =>"Not able to Add Strength/Weakness details now..!",
+                'message' =>"Not able to Add Strength/Weakness details now..!",
                 'errors' => $validator->messages(),
             ]);
         }
         $user = Token::where('tokenid', $request->tokenid)->first();   
         $userid = $user['userid'];
         $request->request->remove('tokenid');
-        if($userid){
+        if($userid)
+        {
             $MobilizationAdvance = MobilizationAdvance::findOrFail($id)->update([
                 'mobAdvance' => $request->mobilizationData['mobAdvance'],
                 'bankName' => $request->mobilizationData['bankName'],
@@ -186,7 +186,6 @@ class MobilizationAdvanceController extends Controller
     {
         //
     }
-
     public function getMobList($mobId){
         $Mobilization = MobilizationAdvance::where('id','=',$mobId)->get();
         if ($Mobilization){

@@ -136,9 +136,12 @@ class CompetitorDetailsWorkOrderController extends Controller
 
     public function update(Request $request, $id)
     {
-    $data = CompetitorDetailsWorkOrder::find($id);
+    $data = CompetitorDetailsWorkOrder::find($id); //to handle existing images 
+    $datatostore =  CompetitorDetailsWorkOrder::findOrFail($id); 
+
     if($request->hasFile('woFile')){
-        //Update WO File
+        // echo "Wo FIle <br>     ";
+            //Update WO File
             $woFile = $request->woFile;
             $woFileExt = $woFile->getClientOriginalExtension();
             //received File extentions sometimes converted by browsers
@@ -153,6 +156,9 @@ class CompetitorDetailsWorkOrderController extends Controller
                 $woFileName=$woFileName1;   
             }
             $woFile->storeAs('competitor/woFile', $woFileName, 'public');
+            $datatostore['woFile']=$woFileName;
+            $datatostore['woFileType']=$woFileExt;
+
     //to delete Existing Image from storage, if image Updated 
             if($data['woFile'])
             {
@@ -161,6 +167,7 @@ class CompetitorDetailsWorkOrderController extends Controller
             }
         }
         else{
+            // echo "No Wo FIle  <br>     ";
             if($data['woFile']=='' || $data['woFile'] ==null){
                 return response()->json([
                     'status' => 404,
@@ -170,8 +177,8 @@ class CompetitorDetailsWorkOrderController extends Controller
            
         }
         //Update completionFile
-        if($request->hasFile('completionFile')){
-            
+        if($request->hasFile('completionFile') && $request->completionFile!="removed" ){
+            // echo "Has WoCompletion FIle  <br>     ";
             $completionFile = $request->completionFile;
             $completionFileExt = $completionFile->getClientOriginalExtension();
             //received File extentions sometimes converted by browsers
@@ -188,7 +195,8 @@ class CompetitorDetailsWorkOrderController extends Controller
             $completionFile->storeAs('competitor/woCompletionFile', $completionFileName, 'public');         
             // $request->completionFile= $completionFileName;
             // $request->request->add(['completionFileType' => $completionFileExt]);
-            
+            $datatostore['completionFile']=$completionFileName;
+            $datatostore['completionFileType']=$completionFileExt;
 
 
     //to delete Existing Image from storage, if image Updated
@@ -198,10 +206,15 @@ class CompetitorDetailsWorkOrderController extends Controller
                 unlink($image_path);
             }
         }
-        else{
-            $completionFileExt='';
-            $completionFileName='';
-        }       
+        else{    
+            // echo "Not have WoCompletion FIle  <br>     ";    
+            if(($data['completionFile']!='' || $data['completionFile']!=null) && $request->completionFile=="removed"){
+                $datatostore['completionFile']="";
+                $datatostore['completionFileType']="";
+                $image_path = public_path()."/uploads/competitor/woCompletionFile/".$data->completionFile;
+                unlink($image_path);
+            }
+        }
        
 
         $user = Token::where("tokenid", $request->tokenId)->first();   
@@ -217,7 +230,7 @@ class CompetitorDetailsWorkOrderController extends Controller
             }
 
     
-            $datatostore = new CompetitorDetailsWorkOrder;
+            // $datatostore =  CompetitorDetailsWorkOrder::findOrFail($id);  // declared at the top to set files
             $datatostore['compId']=$request->compId;
             $datatostore['compNo']=$request->compNo;
             $datatostore['projectName']=$request->projectName;
@@ -231,23 +244,10 @@ class CompetitorDetailsWorkOrderController extends Controller
             $datatostore['perTonRate']=$request->perTonRate;
             $datatostore['qualityCompleted']=$request->qualityCompleted;
             $datatostore['date']=$request->date;
-            // $datatostore->cr_userid=$data['cr_userid'];
             $datatostore['edited_userid']=$user['userid'];
-    if($request->hasFile('woFile')){
-            $datatostore['woFile']=$woFileName;
-            $datatostore['woFileType']=$woFileExt;
-    }
-    else{
-            $datatostore['woFile']=$data->woFile;
-            $datatostore['woFileType']=$data->woFileType;
-    }
-
-            $datatostore['completionFile']=$completionFileName;
-            $datatostore['completionFileType']=$completionFileExt;
-            // $woedit=$datatostore->save();
-        $datatoupdate=(array)$datatostore;
+            $woedit=$datatostore->save();
     
-    $woedit = CompetitorDetailsWorkOrder::findOrFail($id)->update($datatoupdate);
+    
     if ($woedit)
         return response()->json([
             'status' => 200,
@@ -259,41 +259,6 @@ class CompetitorDetailsWorkOrderController extends Controller
             'message' => 'The provided credentials are incorrect.'
         ]);
     }
-
-
-    // else{
-        
-    //         $user = Token::where("tokenid", $request->tokenId)->first();  
-            
-    //         $request->request->add(['edited_userid' => $user['userid']]);
-    //         // $request->request->add(['filepath' => $fileName]);
-    //         $request->request->remove('tokenId');
-        
-    //         $validator = Validator::make($request->all(), ['compId' => 'required|integer','compNo' => 'required|string','cerName'=>'required|string', 'remark'=>'nullable|string','edited_userid'=>'required|integer']);
-            
-    //         if ($validator->fails()) {
-    //             return response()->json([
-    //                 'status' => 404,
-    //                 'message' =>"Not able to update details now..!",
-    //                 'error'=> $validator->messages(),
-    //             ]);
-    //             }
-        
-    //     $woedit = CompetitorDetailsWorkOrder::findOrFail($id)->update($request->all());
-    //     if ($woedit)
-    //         return response()->json([
-    //             'status' => 200,
-    //             'message' => "Updated Successfully!"
-    //         ]);
-    //     else {
-    //         return response()->json([
-    //             'status' => 404,
-    //             'message' => 'The provided credentials are incorrect.'
-    //         ]);
-    //     }
-    //     }     
-    // }
-
 }       
 
 
