@@ -197,4 +197,29 @@ class BidManagementWorkOrderWorkOrderController extends Controller
             ]);
         }
     }
+
+    public function download($fileName){
+
+        $doc = BidManagementWorkOrderWorkOrder::find($fileName);
+
+        if($doc){
+            $filename = $doc['wofile'];
+            $file = public_path()."/uploads/BidManagement/WorkOrder/WorkOrder/workorderDocument/".$filename;
+
+            $filename = $doc['shofile'];
+            $file = public_path()."/uploads/BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/".$filename;
+
+            $filename = $doc['agfile'];
+            $file = public_path()."/uploads/BidManagement/WorkOrder/WorkOrder/agreementDocument/".$filename;
+
+            // $file =  storage_path('app/public/BidDocs/'.$filename);
+            // return response()->json([
+            //     'file' =>  $file,
+            //     'message' => 'The provided credentials are incorrect.'
+            // ]);
+          return "saran";
+            // return response()->download($file);
+        }
+
+    }
 }

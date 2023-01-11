@@ -115,7 +115,9 @@ Route::post('bidcreation/creation/bidlist',[BidCreationCreationController::class
 Route::get('moilization/getMobList/{mobId}',[BidManagementWorkOrderMobilizationAdvanceController::class,'getMobList']);
 Route::get('ProjectDetails/getProList/{proid}',[BidManagementWorkOrderProjectDetailsController::class,'getProList']);
 Route::get('workorder/getWorkList/{workId}',[BidManagementWorkOrderWorkOrderController::class,'getWorkList']);   
-Route::get('workorder/getComList/{comId}',[BidManagementWorkOrderCommunicationFilesController::class,'getComList']);   
+Route::get('download/WorkorderFiles/{fileName}',[BidManagementWorkOrderWorkOrderController::class, 'download']);    
+
+Route::get('workorder/getComList/{comId}',[BidManagementWorkOrderCommunicationFilesController::class,'getComList']);  
 Route::get('tenderstatus/getbidder/{id}',[BidManagementTenderStatusBiddersController::class,'getBidders']);   
 Route::post('tenderstatus/updatestatus/{id}',[BidManagementTenderStatusBiddersController::class,'updateStatus']);   
 
