@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('tender_type_masters', function (Blueprint $table) {
             $table->id();
             $table->string('tendertype')->unique();
-            $table->string('description');
+            $table->string('tendertype_status')->default("Active");
+            $table->integer('cr_userid');
+            $table->integer('edited_userid')->nullable()->default(null);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
 
