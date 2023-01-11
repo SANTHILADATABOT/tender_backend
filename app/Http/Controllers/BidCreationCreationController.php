@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BidCreation_Creation;
 use App\Models\BidCreation_Creation_Docs;
+use App\Models\BidmanagementPreBidQueries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Token;
@@ -207,6 +208,22 @@ class BidCreationCreationController extends Controller
                 }
             }
 
+            $prebiddocs = BidmanagementPreBidQueries::where("bidCreationMainId",$id)->get();
+
+            if($prebiddocs){
+                foreach($prebiddocs as $doc){
+                    $document = BidmanagementPreBidQueries::find($doc['id']);
+
+                    $filename = $document['file_new_name'];
+                    $file_path = public_path()."/uploads/BidManagement/prebidqueries/".$filename;
+                    // $file_path =  storage_path('app/public/BidDocs/'.$filename);
+        
+                    if(File::exists($file_path)) {
+                        File::delete($file_path);
+                    }
+                }
+            }
+
 
             $deleteBid = BidCreation_Creation::destroy($id);
 
@@ -248,4 +265,6 @@ class BidCreationCreationController extends Controller
           ]);
 
     }
+
+    
 }
