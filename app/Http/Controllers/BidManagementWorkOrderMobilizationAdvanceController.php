@@ -62,12 +62,12 @@ class BidManagementWorkOrderMobilizationAdvanceController extends Controller
     {
         $MobilizationAdvance = new BidManagementWorkOrderMobilizationAdvance;
         $MobilizationAdvance -> bidid = $request->bidid;
-        $MobilizationAdvance -> mobAdvance = $request->mobilizationData['mobAdvance'];
-        $MobilizationAdvance -> bankName = $request->mobilizationData['bankName'];
-        $MobilizationAdvance -> bankBranch = $request->mobilizationData['bankBranch'];
-        $MobilizationAdvance -> mobAdvMode = $request->mobilizationData['mobAdvMode'];
-        $MobilizationAdvance -> dateMobAdv = $request->mobilizationData['dateMobAdv'];
-        $MobilizationAdvance -> validUpto = $request->mobilizationData['validUpto'];
+        $MobilizationAdvance -> mobadvance = $request->mobilizationData['mobAdvance'];
+        $MobilizationAdvance -> bankname = $request->mobilizationData['bankName'];
+        $MobilizationAdvance -> bankbranch = $request->mobilizationData['bankBranch'];
+        $MobilizationAdvance -> mobadvmode = $request->mobilizationData['mobAdvMode'];
+        $MobilizationAdvance -> datemobadv = $request->mobilizationData['dateMobAdv'];
+        $MobilizationAdvance -> validupto = $request->mobilizationData['validUpto'];
         $MobilizationAdvance -> createdby_userid = $userid ;
         $MobilizationAdvance -> updatedby_userid = 0 ;
         $MobilizationAdvance -> save();
@@ -156,12 +156,12 @@ class BidManagementWorkOrderMobilizationAdvanceController extends Controller
         if($userid)
         {
             $MobilizationAdvance = BidManagementWorkOrderMobilizationAdvance::findOrFail($id)->update([
-                'mobAdvance' => $request->mobilizationData['mobAdvance'],
-                'bankName' => $request->mobilizationData['bankName'],
-                'bankBranch' => $request->mobilizationData['bankBranch'],
-                'mobAdvMode' => $request->mobilizationData['mobAdvMode'],
-                'dateMobAdv' => $request->mobilizationData['dateMobAdv'],
-                'validUpto' => $request->mobilizationData['validUpto'],
+                'mobadvance' => $request->mobilizationData['mobAdvance'],
+                'bankname' => $request->mobilizationData['bankName'],
+                'bankbranch' => $request->mobilizationData['bankBranch'],
+                'mobadvmode' => $request->mobilizationData['mobAdvMode'],
+                'datemobadv' => $request->mobilizationData['dateMobAdv'],
+                'validupto' => $request->mobilizationData['validUpto'],
                 'updatedby_userid'=>  $userid 
             ]);
         }

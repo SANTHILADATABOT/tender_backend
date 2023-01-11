@@ -85,27 +85,29 @@ class BidManagementWorkOrderWorkOrderController extends Controller
             $user = Token::where('tokenid', $request->tokenid)->first();   
             $userid =$user['userid'];
             $request->request->remove('tokenid');
+            
             if($userid){
                 $WorkOrder = new BidManagementWorkOrderWorkOrder;
                 $WorkOrder -> bidid = $request->bidid;
-                $WorkOrder -> orderQuantity = $request->orderQuantity;
-                $WorkOrder -> PricePerUnit = $request->PricePerUnit;
-                $WorkOrder -> LoaDate = $request->LoaDate;
-                $WorkOrder -> OrderDate = $request->OrderDate;
-                $WorkOrder -> AgreeDate = $request->AgreeDate;
-                $WorkOrder -> SiteHandOverDate = $request->SiteHandOverDate;
-                $WorkOrder -> woFile = $FileName_I;
-                $WorkOrder -> agFile = $FileName_II;
-                $WorkOrder -> shoFile = $FileName_III;
+                $WorkOrder -> orderquantity = $request->orderQuantity;
+                $WorkOrder -> priceperUnit = $request->PricePerUnit;
+                $WorkOrder -> loadate = $request->LoaDate;
+                $WorkOrder -> orderdate = $request->OrderDate;
+                $WorkOrder -> agreedate = $request->AgreeDate;
+                $WorkOrder -> sitehandoverdate = $request->SiteHandOverDate;
+                $WorkOrder -> wofile = $FileName_I;
+                $WorkOrder -> agfile = $FileName_II;
+                $WorkOrder -> shofile = $FileName_III;
                 $WorkOrder -> createdby_userid = $userid ;
                 $WorkOrder -> updatedby_userid = 0 ;
                 $WorkOrder -> save();
-            //image one upload 
-                $wofile->storeAs('BidManagement/WorkOrder/WorkOrder/workorderDocument/', $FileName_I, 'public');
-            //image two upload
-            $agfile->storeAs('BidManagement/WorkOrder/WorkOrder/agreementDocument/', $FileName_II, 'public');
+
+             //image one upload 
+              $wofile->storeAs('BidManagement/WorkOrder/WorkOrder/workorderDocument/', $FileName_I, 'public');
+             //image two upload
+              $agfile->storeAs('BidManagement/WorkOrder/WorkOrder/agreementDocument/', $FileName_II, 'public');
              //image three upload
-             $shofile->storeAs('BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/', $FileName_III, 'public');
+              $shofile->storeAs('BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/', $FileName_III, 'public');
             
             }
             return response()-> json([

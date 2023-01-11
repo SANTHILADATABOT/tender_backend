@@ -35,6 +35,7 @@ use App\Http\Controllers\BidManagementWorkOrderMobilizationAdvanceController;
 use App\Http\Controllers\BidManagementWorkOrderProjectDetailsController;
 use App\Http\Controllers\BidManagementWorkOrderWorkOrderController;
 use App\Http\Controllers\BidManagementWorkOrderCommunicationFilesController;
+use App\Http\Controllers\BidManagementTenderStatusBiddersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,10 +110,14 @@ Route::post('bidcreation/creation/docupload/{id}', [BidCreationCreationDocsContr
 Route::get('download/BidDocs/{fileName}', [BidCreationCreationDocsController::class, 'download']);
 // Route::post('competitordetails/competitorqcertificate/updatewithimage', [CompetitorDetailsQualityCertificatesController::class, 'updateWithImage']);
 Route::get('competitordetails/wolist/{compid}', [CompetitorDetailsWorkOrderController::class, 'getWOList']);
+Route::post('bidcreation/creation/bidlist',[BidCreationCreationController::class,'getBidList']);
+
 Route::get('moilization/getMobList/{mobId}',[BidManagementWorkOrderMobilizationAdvanceController::class,'getMobList']);
 Route::get('ProjectDetails/getProList/{proid}',[BidManagementWorkOrderProjectDetailsController::class,'getProList']);
-Route::post('bidcreation/creation/bidlist',[BidCreationCreationController::class,'getBidList']);
 Route::get('workorder/getWorkList/{workId}',[BidManagementWorkOrderWorkOrderController::class,'getWorkList']);   
+Route::get('workorder/getComList/{comId}',[BidManagementWorkOrderCommunicationFilesController::class,'getComList']);   
+Route::get('tenderstatus/getbidder/{id}',[BidManagementTenderStatusBiddersController::class,'getBidders']);   
+Route::post('tenderstatus/updatestatus/{id}',[BidManagementTenderStatusBiddersController::class,'updateStatus']);   
 
 /*
 ## Resource Laravel Routes Example
@@ -153,6 +158,7 @@ Route::resources([
     'customercreationbankdetails'=> CustomerCreationBankDetailsController::class,
     'bidcreation/creation'=> BidCreationCreationController::class,
     'bidcreation/creation/docupload'=> BidCreationCreationDocsController::class,
+    'tenderstatus'=>BidManagementTenderStatusBiddersController::class,
     'workorder/creation/communicationfiles' => BidManagementWorkOrderCommunicationFilesController::class,
     'mobilization/creation' => BidManagementWorkOrderMobilizationAdvanceController::class,
     'ProjectDetails/Creation'=>BidManagementWorkOrderProjectDetailsController::class,
