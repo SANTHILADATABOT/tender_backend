@@ -85,7 +85,6 @@ class BidManagementWorkOrderWorkOrderController extends Controller
             $user = Token::where('tokenid', $request->tokenid)->first();   
             $userid =$user['userid'];
             $request->request->remove('tokenid');
-            
             if($userid){
                 $WorkOrder = new BidManagementWorkOrderWorkOrder;
                 $WorkOrder -> bidid = $request->bidid;
@@ -101,13 +100,12 @@ class BidManagementWorkOrderWorkOrderController extends Controller
                 $WorkOrder -> createdby_userid = $userid ;
                 $WorkOrder -> updatedby_userid = 0 ;
                 $WorkOrder -> save();
-
              //image one upload 
-              $wofile->storeAs('BidManagement/WorkOrder/WorkOrder/workorderDocument/', $FileName_I, 'public');
+             $wofile->storeAs('BidManagement/WorkOrder/WorkOrder/workorderDocument/', $FileName_I, 'public');
              //image two upload
-              $agfile->storeAs('BidManagement/WorkOrder/WorkOrder/agreementDocument/', $FileName_II, 'public');
+             $agfile->storeAs('BidManagement/WorkOrder/WorkOrder/agreementDocument/', $FileName_II, 'public');
              //image three upload
-              $shofile->storeAs('BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/', $FileName_III, 'public');
+             $shofile->storeAs('BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/', $FileName_III, 'public');
             
             }
             return response()-> json([
@@ -196,30 +194,5 @@ class BidManagementWorkOrderWorkOrderController extends Controller
                 'message' => 'The provided credentials are incorrect.'
             ]);
         }
-    }
-
-    public function download($fileName){
-
-        $doc = BidManagementWorkOrderWorkOrder::find($fileName);
-
-        if($doc){
-            $filename = $doc['wofile'];
-            $file = public_path()."/uploads/BidManagement/WorkOrder/WorkOrder/workorderDocument/".$filename;
-
-            $filename = $doc['shofile'];
-            $file = public_path()."/uploads/BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/".$filename;
-
-            $filename = $doc['agfile'];
-            $file = public_path()."/uploads/BidManagement/WorkOrder/WorkOrder/agreementDocument/".$filename;
-
-            // $file =  storage_path('app/public/BidDocs/'.$filename);
-            // return response()->json([
-            //     'file' =>  $file,
-            //     'message' => 'The provided credentials are incorrect.'
-            // ]);
-          return "saran";
-            // return response()->download($file);
-        }
-
     }
 }
