@@ -17,14 +17,14 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('bidid')->unsigned();
             $table->foreign('bidid')->references('id')->on('bid_creation__creations')->onDelete("cascade")->onUpdate("NO ACTION");
-            $table -> string('mobAdvance')->default(''); 
-            $table -> string('bankName')->default(''); 
-            $table -> string('bankBranch')->default(''); 
-            $table -> string('mobAdvMode')->default(''); 
-            $table -> date('dateMobAdv')->nullable(); 
-            $table -> date('validUpto')->nullable(); 
+            $table -> string('mobadvance')->default(''); 
+            $table -> string('bankname')->default(''); 
+            $table -> string('bankbranch')->default(''); 
+            $table -> string('mobadvmode')->default(''); 
+            $table -> date('datemobadv')->nullable(); 
+            $table -> date('validupto')->nullable(); 
             $table -> integer('createdby_userid');
-            $table -> integer('updatedby_userid'); 
+            $table -> integer('updatedby_userid')->nullable()->default(null);
             $table->timestamps();
         });
     }

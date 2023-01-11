@@ -67,16 +67,16 @@ class BidManagementWorkOrderProjectDetailsController extends Controller
         if($userid){
             $Projectdetails = new BidManagementWorkOrderProjectDetails;
             $Projectdetails -> bidid = $request->bidid;
-            $Projectdetails -> ProPeriod = $request->projectDetails['ProPeriod'];
-            $Projectdetails -> mobPeriod = $request->projectDetails['mobPeriod'];
-            $Projectdetails -> monsoonPeriod = $request->projectDetails['monsoonPeriod'];
-            $Projectdetails -> monthDuration = $request->projectDetails['monthDuration'];
-            $Projectdetails -> supplyScape = $request->projectDetails['supplyScape'];
-            $Projectdetails -> supplyDate = $request->projectDetails['supplyDate'];
-            $Projectdetails -> erectionStart = $request->projectDetails['erectionStart'];
-            $Projectdetails -> commercialProduc = $request->projectDetails['commercialProduc'];
-            $Projectdetails -> tarCompletion = $request->projectDetails['tarCompletion'];
-            $Projectdetails -> producCompletion = $request->projectDetails['producCompletion'];
+            $Projectdetails -> properiod = $request->projectDetails['ProPeriod'];
+            $Projectdetails -> mobperiod = $request->projectDetails['mobPeriod'];
+            $Projectdetails -> monsoonperiod = $request->projectDetails['monsoonPeriod'];
+            $Projectdetails -> monthduration = $request->projectDetails['monthDuration'];
+            $Projectdetails -> supplyscape = $request->projectDetails['supplyScape'];
+            $Projectdetails -> supplydate = $request->projectDetails['supplyDate'];
+            $Projectdetails -> erectionstart = $request->projectDetails['erectionStart'];
+            $Projectdetails -> commercialproduc = $request->projectDetails['commercialProduc'];
+            $Projectdetails -> tarcompletion = $request->projectDetails['tarCompletion'];
+            $Projectdetails -> produccompletion = $request->projectDetails['producCompletion'];
             $Projectdetails -> createdby_userid = $userid ;
             $Projectdetails -> updatedby_userid = 0 ;
             $Projectdetails -> save();
@@ -168,16 +168,16 @@ class BidManagementWorkOrderProjectDetailsController extends Controller
 
         if($userid){
             $projectDetails = BidManagementWorkOrderProjectDetails::findOrFail($id)->update([
-                'ProPeriod' => $request->projectDetails['ProPeriod'],
-                'mobPeriod' => $request->projectDetails['mobPeriod'],
-                'monsoonPeriod' => $request->projectDetails['monsoonPeriod'],
-                'monthDuration' => $request->projectDetails['monthDuration'],
-                'supplyScape' => $request->projectDetails['supplyScape'],
-                'supplyDate' => $request->projectDetails['supplyDate'],
-                'erectionStart' => $request->projectDetails['erectionStart'],
-                'commercialProduc' => $request->projectDetails['commercialProduc'],
-                'tarCompletion' => $request->projectDetails['tarCompletion'],
-                'producCompletion' => $request->projectDetails['producCompletion'],
+                'properiod' => $request->projectDetails['ProPeriod'],
+                'mobperiod' => $request->projectDetails['mobPeriod'],
+                'monsoonperiod' => $request->projectDetails['monsoonPeriod'],
+                'monthduration' => $request->projectDetails['monthDuration'],
+                'supplyscape' => $request->projectDetails['supplyScape'],
+                'supplydate' => $request->projectDetails['supplyDate'],
+                'erectionstart' => $request->projectDetails['erectionStart'],
+                'commercialproduc' => $request->projectDetails['commercialProduc'],
+                'tarcompletion' => $request->projectDetails['tarCompletion'],
+                'produccompletion' => $request->projectDetails['producCompletion'],
                 'updatedby_userid'=>  $userid 
             ]);
         }
