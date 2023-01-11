@@ -50,7 +50,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
             else{
                 $FileName_I=$fileName_I;   
             }
-            $wofile->storeAs('BidManagement/WorkOrder/WorkOrder/workorderDocument/', $FileName_I, 'public');
+            //$wofile->storeAs('BidManagement/WorkOrder/WorkOrder/workorderDocument/', $FileName_I, 'public');
             //image two upload
            
             $agfile = $request->file('agfile');
@@ -65,7 +65,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
             else{
                 $FileName_II=$fileName_II;   
             }
-            $agfile->storeAs('BidManagement/WorkOrder/WorkOrder/agreementDocument/', $FileName_II, 'public');
+            //$agfile->storeAs('BidManagement/WorkOrder/WorkOrder/agreementDocument/', $FileName_II, 'public');
             //image three upload
 
             $shofile = $request->file('shofile');
@@ -100,6 +100,13 @@ class BidManagementWorkOrderWorkOrderController extends Controller
                 $WorkOrder -> createdby_userid = $userid ;
                 $WorkOrder -> updatedby_userid = 0 ;
                 $WorkOrder -> save();
+            //image one upload 
+                $wofile->storeAs('BidManagement/WorkOrder/WorkOrder/workorderDocument/', $FileName_I, 'public');
+            //image two upload
+            $agfile->storeAs('BidManagement/WorkOrder/WorkOrder/agreementDocument/', $FileName_II, 'public');
+             //image three upload
+             $shofile->storeAs('BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/', $FileName_III, 'public');
+            
             }
             return response()-> json([
                     'status' => 200,

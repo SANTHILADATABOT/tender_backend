@@ -23,10 +23,9 @@ return new class extends Migration
             $table->string('To');
             $table->string('Subject');
             $table->string('Medium');
-            $table->string('Filepath');
-            $table->string('Filetype');
-            $table->integer('cr_userid');
-            $table->integer('edited_userid')->nullable()->default(null);
+            $table->string('comfile');
+            $table->integer('created_userid');
+            $table->integer('updated_userid')->nullable()->default(null);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });

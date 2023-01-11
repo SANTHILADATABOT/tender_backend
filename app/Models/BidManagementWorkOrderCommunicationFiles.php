@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class BidManagementWorkOrderCommunicationFiles extends Model
 {
     use HasFactory;
-    protected $fillable = ['bidid','Date','RefrenceNo','From','To','Subject','Medium','Filepath','Filetype','cr_userid','edited_userid'];
+    protected $fillable = ['bidid','Date','RefrenceNo','From','To','Subject','Medium','comfile','created_userid','updated_userid'];
 
 }

@@ -41,23 +41,38 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
         if($request ->hasFile('file')){
             $file = $request->file('file');
             $fileExt = $file->getClientOriginalName();
+            $FileExt_I = $file->getClientOriginalExtension();
             $fileName1=$file->hashName();
             $filenameSplited=explode(".",$fileName1);
             if($filenameSplited[1]!=$fileExt)
             {
-            $fileName=$filenameSplited[0].".".$fileExt;
+            $fileName=$filenameSplited[0].".".$FileExt_I;
             }
             else{
                 $fileName=$fileName1;   
             }
-            $file->storeAs('BidManagement/WorkOrder/CommunicationFiles/', $fileName, 'public');
-            $user = Token::where('tokenid', $request->tokenid)->first();   
-            $request->request->add(['cr_userid' => $user['userid']]);
-            $request->request->add(['Filepath' => $fileName]);
+           
+           
+            $user = Token::where('tokenid', $request->tokenid)->first(); 
+            $userid = $user['userid'];
             $request->request->remove('tokenid');
-            $request->request->add(['Filetype' => $fileExt]);
-            $request->except(['file']);
-            $CommunicationFiles = BidManagementWorkOrderCommunicationFiles::firstOrCreate($request->all());
+            if($userid){
+              $CommunicationFiles = new BidManagementWorkOrderCommunicationFiles;
+              $CommunicationFiles -> bidid = $request->bidid;
+              $CommunicationFiles -> Date = $request->date;
+              $CommunicationFiles -> RefrenceNo = $request->refrence_no;
+              $CommunicationFiles -> From = $request->from;
+              $CommunicationFiles -> To = $request->to;
+              $CommunicationFiles -> Subject = $request->bidid;
+              $CommunicationFiles -> Medium = $request->medium;
+              $CommunicationFiles -> Filepath = $fileName;
+              $CommunicationFiles -> created_userid = $userid;
+              $CommunicationFiles -> updated_userid = 0 ;
+              $CommunicationFiles -> save();
+
+              $file->storeAs('BidManagement/WorkOrder/CommunicationFiles/', $fileName, 'public');
+            }
+                        
             return response() -> json([
                 'status' => 200,
                 'message' => 'Uploaded Succcessfully'
