@@ -57,7 +57,8 @@ class BidManagementWorkOrderProjectDetailsController extends Controller
         if($validator->fails()){
             return response()->json([
                 'status' => 400,
-                'message' => $validator->messages(),
+                'message' => 'unable to save',
+                'errors' => $validator->messages(),
             ]);
         }
         $user = Token::where('tokenid', $request->tokenid)->first();   
@@ -86,9 +87,9 @@ class BidManagementWorkOrderProjectDetailsController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => 'Project Details Has created Succssfully!',
-                'Mobilization' => $Projectdetails,
-                'bidid' => $Projectdetails['bidid'],
-                'id' => $Projectdetails['id'],
+                'Projectdetails' => $Projectdetails,
+                // 'bidid' => $Projectdetails['bidid'],
+                // 'id' => $Projectdetails['id'],
             ]);
         }else{
             return response()->json([
@@ -106,11 +107,11 @@ class BidManagementWorkOrderProjectDetailsController extends Controller
      */
     public function show($id)
     {
-        $Projectdetails = BidManagementWorkOrderProjectDetails::where('id','=',$id)->get();
+        $Projectdetails = BidManagementWorkOrderProjectDetails::where('bidid','=',$id)->get();
         if ($Projectdetails){
             return response()->json([
                 'status' => 200,
-                'MobilizationAdvance' => $Projectdetails,
+                'Projectdetails' => $Projectdetails,
             ]);
         }
         else {
@@ -159,7 +160,8 @@ class BidManagementWorkOrderProjectDetailsController extends Controller
         if($validator->fails()){
             return response()->json([
                 'status' => 400,
-                'message' => $validator->messages(),
+                'message' => "unable to save",
+                'errors' => $validator->messages(),
             ]);
         }
         $user = Token::where('tokenid', $request->tokenid)->first();   
@@ -181,6 +183,7 @@ class BidManagementWorkOrderProjectDetailsController extends Controller
                 'updatedby_userid'=>  $userid 
             ]);
         }
+
         if ($projectDetails){
             return response()->json([
                 'status' => 200,
@@ -191,6 +194,7 @@ class BidManagementWorkOrderProjectDetailsController extends Controller
             return response()->json([
                 'status' => 404,
                 'message' => 'The provided credentials are incorrect.'
+
             ]);
         }
     }

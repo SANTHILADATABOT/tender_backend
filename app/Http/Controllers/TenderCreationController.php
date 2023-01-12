@@ -6,14 +6,11 @@ use App\Models\TenderCreation;
 use App\Models\TenderTypeMaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Token;
 
 class TenderCreationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function index()
     {
         $tendercreation = TenderCreation::orderBy('created_at', 'desc')->get();
@@ -32,33 +29,22 @@ class TenderCreationController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+      
     public function store(Request $request)
     {
-        $ulbRes1 = TenderCreation::where('tendertype', '=', $request->tendertype)->exists();
-        if ($ulbRes1) {
-            return response()->json([
-                'status' => 400,
-                'errors' => 'Tender Type Already Exists'
-            ]);
-        }
-
-        $validator = Validator::make($request->all(), ['customername' => 'required', 'tendertype' => 'required',  'organization' => 'required']);
+        // $tenderCreationResult = TenderCreation::where('tenderType', '=', $request->tendertype)->exists();
+        // if ($tenderCreationResult) {
+        //     return response()->json([
+        //         'status' => 400,
+        //         'errors' => 'Tender Type Already Exists'
+        //     ]);
+        // }
+        $user = Token::where("tokenid", $request->tokenId)->first();
+        $request->request->add(['cr_userid' => $user['userid']]);
+        $request->request->remove('tokenId');
+    
+    if( $user['userid']){
+        $validator = Validator::make($request->all(), ['organisation' => 'required|string', 'customername' => 'required|string',  'tendertype' => 'required|integer', 'nitdate'=>'required', 'cr_userid'=>'required']);
         if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
@@ -70,17 +56,12 @@ class TenderCreationController extends Controller
         if ($tenderObj) {
             return response()->json([
                 'status' => 200,
-                'message' => 'State Has created Succssfully!'
+                'message' => 'Tender Created Succssfully!'
             ]);
         }
     }
+}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\TenderCreation  $tenderCreation
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $tender = TenderCreation::find($id);
@@ -98,31 +79,20 @@ class TenderCreationController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\TenderCreation  $tenderCreation
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit(TenderCreation $tenderCreation)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TenderCreation  $tenderCreation
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
-        $ulbRes12 = TenderCreation::where('tendercreation', '=', $request->tendercreation)
+        $tenderCreationResult2 = TenderCreation::where('tendercreation', '=', $request->tendercreation)
         ->where('id', '!=', $id)
         ->where('customer_id', '=', $request->customer_id)
         ->exists();
-        if ($ulbRes12) {
+        if ($tenderCreationResult2) {
             return response()->json([
                 'status' => 400,
                 'errors' => 'Tender Type Already Exists'

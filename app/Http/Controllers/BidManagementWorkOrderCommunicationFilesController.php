@@ -38,24 +38,21 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
      */
     public function store(Request $request)
     {
+        
         if($request ->hasFile('file')){
             $file = $request->file('file');
-            $fileExt = $file->getClientOriginalName();
-            $FileExt_I = $file->getClientOriginalExtension();
-            $fileName1=$file->hashName();
-            $filenameSplited=explode(".",$fileName1);
-            if($filenameSplited[1]!=$fileExt)
-            {
-            $fileName=$filenameSplited[0].".".$FileExt_I;
-            }
-            else{
-                $fileName=$fileName1;   
-            }
+            $originalfileName = $file->getClientOriginalName();
+            // $FileExt = $file->getClientOriginalExtension();
+            $filenameSplited=explode(".",$originalfileName);
+            $hasfileName=$file->hashName();
+            $hasfilenameSplited=explode(".",$hasfileName);
+            $fileName=$hasfilenameSplited[0].".".$filenameSplited[1];
+
            
             $user = Token::where('tokenid', $request->tokenid)->first(); 
-            $userid = $user['userid'];
+            // $userid = $user['userid'];
             $request->request->remove('tokenid');
-            if($userid){
+            if($user['userid']){
               $CommunicationFiles = new BidManagementWorkOrderCommunicationFiles;
               $CommunicationFiles -> bidid = $request->bidid;
               $CommunicationFiles -> date = $request->date;
@@ -66,17 +63,16 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
               $CommunicationFiles -> medium = $request->medium;
               $CommunicationFiles -> med_refrenceno = $request->medrefrenceno;
               $CommunicationFiles -> comfile = $fileName;
-              $CommunicationFiles -> createdby_userid = $userid;
-              $CommunicationFiles -> updatedby_userid = 0 ;
+              $CommunicationFiles -> createdby_userid = $user['userid'];
+            //$CommunicationFiles -> updatedby_userid = 0 ;
+              
               $CommunicationFiles -> save();
+
             }
             $file->storeAs('BidManagement/WorkOrder/CommunicationFiles/', $fileName, 'public'); 
             return response() -> json([
                 'status' => 200,
                 'message' => 'Uploaded Succcessfully',
-                'CommunicationFiles' => $CommunicationFiles,
-                'bidid' => $CommunicationFiles['bidid'],
-                'id' => $CommunicationFiles['id'],
             ]);
         }else{
             return response()->json([
@@ -94,7 +90,7 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
      */
     public function show($id)
     {
-        $CommunicationFiles = BidManagementWorkOrderCommunicationFiles::where('id','=',$id)->get();
+        $CommunicationFiles = BidManagementWorkOrderCommunicationFiles::where('bidid','=',$id)->get();
         if ($CommunicationFiles){
             return response()->json([
                 'status' => 200,

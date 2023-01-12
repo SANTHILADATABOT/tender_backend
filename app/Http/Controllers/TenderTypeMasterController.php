@@ -47,7 +47,6 @@ class TenderTypeMasterController extends Controller
     {
         
         $user = Token::where("tokenid", $request->tokenId)->first();
-        
         if($user['userid'])
         {
         $tendertype = TenderTypeMaster::where('tendertype', '=', $request->tendertype)->exists();
@@ -82,6 +81,7 @@ class TenderTypeMasterController extends Controller
     
     public function show($id)
     {
+
         $tendertype = TenderTypeMaster::find($id);
         if ($tendertype)
             return response()->json([
@@ -185,8 +185,9 @@ class TenderTypeMasterController extends Controller
 
 
     public function getList(){
-
-        $tendertypes = TenderTypeMaster::where("tendertype", "!=", "")->get();
+        $tendertypes = TenderTypeMaster::where("tendertype", "!=", "")
+        ->where("tendertype_status","=","Active")
+        ->get();
 
         $tendertypeList= [];
         foreach($tendertypes as $tendertype){

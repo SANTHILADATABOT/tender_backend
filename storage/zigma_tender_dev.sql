@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2023 at 02:20 PM
+-- Generation Time: Jan 12, 2023 at 06:47 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -247,7 +247,7 @@ CREATE TABLE `bid_management_work_order_mobilization_advances` (
 --
 
 INSERT INTO `bid_management_work_order_mobilization_advances` (`id`, `bidid`, `mobadvance`, `bankname`, `bankbranch`, `mobadvmode`, `datemobadv`, `validupto`, `createdby_userid`, `updatedby_userid`, `created_at`, `updated_at`) VALUES
-(2, 6, '15000', 'dfgnmd', 'dghmdgh', '11', '2023-01-10', '2023-01-10', 42, 0, '2023-01-11 07:32:06', '2023-01-11 07:32:06');
+(2, 6, '70000', 'testing', 'testing', '11', '2023-01-10', '2023-01-10', 42, 42, '2023-01-11 07:32:06', '2023-01-12 00:10:14');
 
 -- --------------------------------------------------------
 
@@ -279,7 +279,7 @@ CREATE TABLE `bid_management_work_order_project_details` (
 --
 
 INSERT INTO `bid_management_work_order_project_details` (`id`, `bidid`, `properiod`, `mobPeriod`, `monsoonperiod`, `monthduration`, `supplyscape`, `supplydate`, `erectionstart`, `commercialproduc`, `tarcompletion`, `produccompletion`, `createdby_userid`, `updatedby_userid`, `created_at`, `updated_at`) VALUES
-(2, 6, 'gdfg', 'gh,42257', 'dff', 'dytkjyt', 'fsgy', '2023-01-10', '2023-01-10', '2023-01-10', '2022-12-29', '2023-01-20', 42, 0, '2023-01-11 07:33:05', '2023-01-11 07:33:05');
+(2, 6, 'testing', 'testing', 'testing', 'testing', 'testing', '2023-01-10', '2023-01-10', '2023-01-10', '2022-12-29', '2023-01-20', 42, 42, '2023-01-11 07:33:05', '2023-01-12 00:09:57');
 
 -- --------------------------------------------------------
 
@@ -304,6 +304,13 @@ CREATE TABLE `bid_management_work_order_work_orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bid_management_work_order_work_orders`
+--
+
+INSERT INTO `bid_management_work_order_work_orders` (`id`, `bidid`, `orderquantity`, `priceperunit`, `loadate`, `orderdate`, `agreedate`, `sitehandoverdate`, `wofile`, `agfile`, `shofile`, `createdby_userid`, `updatedby_userid`, `created_at`, `updated_at`) VALUES
+(2, 6, 'testing', 'testing', '2023-01-12', '2023-01-12', '2023-01-12', '2023-01-12', 'rrM5368p7UK2pVddL3R8LkEyxbX5vGp2ZVbLWnoX.png', 'gBQC5F3wEX4zYRyQWEO5A4rbJt4ayFxV9BouPI2N.jpg', '0qnhnoZBZeAev7fIPWKwa61yLc3FQrTBgweYQpVC.png', 42, 0, '2023-01-12 00:02:43', '2023-01-12 00:02:43');
 
 -- --------------------------------------------------------
 
@@ -7699,8 +7706,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (46, '2022_12_28_035018_create_competitor_details_company_net_worths_table', 27),
 (49, '2022_12_28_043550_create_competitor_details_line_of_businesses_table', 28),
 (50, '2022_12_28_130636_create_competitor_details_pros_cons_table', 29),
-(55, '2022_12_29_072732_create_tender_type_masters_table', 32),
-(57, '2023_01_04_044406_create_tender_creations_table', 34),
 (62, '2023_01_05_130216_create_competitor_details_work_orders_table', 38),
 (65, '2022_12_25_115331_create_bid_creation__creation__docs_table', 40),
 (85, '2023_01_07_072005_create_bid_management_work_order_project_details_table', 50),
@@ -7710,7 +7715,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (93, '2023_01_10_125224_create_bidmanagement_pre_bid_queries_table', 56),
 (94, '2023_01_10_173238_create_bidmanagement_corrigendum_publishes_table', 57),
 (95, '2023_01_11_044908_create_bid_creation_tender_participations_table', 58),
-(96, '2023_01_10_101014_create_bid_management_work_order_communication_files_table', 59);
+(96, '2023_01_10_101014_create_bid_management_work_order_communication_files_table', 59),
+(97, '2022_12_29_072732_create_tender_type_masters_table', 60),
+(102, '2023_01_04_044406_create_tender_creations_table', 61);
 
 -- --------------------------------------------------------
 
@@ -7865,13 +7872,31 @@ INSERT INTO `state_masters` (`id`, `state_name`, `category`, `state_code`, `coun
 
 CREATE TABLE `tender_creations` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tendertype` varchar(255) NOT NULL,
-  `organization` varchar(255) NOT NULL,
+  `organisation` varchar(255) NOT NULL,
   `customername` varchar(255) NOT NULL,
   `nitdate` date NOT NULL,
+  `tendertype` bigint(20) UNSIGNED NOT NULL,
+  `cr_userid` int(11) NOT NULL,
+  `edited_userid` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tender_creations`
+--
+
+INSERT INTO `tender_creations` (`id`, `organisation`, `customername`, `nitdate`, `tendertype`, `cr_userid`, `edited_userid`, `created_at`, `updated_at`) VALUES
+(1, 'public', 'Test Customer', '2023-01-11', 2, 42, NULL, '2023-01-11 23:58:33', '2023-01-11 23:58:33'),
+(2, 'public1', 'Test Customer22', '2023-01-28', 3, 42, NULL, '2023-01-12 00:00:13', '2023-01-12 00:00:13'),
+(3, 'public222', 'Test Customer5775', '2023-02-02', 3, 42, NULL, '2023-01-12 00:00:49', '2023-01-12 00:00:49'),
+(4, 'Test Org', 'Test Customer 1233', '2023-01-28', 4, 42, NULL, '2023-01-12 00:01:22', '2023-01-12 00:01:22'),
+(5, 'public', 'hthth', '2023-01-20', 3, 42, NULL, '2023-01-12 00:02:06', '2023-01-12 00:02:06'),
+(6, 'Test Org', 'Test Customer', '2023-01-28', 4, 42, NULL, '2023-01-12 00:02:41', '2023-01-12 00:02:41'),
+(7, 'public', 'Test Customer', '2023-01-11', 3, 42, NULL, '2023-01-12 00:06:13', '2023-01-12 00:06:13'),
+(8, 'sf', 'df', '2023-01-06', 2, 42, NULL, '2023-01-12 00:07:45', '2023-01-12 00:07:45'),
+(9, 'Teyu', 'sd;g', '2023-01-07', 3, 42, NULL, '2023-01-12 00:09:05', '2023-01-12 00:09:05'),
+(10, 'Test ks', 'mdfhmskn', '2023-01-07', 2, 42, NULL, '2023-01-12 00:12:03', '2023-01-12 00:12:03');
 
 -- --------------------------------------------------------
 
@@ -7882,7 +7907,9 @@ CREATE TABLE `tender_creations` (
 CREATE TABLE `tender_type_masters` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `tendertype` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `tendertype_status` varchar(255) NOT NULL DEFAULT 'Active',
+  `cr_userid` int(11) NOT NULL,
+  `edited_userid` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -7891,8 +7918,10 @@ CREATE TABLE `tender_type_masters` (
 -- Dumping data for table `tender_type_masters`
 --
 
-INSERT INTO `tender_type_masters` (`id`, `tendertype`, `description`, `created_at`, `updated_at`) VALUES
-(8, 'Zigma Pvt Ltd', 'MLMN', '2023-01-02 05:45:02', '2023-01-02 05:45:48');
+INSERT INTO `tender_type_masters` (`id`, `tendertype`, `tendertype_status`, `cr_userid`, `edited_userid`, `created_at`, `updated_at`) VALUES
+(2, 'Type 2', 'Active', 42, NULL, '2023-01-11 22:01:08', '2023-01-11 22:01:08'),
+(3, 'Type 3', 'Active', 42, 42, '2023-01-11 22:01:16', '2023-01-11 22:01:30'),
+(4, 'Type 1', 'Active', 42, NULL, '2023-01-11 22:01:45', '2023-01-11 22:01:45');
 
 -- --------------------------------------------------------
 
@@ -7975,7 +8004,8 @@ INSERT INTO `tokens` (`id`, `tokenid`, `userid`, `isLoggedIn`, `created_at`, `up
 (59, '12f38409938a77668a6721ee373c31411673336956312', 42, 0, '2023-01-10 02:19:16', '2023-01-11 06:02:26'),
 (60, 'ccff94dbdeea335c0272257aecf386041673419715888', 42, 1, '2023-01-11 01:18:35', '2023-01-11 01:18:35'),
 (61, '1e19a26699b77b488a7af35f0f2a66ab1673436757324', 42, 1, '2023-01-11 06:02:37', '2023-01-11 06:02:37'),
-(62, '2980e622f696740dec2414ac2584c9c61673436757921', 42, 1, '2023-01-11 06:02:37', '2023-01-11 06:02:37');
+(62, '2980e622f696740dec2414ac2584c9c61673436757921', 42, 0, '2023-01-11 06:02:37', '2023-01-11 22:52:11'),
+(63, '194b5c4d0f91295fc7c55b7d05a784621673497340897', 42, 1, '2023-01-11 22:52:20', '2023-01-11 22:52:20');
 
 -- --------------------------------------------------------
 
@@ -8924,7 +8954,7 @@ ALTER TABLE `state_masters`
 --
 ALTER TABLE `tender_creations`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `tender_creations_tendertype_unique` (`tendertype`);
+  ADD KEY `tender_creations_tendertype_foreign` (`tendertype`);
 
 --
 -- Indexes for table `tender_type_masters`
@@ -9029,13 +9059,13 @@ ALTER TABLE `bid_management_work_order_mobilization_advances`
 -- AUTO_INCREMENT for table `bid_management_work_order_project_details`
 --
 ALTER TABLE `bid_management_work_order_project_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `bid_management_work_order_work_orders`
 --
 ALTER TABLE `bid_management_work_order_work_orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `city_masters`
@@ -9149,7 +9179,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -9179,19 +9209,19 @@ ALTER TABLE `state_masters`
 -- AUTO_INCREMENT for table `tender_creations`
 --
 ALTER TABLE `tender_creations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tender_type_masters`
 --
 ALTER TABLE `tender_type_masters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tokens`
 --
 ALTER TABLE `tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `ulb_masters`
@@ -9395,6 +9425,12 @@ ALTER TABLE `district_masters`
 --
 ALTER TABLE `state_masters`
   ADD CONSTRAINT `state_masters_country_id_foreign` FOREIGN KEY (`country_id`) REFERENCES `country_masters` (`id`) ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `tender_creations`
+--
+ALTER TABLE `tender_creations`
+  ADD CONSTRAINT `tender_creations_tendertype_foreign` FOREIGN KEY (`tendertype`) REFERENCES `tender_type_masters` (`id`) ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `u_l_b_details`

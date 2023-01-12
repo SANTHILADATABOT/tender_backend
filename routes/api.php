@@ -40,6 +40,7 @@ use App\Http\Controllers\BidManagementTenderStatusBiddersController;
 use App\Http\Controllers\BidmanagementPreBidQueriesController;
 use App\Http\Controllers\BidmanagementCorrigendumPublishController;
 use App\Http\Controllers\BidCreationTenderParticipationController;
+use App\Http\Controllers\FileDownloadHandlingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -78,8 +79,8 @@ Route::get('tendercreation-list/{id}', [TenderCreationController::class, 'getTen
 
 // Route::get('state/list/{id}', [StateMasterController::class, 'getStateList']);
 
-Route::get('tendertype/{id}', [TenderTypeMasterController::class, 'show']);
-
+// Route::get('tendertype/{id}', [TenderTypeMasterController::class, 'show']);
+Route::get('tendertype/list', [TenderTypeMasterController::class, 'getList']);
 // Route::get('state/list/{id}/{category}/{savedstate}', [StateMasterController::class, 'getStateListOptions']);
 
 
@@ -121,23 +122,22 @@ Route::get('moilization/getMobList/{mobId}',[BidManagementWorkOrderMobilizationA
 Route::get('ProjectDetails/getProList/{proid}',[BidManagementWorkOrderProjectDetailsController::class,'getProList']);
 
 Route::post('bidcreation/creation/bidlist',[BidCreationCreationController::class,'getBidList']);
-Route::get('workorder/getWorkList/{workId}',[BidManagementWorkOrderWorkOrderController::class,'getWorkList']);
 
 Route::post('bidcreation/prebidqueries/docupload/list', [BidmanagementPreBidQueriesController::class, 'getUplodedDocList']);
 Route::get('download/prebidqueriesdocs/{fileName}', [BidmanagementPreBidQueriesController::class, 'download']);
 Route::post('bidcreation/prebidqueries/docupload/{id}', [BidmanagementPreBidQueriesController::class, 'update']);
 
-Route::get('workorder/getWorkList/{workId}',[BidManagementWorkOrderWorkOrderController::class,'getWorkList']);   
-Route::get('download/WorkorderFiles/{fileName}',[BidManagementWorkOrderWorkOrderController::class, 'download']);    
-
 Route::get('workorder/getComList/{comId}',[BidManagementWorkOrderCommunicationFilesController::class,'getComList']);  
 Route::get('tenderstatus/getbidder/{id}',[BidManagementTenderStatusBiddersController::class,'getBidders']);   
 Route::post('tenderstatus/updatestatus/{id}',[BidManagementTenderStatusBiddersController::class,'updateStatus']);   
 
-
 Route::post('bidcreation/corrigendumpublish/docupload/list', [BidmanagementCorrigendumPublishController::class, 'getUplodedDocList']);
 Route::get('download/corrigendumpublishdocs/{fileName}', [BidmanagementCorrigendumPublishController::class, 'download']);
 Route::post('bidcreation/corrigendumpublish/docupload/{id}', [BidmanagementCorrigendumPublishController::class, 'update']);
+
+// Route::post('bidcreation/getWorkList/list', [BidmanagementCorrigendumPublishController::class, 'getWorkList']);
+Route::get('download/workorder/{fileName}', [BidManagementWorkOrderWorkOrderController::class, 'download']);
+Route::post('download/files', [FileDownloadHandlingController::class, 'download']);
 /*
 ## Resource Laravel Routes Example
 
