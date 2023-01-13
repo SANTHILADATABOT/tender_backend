@@ -40,7 +40,12 @@ use App\Http\Controllers\BidManagementTenderStatusBiddersController;
 use App\Http\Controllers\BidmanagementPreBidQueriesController;
 use App\Http\Controllers\BidmanagementCorrigendumPublishController;
 use App\Http\Controllers\BidCreationTenderParticipationController;
+
+use App\Http\Controllers\BidCreationTenderFeeController;
+use App\Http\Controllers\BidCreationBidSubmittedStatusController;
+
 use App\Http\Controllers\FileDownloadHandlingController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -135,6 +140,10 @@ Route::post('bidcreation/corrigendumpublish/docupload/list', [BidmanagementCorri
 Route::get('download/corrigendumpublishdocs/{fileName}', [BidmanagementCorrigendumPublishController::class, 'download']);
 Route::post('bidcreation/corrigendumpublish/docupload/{id}', [BidmanagementCorrigendumPublishController::class, 'update']);
 
+Route::get('download/tenderfeedocs/{id}', [BidCreationTenderFeeController::class, 'getdocs']);
+Route::get('download/bidsubmittedstatusdocs/{id}', [BidCreationBidSubmittedStatusController::class, 'getdocs']);
+
+
 // Route::post('bidcreation/getWorkList/list', [BidmanagementCorrigendumPublishController::class, 'getWorkList']);
 Route::get('download/workorderimage/{woid}', [BidManagementWorkOrderWorkOrderController::class, 'wodownload']);
 Route::get('download/agreementimage/{agid}', [BidManagementWorkOrderWorkOrderController::class, 'agdownload']);
@@ -142,6 +151,7 @@ Route::get('download/sitehandoverimage/{shoid}', [BidManagementWorkOrderWorkOrde
 Route::post('workorder/creation/Workorder/update/{workid}', [BidManagementWorkOrderWorkOrderController::class, 'update']);
 Route::get('workorder/creation/Workorder/getimagename/{workid}', [BidManagementWorkOrderWorkOrderController::class, 'getimagename']);
 Route::post('download/files', [FileDownloadHandlingController::class, 'download']);
+
 /*
 ## Resource Laravel Routes Example
 
@@ -189,6 +199,8 @@ Route::resources([
     'bidcreation/prebidqueries/docupload'=> BidmanagementPreBidQueriesController::class,
     'bidcreation/corrigendumpublish/docupload'=> BidmanagementCorrigendumPublishController::class,
     'bidcreation/tenderparticipation'=> BidCreationTenderParticipationController::class,
+    'bidcreation/bidsubmission/tenderfee'=> BidCreationTenderFeeController::class,
+    'bidcreation/bidsubmission/bidsubmittedstatus' =>BidCreationBidSubmittedStatusController::class,
 ]);
 
 
