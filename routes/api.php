@@ -136,7 +136,11 @@ Route::get('download/corrigendumpublishdocs/{fileName}', [BidmanagementCorrigend
 Route::post('bidcreation/corrigendumpublish/docupload/{id}', [BidmanagementCorrigendumPublishController::class, 'update']);
 
 // Route::post('bidcreation/getWorkList/list', [BidmanagementCorrigendumPublishController::class, 'getWorkList']);
-Route::get('download/workorder/{fileName}', [BidManagementWorkOrderWorkOrderController::class, 'download']);
+Route::get('download/workorderimage/{woid}', [BidManagementWorkOrderWorkOrderController::class, 'wodownload']);
+Route::get('download/agreementimage/{agid}', [BidManagementWorkOrderWorkOrderController::class, 'agdownload']);
+Route::get('download/sitehandoverimage/{shoid}', [BidManagementWorkOrderWorkOrderController::class, 'shodownload']);
+Route::post('workorder/creation/Workorder/update/{workid}', [BidManagementWorkOrderWorkOrderController::class, 'update']);
+Route::get('workorder/creation/Workorder/getimagename/{workid}', [BidManagementWorkOrderWorkOrderController::class, 'getimagename']);
 Route::post('download/files', [FileDownloadHandlingController::class, 'download']);
 /*
 ## Resource Laravel Routes Example

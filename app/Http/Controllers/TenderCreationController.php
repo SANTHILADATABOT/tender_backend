@@ -7,7 +7,7 @@ use App\Models\TenderTypeMaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Token;
-
+use Illuminate\Support\Facades\DB;
 class TenderCreationController extends Controller
 {
    
@@ -32,13 +32,8 @@ class TenderCreationController extends Controller
       
     public function store(Request $request)
     {
-        // $tenderCreationResult = TenderCreation::where('tenderType', '=', $request->tendertype)->exists();
-        // if ($tenderCreationResult) {
-        //     return response()->json([
-        //         'status' => 400,
-        //         'errors' => 'Tender Type Already Exists'
-        //     ]);
-        // }
+      
+        try{
         $user = Token::where("tokenid", $request->tokenId)->first();
         $request->request->add(['cr_userid' => $user['userid']]);
         $request->request->remove('tokenId');
@@ -60,10 +55,19 @@ class TenderCreationController extends Controller
             ]);
         }
     }
+    }
+    catch(\Exception $e){
+        $error = $e->getMessage();
+        return response()->json([
+            'status' => 404,
+            'message' => 'The provided credentials are incorrect!',
+            'error' => $error
+        ]);
+    }
 }
 
     public function show($id)
-    {
+    {try{
         $tender = TenderCreation::find($id);
 
         if ($tender)
@@ -74,11 +78,19 @@ class TenderCreationController extends Controller
         else {
             return response()->json([
                 'status' => 404,
-                'message' => 'The provided credentials are incorrect.'
+                'message' => 'The provided credentials are incorrect!'
             ]);
         }
     }
-
+    catch(\Exception $e){
+        $error = $e->getMessage();
+        return response()->json([
+            'status' => 404,
+            'message' => 'The provided credentials are incorrect!',
+            'error' => $error
+        ]);
+    }
+    }
     
     public function edit(TenderCreation $tenderCreation)
     {
@@ -88,6 +100,7 @@ class TenderCreationController extends Controller
     
     public function update(Request $request, $id)
     {
+        try{
         $tenderCreationResult2 = TenderCreation::where('tendercreation', '=', $request->tendercreation)
         ->where('id', '!=', $id)
         ->where('customer_id', '=', $request->customer_id)
@@ -126,6 +139,15 @@ class TenderCreationController extends Controller
                 'message' => 'The provided credentials are incorrect.'
             ]);
         }
+    }
+    catch(\Exception $e){
+        $error = $e->getMessage();
+        return response()->json([
+            'status' => 404,
+            'message' => 'The provided credentials are incorrect!',
+            'error' => $error
+        ]);
+    }
     }
 
     /**

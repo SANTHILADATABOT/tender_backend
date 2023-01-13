@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BidmanagementPreBidQueries;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\Token;
 use Illuminate\Support\Facades\File;
 
@@ -18,11 +19,18 @@ public function download(Request $request){
     if($user){
         //For Development
         $path= str_replace("http://192.168.1.29:8000","",$request->fileName);
-        $file=public_path().$path;
+        $path_renamed= str_replace("/","\\", $path);
+        $file=public_path().$path_renamed;
+
+
+        // $file = File::get($file);
+        // $response = Response::make($file, 200);
+        // $response->header('Content-Type', 'application/pdf');
+        // return $response;
 
         //For Live
-        // $path= str_replace("http://192.168.1.29:8000","",$request->fileName);
-        // $file=public_path().$path;
+        $path= str_replace("http://192.168.1.29:8000","",$request->fileName);
+        $file=public_path().$path;
         
         return response()->download($file);
     }
