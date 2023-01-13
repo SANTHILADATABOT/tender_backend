@@ -15,21 +15,19 @@ return new class extends Migration
     {
         Schema::create('tender_creations', function (Blueprint $table) {
             $table->id();
-            $table->string('tendertype')->unique();
-            $table->string('organization');
-            $table->string('customername');
+            $table->string('organisation');
+            $table->string('customername');    
             $table->date('nitdate');
+            $table->bigInteger('tendertype')->unsigned();
+            $table->foreign("tendertype")->references("id")->on("tender_type_masters")->onDelete("restrict")->onUpdate("NO ACTION");
+            $table->integer('cr_userid');
+            $table->integer('edited_userid')->nullable()->default(null);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    
     public function down()
     {
         Schema::dropIfExists('tender_creations');

@@ -96,7 +96,7 @@ class MobilizationAdvanceController extends Controller
      */
     public function show($id)
     {
-        $MobilizationAdvance = MobilizationAdvance::where('id','=',$id)->get();
+        $MobilizationAdvance = MobilizationAdvance::where('bidid','=',$id)->get();
         if ($MobilizationAdvance){
             return response()->json([
                 'status' => 200,

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TenderTypeMaster extends Model
 {
     use HasFactory;
-    protected $fillable = ['tendertype','description'];
+    protected $fillable = ['tendertype','tendertype_status','cr_userid','edited_userid'];
 }

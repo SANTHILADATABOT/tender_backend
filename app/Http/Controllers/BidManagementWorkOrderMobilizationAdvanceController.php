@@ -10,34 +10,22 @@ use Illuminate\Support\Facades\Validator;
 
 class BidManagementWorkOrderMobilizationAdvanceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
+        
         $data= $request->mobilizationData;   
         $validator = Validator::make($data, [
             'mobAdvance' => 'required|integer',
@@ -78,8 +66,8 @@ class BidManagementWorkOrderMobilizationAdvanceController extends Controller
                 'status' => 200,
                 'message' => 'Mobilzation Advance Has created Succssfully!',
                 'Mobilization' => $MobilizationAdvance,
-                'bidid' => $MobilizationAdvance['bidid'],
-                'id' => $MobilizationAdvance['id'],
+                // 'bidid' => $MobilizationAdvance['bidid'],
+                // 'id' => $MobilizationAdvance['id'],
             ]);
         }
         else
@@ -99,7 +87,7 @@ class BidManagementWorkOrderMobilizationAdvanceController extends Controller
      */
     public function show($id)
     {
-        $MobilizationAdvance = BidManagementWorkOrderMobilizationAdvance::where('id','=',$id)->get();
+        $MobilizationAdvance = BidManagementWorkOrderMobilizationAdvance::where('bidid','=',$id)->get();
         if ($MobilizationAdvance){
             return response()->json([
                 'status' => 200,

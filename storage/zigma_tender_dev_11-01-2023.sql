@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2022 at 02:11 PM
+-- Generation Time: Jan 11, 2023 at 02:20 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -20,6 +20,85 @@ SET time_zone = "+00:00";
 --
 -- Database: `zigma_tender_dev`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bidmanagement_corrigendum_publishes`
+--
+
+CREATE TABLE `bidmanagement_corrigendum_publishes` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `date` date NOT NULL,
+  `file_original_name` varchar(255) NOT NULL,
+  `file_new_name` varchar(255) NOT NULL,
+  `file_type` varchar(255) NOT NULL,
+  `file_size` double NOT NULL,
+  `ext` varchar(255) NOT NULL,
+  `bidCreationMainId` bigint(20) UNSIGNED NOT NULL,
+  `createdby_userid` int(11) NOT NULL,
+  `updatedby_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bidmanagement_corrigendum_publishes`
+--
+
+INSERT INTO `bidmanagement_corrigendum_publishes` (`id`, `date`, `file_original_name`, `file_new_name`, `file_type`, `file_size`, `ext`, `bidCreationMainId`, `createdby_userid`, `updatedby_userid`, `created_at`, `updated_at`) VALUES
+(1, '2022-12-31', 'NGqsSEVU9imYvseJQaTDSYc2nChj0YDi2nt6pUwx.pdf', '1673441342430NGqsSEVU9imYvseJQaTDSYc2nChj0YDi2nt6pUwx.pdf', 'application/pdf', 13.264, 'pdf', 6, 42, 0, '2023-01-11 07:19:02', '2023-01-11 07:19:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bidmanagement_pre_bid_queries`
+--
+
+CREATE TABLE `bidmanagement_pre_bid_queries` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `date` date NOT NULL,
+  `file_original_name` varchar(255) NOT NULL,
+  `file_new_name` varchar(255) NOT NULL,
+  `file_type` varchar(255) NOT NULL,
+  `file_size` double NOT NULL,
+  `ext` varchar(255) NOT NULL,
+  `bidCreationMainId` bigint(20) UNSIGNED NOT NULL,
+  `createdby_userid` int(11) NOT NULL,
+  `updatedby_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bidmanagement_pre_bid_queries`
+--
+
+INSERT INTO `bidmanagement_pre_bid_queries` (`id`, `date`, `file_original_name`, `file_new_name`, `file_type`, `file_size`, `ext`, `bidCreationMainId`, `createdby_userid`, `updatedby_userid`, `created_at`, `updated_at`) VALUES
+(1, '2023-01-10', 'istockphoto-1398462038-612x612.jpg', '1673441329220istockphoto-1398462038-612x612.jpg', 'image/jpeg', 34.566, 'jpg', 6, 42, 0, '2023-01-11 07:18:49', '2023-01-11 07:18:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bid_creation_tender_participations`
+--
+
+CREATE TABLE `bid_creation_tender_participations` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tenderparticipation` varchar(255) NOT NULL,
+  `bidCreationMainId` bigint(20) UNSIGNED NOT NULL,
+  `createdby_userid` int(11) NOT NULL,
+  `updatedby_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bid_creation_tender_participations`
+--
+
+INSERT INTO `bid_creation_tender_participations` (`id`, `tenderparticipation`, `bidCreationMainId`, `createdby_userid`, `updatedby_userid`, `created_at`, `updated_at`) VALUES
+(1, 'participating', 6, 42, 0, '2023-01-11 07:19:07', '2023-01-11 07:19:07');
 
 -- --------------------------------------------------------
 
@@ -54,6 +133,172 @@ CREATE TABLE `bid_creation__creations` (
   `prebiddate` date DEFAULT NULL,
   `EMD` varchar(255) NOT NULL DEFAULT '',
   `location` varchar(255) NOT NULL DEFAULT '',
+  `createdby_userid` int(11) NOT NULL,
+  `updatedby_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bid_creation__creations`
+--
+
+INSERT INTO `bid_creation__creations` (`id`, `bidno`, `customername`, `bidcall`, `tenderid`, `tenderinvtauth`, `tenderref`, `state`, `ulb`, `TenderDescription`, `NITdate`, `submissiondate`, `quality`, `unit`, `tenderevalutionsysytem`, `projectperioddate1`, `projectperioddate2`, `estprojectvalue`, `tenderfeevalue`, `priceperunit`, `emdmode`, `emdamt`, `dumpsiter`, `prebiddate`, `EMD`, `location`, `createdby_userid`, `updatedby_userid`, `created_at`, `updated_at`) VALUES
+(6, '00011', 'dvsdv', 'sdg', 'cfdbfdb', 'fdbqfd`', 'dgnrtw', 4, 5, 'fbfd', '2023-01-09', '2023-01-10', '25000', 'Cu.M', 'QCBS', '2023-01-03', '2023-04-11', 25000, 2500, 25000, '25000', 250000, 'zfd.bmk', '2023-01-10', 'nonexempted', 'fdhad', 42, 0, '2023-01-11 07:18:30', '2023-01-11 07:18:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bid_creation__creation__docs`
+--
+
+CREATE TABLE `bid_creation__creation__docs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `docname` varchar(255) NOT NULL,
+  `file_original_name` varchar(255) NOT NULL,
+  `file_new_name` varchar(255) NOT NULL,
+  `file_type` varchar(255) NOT NULL,
+  `file_size` double NOT NULL,
+  `ext` varchar(255) NOT NULL,
+  `bidCreationMainId` bigint(20) UNSIGNED NOT NULL,
+  `createdby_userid` int(11) NOT NULL,
+  `updatedby_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bid_creation__creation__docs`
+--
+
+INSERT INTO `bid_creation__creation__docs` (`id`, `docname`, `file_original_name`, `file_new_name`, `file_type`, `file_size`, `ext`, `bidCreationMainId`, `createdby_userid`, `updatedby_userid`, `created_at`, `updated_at`) VALUES
+(7, 'Test', 'i.jpeg', '1673441319361i.jpeg', 'image/webp', 27.568, 'webp', 6, 42, 0, '2023-01-11 07:18:39', '2023-01-11 07:18:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bid_management_tender_status_bidders`
+--
+
+CREATE TABLE `bid_management_tender_status_bidders` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `bidid` bigint(20) UNSIGNED NOT NULL,
+  `no_of_bidders` int(10) UNSIGNED NOT NULL,
+  `tenderstatus` enum('Pending','Cancelled','Completed') NOT NULL DEFAULT 'Pending',
+  `created_userid` int(11) NOT NULL,
+  `edited_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bid_management_tender_status_bidders`
+--
+
+INSERT INTO `bid_management_tender_status_bidders` (`id`, `bidid`, `no_of_bidders`, `tenderstatus`, `created_userid`, `edited_userid`, `created_at`, `updated_at`) VALUES
+(2, 6, 45, 'Pending', 42, 42, '2023-01-11 07:19:34', '2023-01-11 12:54:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bid_management_work_order_communication_files`
+--
+
+CREATE TABLE `bid_management_work_order_communication_files` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `bidid` bigint(20) UNSIGNED NOT NULL,
+  `date` date DEFAULT NULL,
+  `refrenceno` varchar(255) NOT NULL DEFAULT '',
+  `med_refrenceno` varchar(255) NOT NULL DEFAULT '',
+  `from` varchar(255) NOT NULL,
+  `to` varchar(255) NOT NULL DEFAULT '',
+  `subject` varchar(255) NOT NULL DEFAULT '',
+  `medium` varchar(255) NOT NULL DEFAULT '',
+  `comfile` varchar(255) NOT NULL DEFAULT '',
+  `createdby_userid` int(11) NOT NULL,
+  `updatedby_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bid_management_work_order_mobilization_advances`
+--
+
+CREATE TABLE `bid_management_work_order_mobilization_advances` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `bidid` bigint(20) UNSIGNED NOT NULL,
+  `mobadvance` varchar(255) NOT NULL DEFAULT '',
+  `bankname` varchar(255) NOT NULL DEFAULT '',
+  `bankbranch` varchar(255) NOT NULL DEFAULT '',
+  `mobadvmode` varchar(255) NOT NULL DEFAULT '',
+  `datemobadv` date DEFAULT NULL,
+  `validupto` date DEFAULT NULL,
+  `createdby_userid` int(11) NOT NULL,
+  `updatedby_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bid_management_work_order_mobilization_advances`
+--
+
+INSERT INTO `bid_management_work_order_mobilization_advances` (`id`, `bidid`, `mobadvance`, `bankname`, `bankbranch`, `mobadvmode`, `datemobadv`, `validupto`, `createdby_userid`, `updatedby_userid`, `created_at`, `updated_at`) VALUES
+(2, 6, '15000', 'dfgnmd', 'dghmdgh', '11', '2023-01-10', '2023-01-10', 42, 0, '2023-01-11 07:32:06', '2023-01-11 07:32:06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bid_management_work_order_project_details`
+--
+
+CREATE TABLE `bid_management_work_order_project_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `bidid` bigint(20) UNSIGNED NOT NULL,
+  `properiod` varchar(255) NOT NULL DEFAULT '',
+  `mobPeriod` varchar(255) NOT NULL DEFAULT '',
+  `monsoonperiod` varchar(255) NOT NULL DEFAULT '',
+  `monthduration` varchar(255) NOT NULL DEFAULT '',
+  `supplyscape` varchar(255) NOT NULL DEFAULT '',
+  `supplydate` date DEFAULT NULL,
+  `erectionstart` date DEFAULT NULL,
+  `commercialproduc` date DEFAULT NULL,
+  `tarcompletion` date DEFAULT NULL,
+  `produccompletion` date DEFAULT NULL,
+  `createdby_userid` int(11) NOT NULL,
+  `updatedby_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bid_management_work_order_project_details`
+--
+
+INSERT INTO `bid_management_work_order_project_details` (`id`, `bidid`, `properiod`, `mobPeriod`, `monsoonperiod`, `monthduration`, `supplyscape`, `supplydate`, `erectionstart`, `commercialproduc`, `tarcompletion`, `produccompletion`, `createdby_userid`, `updatedby_userid`, `created_at`, `updated_at`) VALUES
+(2, 6, 'gdfg', 'gh,42257', 'dff', 'dytkjyt', 'fsgy', '2023-01-10', '2023-01-10', '2023-01-10', '2022-12-29', '2023-01-20', 42, 0, '2023-01-11 07:33:05', '2023-01-11 07:33:05');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bid_management_work_order_work_orders`
+--
+
+CREATE TABLE `bid_management_work_order_work_orders` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `bidid` bigint(20) UNSIGNED NOT NULL,
+  `orderquantity` varchar(255) NOT NULL DEFAULT '',
+  `priceperunit` varchar(255) NOT NULL DEFAULT '',
+  `loadate` date DEFAULT NULL,
+  `orderdate` date DEFAULT NULL,
+  `agreedate` date DEFAULT NULL,
+  `sitehandoverdate` date DEFAULT NULL,
+  `wofile` varchar(255) NOT NULL DEFAULT '',
+  `agfile` varchar(255) NOT NULL DEFAULT '',
+  `shofile` varchar(255) NOT NULL DEFAULT '',
   `createdby_userid` int(11) NOT NULL,
   `updatedby_userid` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -6017,7 +6262,8 @@ INSERT INTO `city_masters` (`id`, `city_name`, `country_id`, `state_id`, `distri
 (5926, 'Sathi', 253, 39, 679, 'InActive', '2022-12-19 00:00:23', '2022-12-19 00:09:58'),
 (5927, 'Bavani', 253, 39, 679, 'Active', '2022-12-19 00:01:27', '2022-12-19 00:01:27'),
 (5928, 'Sathi', 253, 39, 680, 'Active', '2022-12-19 00:02:12', '2022-12-19 00:02:12'),
-(5929, 'Bavani', 253, 39, 680, 'Active', '2022-12-19 00:02:51', '2022-12-19 00:02:51');
+(5929, 'Bavani', 253, 39, 680, 'Active', '2022-12-19 00:02:51', '2022-12-19 00:02:51'),
+(5930, '2022-12-29', 254, 42, 682, 'Active', '2022-12-28 23:24:43', '2022-12-28 23:24:43');
 
 -- --------------------------------------------------------
 
@@ -6044,9 +6290,116 @@ CREATE TABLE `competitor_details_branches` (
 --
 
 INSERT INTO `competitor_details_branches` (`id`, `compId`, `compNo`, `country`, `state`, `district`, `city`, `cr_userid`, `edited_userid`, `created_at`, `updated_at`) VALUES
-(8, 3, 'TNCMP0003', 105, 31, 639, 5896, '42', NULL, '2022-12-26 23:23:52', '2022-12-26 23:23:52'),
-(10, 4, 'TNCMP0003', 105, 3, 281, 1669, '42', NULL, '2022-12-26 23:32:23', '2022-12-26 23:32:23'),
-(12, 4, 'TNCMP0003', 105, 5, 239, 1543, '42', NULL, '2022-12-27 00:14:47', '2022-12-27 00:14:47');
+(12, 4, 'TNCMP0003', 105, 5, 239, 1543, '42', NULL, '2022-12-27 00:14:47', '2022-12-27 00:14:47'),
+(13, 4, 'TNCMP0003', 105, 4, 337, 2114, '42', '42', '2023-01-04 06:53:27', '2023-01-04 06:53:35'),
+(14, 4, 'TNCMP0003', 105, 31, 643, 5751, '42', NULL, '2023-01-06 05:00:19', '2023-01-06 05:00:19');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `competitor_details_company_net_worths`
+--
+
+CREATE TABLE `competitor_details_company_net_worths` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `compId` bigint(20) UNSIGNED NOT NULL,
+  `compNo` varchar(255) NOT NULL,
+  `accountYear` varchar(255) NOT NULL,
+  `accValue` decimal(13,2) NOT NULL,
+  `cr_userid` int(11) NOT NULL,
+  `edited_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `competitor_details_company_net_worths`
+--
+
+INSERT INTO `competitor_details_company_net_worths` (`id`, `compId`, `compNo`, `accountYear`, `accValue`, `cr_userid`, `edited_userid`, `created_at`, `updated_at`) VALUES
+(3, 4, 'TNCMP0003', '2023-2024', '7888888.01', 42, NULL, '2023-01-04 06:54:10', '2023-01-04 06:54:10'),
+(4, 4, 'TNCMP0003', '2022-2023', '999999999.20', 42, NULL, '2023-01-04 06:54:15', '2023-01-04 06:54:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `competitor_details_line_of_businesses`
+--
+
+CREATE TABLE `competitor_details_line_of_businesses` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `compId` bigint(20) UNSIGNED NOT NULL,
+  `compNo` varchar(255) NOT NULL,
+  `bizLineValue` varchar(255) NOT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `cr_userid` int(11) NOT NULL,
+  `edited_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `competitor_details_line_of_businesses`
+--
+
+INSERT INTO `competitor_details_line_of_businesses` (`id`, `compId`, `compNo`, `bizLineValue`, `remark`, `cr_userid`, `edited_userid`, `created_at`, `updated_at`) VALUES
+(6, 4, 'TNCMP0003', 'Service Sector', 'IT', 42, NULL, '2023-01-04 06:56:27', '2023-01-04 06:56:27'),
+(7, 4, 'TNCMP0003', 'Education', NULL, 42, NULL, '2023-01-04 06:56:31', '2023-01-04 06:56:31');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `competitor_details_pros_cons`
+--
+
+CREATE TABLE `competitor_details_pros_cons` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `compId` bigint(20) UNSIGNED NOT NULL,
+  `compNo` varchar(255) NOT NULL,
+  `strength` varchar(255) DEFAULT NULL,
+  `weakness` varchar(255) DEFAULT NULL,
+  `cr_userid` int(11) NOT NULL,
+  `edited_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `competitor_details_pros_cons`
+--
+
+INSERT INTO `competitor_details_pros_cons` (`id`, `compId`, `compNo`, `strength`, `weakness`, `cr_userid`, `edited_userid`, `created_at`, `updated_at`) VALUES
+(7, 4, 'TNCMP0003', 'tetd', '/df', 42, NULL, '2023-01-04 06:15:33', '2023-01-04 06:15:33'),
+(8, 4, 'TNCMP0003', 'asdfa', 'eg', 42, NULL, '2023-01-04 06:57:19', '2023-01-04 06:57:19');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `competitor_details_quality_certificates`
+--
+
+CREATE TABLE `competitor_details_quality_certificates` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `compId` bigint(20) UNSIGNED NOT NULL,
+  `compNo` varchar(255) NOT NULL,
+  `cerName` varchar(255) NOT NULL,
+  `filepath` varchar(255) NOT NULL,
+  `filetype` varchar(255) NOT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `cr_userid` int(11) NOT NULL,
+  `edited_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `competitor_details_quality_certificates`
+--
+
+INSERT INTO `competitor_details_quality_certificates` (`id`, `compId`, `compNo`, `cerName`, `filepath`, `filetype`, `remark`, `cr_userid`, `edited_userid`, `created_at`, `updated_at`) VALUES
+(1, 4, 'TNCMP0003', '1', '1IvTVPSofaVLNXQKBBucDFG9l59iAjsylQDse58b.jpg', 'jpg', 'jpg', 42, 42, '2023-01-05 04:32:14', '2023-01-07 04:54:36'),
+(2, 4, 'TNCMP0003', '2', 'UyOQwRgxQRJ9g9Ezp4xSc6zgl6J3X3zXkfdbcb10.jpeg', 'jpeg', 'JPEG updated', 42, 42, '2023-01-05 04:33:21', '2023-01-08 22:52:57'),
+(3, 4, 'TNCMP0003', 'pdf', 'NGqsSEVU9imYvseJQaTDSYc2nChj0YDi2nt6pUwx.pdf', 'pdf', 'pdf', 42, NULL, '2023-01-05 05:00:01', '2023-01-05 05:00:01');
 
 -- --------------------------------------------------------
 
@@ -6071,8 +6424,53 @@ CREATE TABLE `competitor_details_turn_overs` (
 --
 
 INSERT INTO `competitor_details_turn_overs` (`id`, `compId`, `compNo`, `accountYear`, `accValue`, `cr_userid`, `edited_userid`, `created_at`, `updated_at`) VALUES
-(17, 3, 'TNCMP0003', '2021-2022', '400500000.00', '42', '42', '2022-12-27 06:55:10', '2022-12-27 07:36:29'),
-(18, 3, 'TNCMP0003', '2020-2021', '7800000.00', '42', NULL, '2022-12-27 07:28:08', '2022-12-27 07:28:08');
+(21, 4, 'TNCMP0003', '2023-2024', '100000.00', '42', NULL, '2023-01-04 06:53:56', '2023-01-04 06:53:56'),
+(22, 4, 'TNCMP0003', '2022-2023', '7888888.01', '42', NULL, '2023-01-04 06:54:02', '2023-01-04 06:54:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `competitor_details_work_orders`
+--
+
+CREATE TABLE `competitor_details_work_orders` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `compId` bigint(20) UNSIGNED NOT NULL,
+  `compNo` varchar(255) NOT NULL,
+  `custName` varchar(255) NOT NULL,
+  `projectName` varchar(255) NOT NULL,
+  `tnederId` varchar(255) NOT NULL,
+  `state` bigint(20) UNSIGNED NOT NULL,
+  `woDate` date NOT NULL,
+  `quantity` varchar(255) NOT NULL,
+  `unit` bigint(20) UNSIGNED NOT NULL,
+  `projectValue` varchar(255) NOT NULL,
+  `perTonRate` varchar(255) NOT NULL,
+  `qualityCompleted` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `woFile` varchar(255) NOT NULL,
+  `woFileType` varchar(255) NOT NULL,
+  `completionFile` varchar(255) NOT NULL,
+  `completionFileType` varchar(255) NOT NULL,
+  `cr_userid` int(11) NOT NULL,
+  `edited_userid` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `competitor_details_work_orders`
+--
+
+INSERT INTO `competitor_details_work_orders` (`id`, `compId`, `compNo`, `custName`, `projectName`, `tnederId`, `state`, `woDate`, `quantity`, `unit`, `projectValue`, `perTonRate`, `qualityCompleted`, `date`, `woFile`, `woFileType`, `completionFile`, `completionFileType`, `cr_userid`, `edited_userid`, `created_at`, `updated_at`) VALUES
+(1, 4, 'TNCMP0003', 'Test cust', 'Project', 'Tend0001', 17, '2023-01-01', '250', 1, '250000', '1000', '10%', '2023-01-05', 'ZzNWljTbc7QGJv9vyzKX4SGgOGAWFmeO7DLGvb76.jpg', 'jpg', '2gVggRpYVJFeZWhqotOaRb3qKC5eAHNryNyBEwfq.jpg', 'jpg', 42, NULL, '2023-01-07 02:26:26', '2023-01-09 05:17:09'),
+(2, 4, 'TNCMP0003', 'Solid Waste Management', 'Water Treatment', 'tht', 30, '2023-01-06', 'nbrtbg', 1, 'rerere', 'reegreg', 'bsd', '2023-01-06', 'ZxfRleh68KWBAwYolceMdwOY10rM5TBw3nkTUboD.jpg', 'jpg', 'D6PK3ciRT5q1FYIRV0JoTdf2sl5KU3mNgdiZsDel.jpg', 'jpg', 42, 42, '2023-01-07 05:05:30', '2023-01-10 00:33:26'),
+(3, 4, 'TNCMP0003', 'Test updated 00000', 'Project', 'Tend0001', 31, '2023-01-01', '250', 1, '250000', '1000', '10%', '2023-01-05', 'SIAUD36tcvmgjDgDdQkFlcQDiK7tjAp3HIKHWkUQ.jpg', 'jpg', 'fbgzr9K82Ovy7sknFOXbMro6JhfNB28MeLgkUzzd.pdf', 'pdf', 42, 42, '2023-01-07 07:15:18', '2023-01-10 00:40:38'),
+(4, 4, 'TNCMP0003', 'A2Z Cleaners 0', 'Waste Management', 'ULB0078222', 31, '2023-01-31', '2500000', 3, '25000000', '10000', '20%', '2023-01-14', 'zflR1CxOhgL5AVaPXxdc7RFiJUBYBft0uGxnlAQo.pdf', 'pdf', 'efDMgcm7aHTraz5RjmUAUeQ1l52XQu853qLjy78M.pdf', 'pdf', 42, 42, '2023-01-10 00:55:51', '2023-01-10 22:36:23'),
+(5, 4, 'TNCMP0003', 'Test Customer Entry Update', 'Test Project update', 'TNR0000012', 27, '2023-01-13', '4500', 3, '45000000', '1000000', '10%', '2023-01-12', 'GMy9g3blvGWk4dlIkLr581dOB07XveniXIOmV8Om.jpg', 'jpg', 'dYeLC6xCAt9MsrJxaWBvmt5qvoDzdrVIFqWdzrPj.pdf', 'pdf', 42, 42, '2023-01-10 01:52:26', '2023-01-10 01:52:46'),
+(6, 4, 'TNCMP0003', 'Final test', 'Final Test Project', 'TnR00001', 6, '2023-01-13', '2500000', 3, '250000000', '10000', '5%', '2023-01-13', 's8qsokGJT8Yj3oDuTDHgLLEPvbQQh3I6gIfqfNDQ.pdf', 'pdf', '', '', 42, 42, '2023-01-10 23:02:03', '2023-01-10 23:25:05'),
+(7, 4, 'TNCMP0003', 'Final check 1', 'Test prog', 'TnR00001', 31, '2023-01-13', '2500000', 3, '250000000', '10000', '5%', '2023-01-13', 'FcXssXX5aTufmcl9d4x5FVJMUvgFAZE96zjBHGKH.jpg', 'jpg', '', '', 42, 42, '2023-01-10 23:03:46', '2023-01-10 23:24:57'),
+(8, 4, 'TNCMP0003', 'Check 1', 'check', 'Tnr 0001', 18, '2022-12-31', '150000', 1, '2500000', '10000', '10%', '2023-01-12', 'DksOzi69tEECrqQSQDd9gRzxGKPVJTyXxxX2uOdE.jpg', 'jpg', 'mHN44pRtM5zNXJxsVXXzYj63KbV412zYrxwQY6Aj.pdf', 'pdf', 42, NULL, '2023-01-10 23:11:27', '2023-01-10 23:11:27');
 
 -- --------------------------------------------------------
 
@@ -6111,10 +6509,9 @@ CREATE TABLE `competitor_profile_creations` (
 --
 
 INSERT INTO `competitor_profile_creations` (`id`, `compNo`, `compName`, `registrationType`, `registerationYear`, `country`, `state`, `district`, `city`, `address`, `pincode`, `panNo`, `mobile`, `email`, `gstNo`, `directors`, `companyType`, `manpower`, `cr_userid`, `edited_userid`, `delete_status`, `created_at`, `updated_at`) VALUES
-(3, 'TNCMP0003', 'Cmp3', '4', 1929, 105, 31, 641, 5886, 'Test address 2', 638110, 'ASAZS9578S', 8877887701, 'mail2@gmail.com', '33ABMPK9220B1ZA', 'Per121', '2', 78, '42', NULL, 0, '2022-12-19 00:20:18', '2022-12-19 00:20:18'),
-(4, 'TNCMP0003', 'Cmp4', '3', 2000, 105, 1, 673, 5917, 'Testf', 684410, 'CCAZS9576S', 8877887799, 'mail2@gmail.com', '07ACZPK9220B1ZG', 'Per121', '1', 100, '42', NULL, 0, '2022-12-19 00:37:02', '2022-12-19 00:37:02'),
+(4, 'TNCMP0003', 'Cmp4', '3', 2000, 105, 4, 335, 2143, 'Testf', 684410, 'CCAZS9576S', 8877887799, 'mail2@gmail.com', '07ACZPK9220B1ZG', 'Per121', '1', 100, '42', NULL, 0, '2022-12-19 00:37:02', '2022-12-19 00:37:02'),
 (5, 'TNCMP0004', 'Comp4', '4', 1993, 105, 17, 591, 5542, 'Comp Address', 632000, 'CAAPZ8877C', 87520014720, '1@email.com', '18AABCU9603R1ZM', 'Person 1', '3', 160, '42', '42', 0, '2022-12-19 22:39:59', '2022-12-19 23:08:18'),
-(6, 'TNCMP0005', 'Comp5', '3', 1993, 105, 2, 569, 5367, 'Test 123', 632040, 'CAAPZ8877F', 87520014721, '2@email.com', '18AABCU9603R1ZN', 'Person 2', '0', 350, '42', NULL, 0, '2022-12-19 22:50:50', '2022-12-19 22:50:50');
+(6, 'TNCMP0005', 'Comp5', '3', 1993, 105, 2, 569, 5367, 'Test123', 632040, 'CAAPZ8877F', 87520014721, '2@email.com', '18AABCU9603R1ZN', 'Person 2', '0', 350, '42', '42', 0, '2022-12-19 22:50:50', '2023-01-04 23:47:59');
 
 -- --------------------------------------------------------
 
@@ -6385,7 +6782,7 @@ INSERT INTO `country_masters` (`id`, `country_name`, `country_status`, `created_
 (248, 'South Africa', 'InActive', '2022-11-26 00:01:37', '2022-11-26 00:01:37'),
 (249, 'Zambia', 'InActive', '2022-11-26 00:01:37', '2022-11-26 00:01:37'),
 (250, 'Zimbabwe', 'InActive', '2022-11-26 00:01:37', '2022-11-26 00:01:37'),
-(253, 't_country_1', 'InActive', '2022-12-18 23:52:57', '2022-12-19 00:43:07'),
+(253, 't_country_1', 'InActive', '2022-12-18 23:52:57', '2022-12-31 00:08:28'),
 (254, 't_country_2', 'Active', '2022-12-18 23:53:23', '2022-12-18 23:53:23');
 
 -- --------------------------------------------------------
@@ -6441,7 +6838,7 @@ CREATE TABLE `customer_creation_contact_people` (
 
 INSERT INTO `customer_creation_contact_people` (`id`, `contact_person`, `mobile_no`, `email`, `designation`, `cust_creation_mainid`, `createdby_userid`, `updatedby_userid`, `delete_status`, `created_at`, `updated_at`) VALUES
 (8, 'madhu', '8999999999', 'madhu@gamil.com', 'devloper', 5, 42, 0, 0, '2022-12-21 02:12:10', '2022-12-21 02:12:10'),
-(9, 'Test 12', '7899663300', 'jhas@gmaoi.com', 'Tester', 5, 42, 0, 0, '2022-12-26 23:38:53', '2022-12-26 23:38:53');
+(9, 'Test 12', '7899663300', 'jhas@gmaoi.com', 'Tester', 5, 42, 42, 0, '2022-12-26 23:38:53', '2023-01-04 23:22:27');
 
 -- --------------------------------------------------------
 
@@ -6528,7 +6925,7 @@ CREATE TABLE `customer_creation_s_w_m_project_statuses` (
 --
 
 INSERT INTO `customer_creation_s_w_m_project_statuses` (`id`, `projecttype`, `status`, `vendortype`, `vendor`, `projectstatus`, `projectvalue`, `duration1`, `duration2`, `createdby`, `updatedby`, `mainid`, `delete_status`, `created_at`, `updated_at`) VALUES
-(9, 2, 1, 1, 'vendor', 2, '1000000', '2022-12-01', '2022-12-20', 42, 0, 5, 0, '2022-12-21 02:13:15', '2022-12-21 02:13:15');
+(9, 2, 1, 1, 'vendor', 2, '1000000', '2022-12-01', '2022-12-20', 42, 42, 5, 0, '2022-12-21 02:13:15', '2023-01-04 23:36:10');
 
 -- --------------------------------------------------------
 
@@ -7298,7 +7695,22 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (41, '2022_12_20_053501_create_competitor_details_branches_table', 23),
 (42, '2022_12_21_050931_create_customer_creation_bank_details_table', 24),
 (43, '2022_12_24_064642_create_bid_creation__creations_table', 25),
-(44, '2022_12_27_083322_create_competitor_details_turn_overs_table', 26);
+(44, '2022_12_27_083322_create_competitor_details_turn_overs_table', 26),
+(46, '2022_12_28_035018_create_competitor_details_company_net_worths_table', 27),
+(49, '2022_12_28_043550_create_competitor_details_line_of_businesses_table', 28),
+(50, '2022_12_28_130636_create_competitor_details_pros_cons_table', 29),
+(55, '2022_12_29_072732_create_tender_type_masters_table', 32),
+(57, '2023_01_04_044406_create_tender_creations_table', 34),
+(62, '2023_01_05_130216_create_competitor_details_work_orders_table', 38),
+(65, '2022_12_25_115331_create_bid_creation__creation__docs_table', 40),
+(85, '2023_01_07_072005_create_bid_management_work_order_project_details_table', 50),
+(87, '2023_01_10_100933_create_bid_management_work_order_mobilization_advances_table', 52),
+(90, '2023_01_09_095720_create_bid_management_work_order_work_orders_table', 54),
+(92, '2023_01_11_054453_create_bid_management_tender_status_bidders_table', 55),
+(93, '2023_01_10_125224_create_bidmanagement_pre_bid_queries_table', 56),
+(94, '2023_01_10_173238_create_bidmanagement_corrigendum_publishes_table', 57),
+(95, '2023_01_11_044908_create_bid_creation_tender_participations_table', 58),
+(96, '2023_01_10_101014_create_bid_management_work_order_communication_files_table', 59);
 
 -- --------------------------------------------------------
 
@@ -7350,15 +7762,9 @@ CREATE TABLE `project_statuses` (
 --
 
 INSERT INTO `project_statuses` (`id`, `projectstatus`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'pro status', 'InActive', '2022-12-15 04:40:54', '2022-12-20 01:39:37'),
-(2, 'pro status2', 'Active', '2022-12-15 04:41:25', '2022-12-15 04:44:02'),
-(3, 'ghrtfhfgjh', 'Active', '2022-12-15 04:44:12', '2022-12-15 04:44:12'),
-(5, 'hgkhgkhg', 'Active', '2022-12-15 04:44:26', '2022-12-15 04:44:26'),
-(9, 'hgkhgkhgkhg', 'Active', '2022-12-15 04:45:00', '2022-12-15 04:45:00'),
-(10, 'hgkhgkhgkhkg', 'Active', '2022-12-15 04:45:14', '2022-12-15 04:45:14'),
-(11, 'fdhfd', 'Active', '2022-12-15 04:45:19', '2022-12-15 04:45:19'),
-(12, 'fhfhfdhgfd', 'Active', '2022-12-15 04:45:25', '2022-12-15 04:45:25'),
-(13, 'fhfdhfdhd', 'Active', '2022-12-15 04:45:33', '2022-12-15 04:45:33');
+(2, 'Approved', 'Active', '2022-12-15 04:41:25', '2023-01-05 03:31:13'),
+(13, 'inprogress', 'Active', '2022-12-15 04:45:33', '2023-01-05 03:30:58'),
+(16, 'Pending', 'Active', '2023-01-05 03:31:26', '2023-01-05 03:31:26');
 
 -- --------------------------------------------------------
 
@@ -7379,18 +7785,14 @@ CREATE TABLE `project_types` (
 --
 
 INSERT INTO `project_types` (`id`, `projecttype`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'projecttypetest2', 'Active', '2022-12-14 06:37:11', '2022-12-20 01:38:07'),
-(22, 'fgjgf', 'Active', '2022-12-14 23:58:27', '2022-12-14 23:58:27'),
-(23, 'gfjgfjf', 'Active', '2022-12-14 23:58:31', '2022-12-14 23:58:31'),
-(24, 'gfjf', 'Active', '2022-12-14 23:58:36', '2022-12-14 23:58:36'),
-(25, 'jfgjfg', 'Active', '2022-12-14 23:58:40', '2022-12-14 23:58:40'),
-(26, 'gfjfj', 'Active', '2022-12-14 23:58:45', '2022-12-14 23:58:45'),
-(28, 'gfjfggfjfg', 'Active', '2022-12-14 23:58:55', '2022-12-14 23:58:55'),
-(29, 'gfjgf', 'Active', '2022-12-14 23:58:59', '2022-12-14 23:58:59'),
-(30, 'gfjfggf', 'Active', '2022-12-14 23:59:11', '2022-12-14 23:59:11'),
-(31, 'gjfgj', 'Active', '2022-12-14 23:59:21', '2022-12-14 23:59:21'),
-(32, 'gfjgfjfgjfjgf', 'Active', '2022-12-14 23:59:35', '2022-12-14 23:59:35'),
-(33, 'gfjgfgfjfg', 'Active', '2022-12-14 23:59:45', '2022-12-15 01:11:14');
+(2, 'Compost Plant', 'Active', '2022-12-14 06:37:11', '2023-01-05 03:56:06'),
+(23, 'Bio CNG Plant', 'Active', '2022-12-14 23:58:31', '2023-01-05 03:55:54'),
+(35, 'MCC', 'Active', '2023-01-05 03:56:14', '2023-01-05 03:56:14'),
+(36, 'Windrow', 'Active', '2023-01-05 03:56:33', '2023-01-05 03:56:33'),
+(37, 'Bio Methnation Plant', 'Active', '2023-01-05 03:56:55', '2023-01-05 03:56:55'),
+(38, 'Waste to Energy Plant', 'Active', '2023-01-05 03:57:24', '2023-01-05 03:57:24'),
+(39, 'Transfer Station', 'Active', '2023-01-05 03:57:34', '2023-01-05 03:57:34'),
+(40, 'LandFill', 'Active', '2023-01-05 03:57:44', '2023-01-05 03:57:44');
 
 -- --------------------------------------------------------
 
@@ -7414,8 +7816,8 @@ CREATE TABLE `state_masters` (
 --
 
 INSERT INTO `state_masters` (`id`, `state_name`, `category`, `state_code`, `country_id`, `state_status`, `created_at`, `updated_at`) VALUES
-(1, 'Andaman & Nicobar Islands', 'Union Territory', 'AN', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 06:44:49'),
-(2, 'Andhra Pradesh', 'State', 'AP', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
+(1, 'Andaman & Nicobar Islands', 'Union Territory', 'AN', 254, 'Active', '2022-11-26 00:15:27', '2022-12-31 01:52:45'),
+(2, 'Andhra pradesh', 'State', 'AP', 105, 'Active', '2022-11-26 00:15:27', '2023-01-03 06:57:26'),
 (3, 'Arunachal Pradesh', 'State', 'AR', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
 (4, 'Assam', 'State', 'AS', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
 (5, 'Bihar', 'State', 'BR', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
@@ -7423,7 +7825,7 @@ INSERT INTO `state_masters` (`id`, `state_name`, `category`, `state_code`, `coun
 (7, 'Chhattisgarh', 'State', 'CG', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
 (8, 'Dadra & Nagar Haveli', 'Union Territory', 'DH', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 06:48:21'),
 (9, 'Daman & Diu', 'Union Territory', 'DD', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 06:48:53'),
-(10, 'Delhi', 'Union Territory', 'DL', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 06:44:24'),
+(10, 'Delhi', 'Union Territory', 'DL', 105, 'InActive', '2022-11-26 00:15:27', '2022-12-31 01:52:29'),
 (11, 'Goa', 'State', 'GA', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
 (12, 'Gujarat', 'State', 'GJ', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
 (13, 'Haryana', 'State', 'HR', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
@@ -7444,7 +7846,7 @@ INSERT INTO `state_masters` (`id`, `state_name`, `category`, `state_code`, `coun
 (28, 'Punjab', 'State', 'PB', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
 (29, 'Rajasthan', 'State', 'RJ', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
 (30, 'Sikkim', 'State', 'SK', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
-(31, 'Tamil Nadu1', 'State', 'TN', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
+(31, 'Tamil Nadu', 'State', 'TN', 105, 'Active', '2022-11-26 00:15:27', '2023-01-03 05:04:09'),
 (32, 'Tripura', 'State', 'TR', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
 (33, 'Uttar Pradesh', 'State', 'UP', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
 (34, 'Uttarakhand', 'State', 'UK', 105, 'Active', '2022-11-26 00:15:27', '2022-12-16 12:07:25'),
@@ -7452,9 +7854,45 @@ INSERT INTO `state_masters` (`id`, `state_name`, `category`, `state_code`, `coun
 (39, 't_State_1', 'Union Territory', 'TS1', 253, 'InActive', '2022-12-18 23:53:39', '2022-12-19 00:33:57'),
 (40, 't_State_2', 'State', 'TS2', 253, 'Active', '2022-12-18 23:53:54', '2022-12-18 23:53:54'),
 (41, 't_State_3', 'State', 'TS3', 253, 'Active', '2022-12-18 23:54:06', '2022-12-18 23:54:06'),
-(42, 't_UNI_1', 'State', 'UN1', 254, 'Active', '2022-12-18 23:54:32', '2022-12-18 23:54:32'),
-(43, 't_UNI_2', 'State', 'UN2', 254, 'Active', '2022-12-18 23:54:43', '2022-12-18 23:54:43'),
-(44, 't_UNI_3', 'State', 'UN3', 254, 'InActive', '2022-12-18 23:54:55', '2022-12-19 05:04:51');
+(42, 't_UNI_123', 'State', 'UN1', 254, 'Active', '2022-12-18 23:54:32', '2023-01-02 02:12:11'),
+(43, 't_UNI_2', 'State', 'UN2', 254, 'Active', '2022-12-18 23:54:43', '2022-12-18 23:54:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tender_creations`
+--
+
+CREATE TABLE `tender_creations` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tendertype` varchar(255) NOT NULL,
+  `organization` varchar(255) NOT NULL,
+  `customername` varchar(255) NOT NULL,
+  `nitdate` date NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tender_type_masters`
+--
+
+CREATE TABLE `tender_type_masters` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tendertype` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tender_type_masters`
+--
+
+INSERT INTO `tender_type_masters` (`id`, `tendertype`, `description`, `created_at`, `updated_at`) VALUES
+(8, 'Zigma Pvt Ltd', 'MLMN', '2023-01-02 05:45:02', '2023-01-02 05:45:48');
 
 -- --------------------------------------------------------
 
@@ -7501,7 +7939,43 @@ INSERT INTO `tokens` (`id`, `tokenid`, `userid`, `isLoggedIn`, `created_at`, `up
 (23, '085f59cd5b4e9758b551f785ba2847ff1671855748210', 42, 1, '2022-12-23 22:52:28', '2022-12-23 22:52:28'),
 (24, 'bb4644487cd6700ad880b625cbc04f531672142415026', 42, 1, '2022-12-27 06:30:15', '2022-12-27 06:30:15'),
 (25, '9813e901e16e2a96a2aed90913f7a9131672144370935', 42, 0, '2022-12-27 07:02:50', '2022-12-27 07:18:50'),
-(26, '2768b1df053427cdbe752fbfaf023db51672145345852', 42, 1, '2022-12-27 07:19:05', '2022-12-27 07:19:05');
+(26, '2768b1df053427cdbe752fbfaf023db51672145345852', 42, 1, '2022-12-27 07:19:05', '2022-12-27 07:19:05'),
+(27, '5570222b2d850484007cd676bd10c1441672224674981', 42, 1, '2022-12-28 05:21:15', '2022-12-28 05:21:15'),
+(28, '49c331dcdd01508811cce341415a9eab1672226796297', 42, 1, '2022-12-28 05:56:36', '2022-12-28 05:56:36'),
+(29, 'ecb520c2484f18ac377946ed7887e05b1672289270847', 42, 0, '2022-12-28 23:17:50', '2022-12-29 00:18:23'),
+(30, '2edadfb15cbfe2124a9cae3e79a053ae1672289283992', 42, 1, '2022-12-28 23:18:04', '2022-12-28 23:18:04'),
+(31, '46356133423a95d4a49a324eca4ec53a1672289902516', 42, 0, '2022-12-28 23:28:22', '2022-12-29 06:02:07'),
+(32, 'cb5fea3feb8419b775301b11f24d401e1672292054052', 42, 1, '2022-12-29 00:04:14', '2022-12-29 00:04:14'),
+(33, '18b903a18a2172f98d18697c06ba4c331672292232097', 42, 1, '2022-12-29 00:07:12', '2022-12-29 00:07:12'),
+(34, '1ca6038c2cd4b7ca0136bf3091cad8b01672292914475', 42, 1, '2022-12-29 00:18:34', '2022-12-29 00:18:34'),
+(35, '135f20ac66cc44e3e311c108a29406b01672294080084', 42, 1, '2022-12-29 00:38:00', '2022-12-29 00:38:00'),
+(36, '36e9732ed49fe783eff66a4ae7e93d701672308516922', 42, 1, '2022-12-29 04:38:36', '2022-12-29 04:38:36'),
+(37, '5f6291ab52e0da31dc37b6caec5de4f51672315703351', 42, 1, '2022-12-29 06:38:23', '2022-12-29 06:38:23'),
+(38, 'cb16be1d777198f0694cbe49fb76403a1672467671966', 42, 0, '2022-12-31 00:51:11', '2023-01-02 07:33:45'),
+(39, '59d18a04d81548eedc464bc4d88b45ec1672655045713', 42, 1, '2023-01-02 04:54:05', '2023-01-02 04:54:05'),
+(40, 'e7694a02399559f5bf19fd85e0f09b4c1672717960621', 42, 0, '2023-01-02 22:22:40', '2023-01-03 07:20:27'),
+(41, '1a9d5d6f4ea0de5c682ee9b8ac0832e91672731101837', 42, 1, '2023-01-03 02:01:41', '2023-01-03 02:01:41'),
+(42, 'e78a24723fc65b14b0075ef939378f151672740062486', 42, 1, '2023-01-03 04:31:02', '2023-01-03 04:31:02'),
+(43, 'b6e3c6c33807dd27d022fcdee73cdd591672804984696', 42, 1, '2023-01-03 22:33:04', '2023-01-03 22:33:04'),
+(44, '17ded40458b3c15d9e65c481ab966ffb1672890323309', 42, 1, '2023-01-04 22:15:23', '2023-01-04 22:15:23'),
+(45, 'f8c47f3b821abd126af3d9c81a3f99bd1672892289622', 42, 1, '2023-01-04 22:48:09', '2023-01-04 22:48:09'),
+(46, 'ff5a9ea3fd2abf87722fd29338a947f41672892651855', 42, 1, '2023-01-04 22:54:11', '2023-01-04 22:54:11'),
+(47, '07e0dff8595b2214b900212ebb695fd41672892873688', 42, 1, '2023-01-04 22:57:53', '2023-01-04 22:57:53'),
+(48, '528e738633823457177ade4aa18dbb821672893655025', 42, 1, '2023-01-04 23:10:55', '2023-01-04 23:10:55'),
+(49, 'a28f3746cd23bbf7b5d13eaf14f1186e1672905233137', 42, 1, '2023-01-05 02:23:53', '2023-01-05 02:23:53'),
+(50, 'b35a8c8060b3cc69fe6a26426369d3ca1673006401415', 42, 1, '2023-01-06 06:30:01', '2023-01-06 06:30:01'),
+(51, '4fa519d3cb1ab693a0e932d679db6cc71673064836222', 42, 0, '2023-01-06 22:43:56', '2023-01-07 01:58:24'),
+(52, '4220b850e6ba312c2de45c9bd2bee53d1673076512816', 42, 0, '2023-01-07 01:58:32', '2023-01-07 05:45:09'),
+(53, 'b8ab8f6680e819eb5fcf560b47ce4ef61673090120946', 42, 1, '2023-01-07 05:45:20', '2023-01-07 05:45:20'),
+(54, '28fce63c83e2e4617cab1a0478d96d451673091553639', 42, 0, '2023-01-07 06:09:13', '2023-01-07 07:07:28'),
+(55, 'a850912da673a914922f4fb0d5b2cd731673095055877', 42, 1, '2023-01-07 07:07:35', '2023-01-07 07:07:35'),
+(56, 'b51dd3a9669cc19eb1703fc4100acc011673268452095', 42, 1, '2023-01-09 07:17:32', '2023-01-09 07:17:32'),
+(57, '28d8bff027ff3bcb3d4f17178d92a0991673268452656', 42, 1, '2023-01-09 07:17:32', '2023-01-09 07:17:32'),
+(58, '8d1236c0f7ea2617d891a2d285fc00f21673334931844', 42, 1, '2023-01-10 01:45:31', '2023-01-10 01:45:31'),
+(59, '12f38409938a77668a6721ee373c31411673336956312', 42, 0, '2023-01-10 02:19:16', '2023-01-11 06:02:26'),
+(60, 'ccff94dbdeea335c0272257aecf386041673419715888', 42, 1, '2023-01-11 01:18:35', '2023-01-11 01:18:35'),
+(61, '1e19a26699b77b488a7af35f0f2a66ab1673436757324', 42, 1, '2023-01-11 06:02:37', '2023-01-11 06:02:37'),
+(62, '2980e622f696740dec2414ac2584c9c61673436757921', 42, 1, '2023-01-11 06:02:37', '2023-01-11 06:02:37');
 
 -- --------------------------------------------------------
 
@@ -7530,6 +8004,16 @@ CREATE TABLE `unit_masters` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `unit_masters`
+--
+
+INSERT INTO `unit_masters` (`id`, `unit_name`, `unit_status`, `created_at`, `updated_at`) VALUES
+(1, 'Cubic Metric Ton', 'Active', '2023-01-05 01:07:43', '2023-01-10 00:54:51'),
+(2, 'Ton', 'Active', '2023-01-10 00:53:53', '2023-01-10 00:54:45'),
+(3, 'Metric Ton', 'Active', '2023-01-10 00:54:05', '2023-01-10 00:54:39'),
+(4, 'Meter', 'Active', '2023-01-10 00:54:32', '2023-01-10 00:54:32');
 
 -- --------------------------------------------------------
 
@@ -8180,12 +8664,75 @@ INSERT INTO `u_l_b_details` (`id`, `area`, `population2011`, `presentpopulation`
 --
 
 --
+-- Indexes for table `bidmanagement_corrigendum_publishes`
+--
+ALTER TABLE `bidmanagement_corrigendum_publishes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bidmanagement_corrigendum_publishes_bidcreationmainid_foreign` (`bidCreationMainId`);
+
+--
+-- Indexes for table `bidmanagement_pre_bid_queries`
+--
+ALTER TABLE `bidmanagement_pre_bid_queries`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bidmanagement_pre_bid_queries_bidcreationmainid_foreign` (`bidCreationMainId`);
+
+--
+-- Indexes for table `bid_creation_tender_participations`
+--
+ALTER TABLE `bid_creation_tender_participations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bid_creation_tender_participations_bidcreationmainid_foreign` (`bidCreationMainId`);
+
+--
 -- Indexes for table `bid_creation__creations`
 --
 ALTER TABLE `bid_creation__creations`
   ADD PRIMARY KEY (`id`),
   ADD KEY `bid_creation__creations_state_foreign` (`state`),
   ADD KEY `bid_creation__creations_ulb_foreign` (`ulb`);
+
+--
+-- Indexes for table `bid_creation__creation__docs`
+--
+ALTER TABLE `bid_creation__creation__docs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bid_creation__creation__docs_bidcreationmainid_foreign` (`bidCreationMainId`);
+
+--
+-- Indexes for table `bid_management_tender_status_bidders`
+--
+ALTER TABLE `bid_management_tender_status_bidders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bid_management_tender_status_bidders_bidid_foreign` (`bidid`);
+
+--
+-- Indexes for table `bid_management_work_order_communication_files`
+--
+ALTER TABLE `bid_management_work_order_communication_files`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bid_management_work_order_communication_files_bidid_foreign` (`bidid`);
+
+--
+-- Indexes for table `bid_management_work_order_mobilization_advances`
+--
+ALTER TABLE `bid_management_work_order_mobilization_advances`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bid_management_work_order_mobilization_advances_bidid_foreign` (`bidid`);
+
+--
+-- Indexes for table `bid_management_work_order_project_details`
+--
+ALTER TABLE `bid_management_work_order_project_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bid_management_work_order_project_details_bidid_foreign` (`bidid`);
+
+--
+-- Indexes for table `bid_management_work_order_work_orders`
+--
+ALTER TABLE `bid_management_work_order_work_orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bid_management_work_order_work_orders_bidid_foreign` (`bidid`);
 
 --
 -- Indexes for table `city_masters`
@@ -8208,11 +8755,48 @@ ALTER TABLE `competitor_details_branches`
   ADD KEY `competitor_details_branches_city_foreign` (`city`);
 
 --
+-- Indexes for table `competitor_details_company_net_worths`
+--
+ALTER TABLE `competitor_details_company_net_worths`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `competitor_details_company_net_worths_compid_foreign` (`compId`);
+
+--
+-- Indexes for table `competitor_details_line_of_businesses`
+--
+ALTER TABLE `competitor_details_line_of_businesses`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `competitor_details_line_of_businesses_compid_foreign` (`compId`);
+
+--
+-- Indexes for table `competitor_details_pros_cons`
+--
+ALTER TABLE `competitor_details_pros_cons`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `competitor_details_pros_cons_compid_foreign` (`compId`);
+
+--
+-- Indexes for table `competitor_details_quality_certificates`
+--
+ALTER TABLE `competitor_details_quality_certificates`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `competitor_details_quality_certificates_compid_foreign` (`compId`);
+
+--
 -- Indexes for table `competitor_details_turn_overs`
 --
 ALTER TABLE `competitor_details_turn_overs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `competitor_details_turn_overs_compid_foreign` (`compId`);
+
+--
+-- Indexes for table `competitor_details_work_orders`
+--
+ALTER TABLE `competitor_details_work_orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `competitor_details_work_orders_compid_foreign` (`compId`),
+  ADD KEY `competitor_details_work_orders_state_foreign` (`state`),
+  ADD KEY `competitor_details_work_orders_unit_foreign` (`unit`);
 
 --
 -- Indexes for table `competitor_profile_creations`
@@ -8336,6 +8920,20 @@ ALTER TABLE `state_masters`
   ADD KEY `state_masters_country_id_foreign` (`country_id`);
 
 --
+-- Indexes for table `tender_creations`
+--
+ALTER TABLE `tender_creations`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tender_creations_tendertype_unique` (`tendertype`);
+
+--
+-- Indexes for table `tender_type_masters`
+--
+ALTER TABLE `tender_type_masters`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tender_type_masters_tendertype_unique` (`tendertype`);
+
+--
 -- Indexes for table `tokens`
 --
 ALTER TABLE `tokens`
@@ -8380,28 +8978,112 @@ ALTER TABLE `u_l_b_details`
 --
 
 --
+-- AUTO_INCREMENT for table `bidmanagement_corrigendum_publishes`
+--
+ALTER TABLE `bidmanagement_corrigendum_publishes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `bidmanagement_pre_bid_queries`
+--
+ALTER TABLE `bidmanagement_pre_bid_queries`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `bid_creation_tender_participations`
+--
+ALTER TABLE `bid_creation_tender_participations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `bid_creation__creations`
 --
 ALTER TABLE `bid_creation__creations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `bid_creation__creation__docs`
+--
+ALTER TABLE `bid_creation__creation__docs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `bid_management_tender_status_bidders`
+--
+ALTER TABLE `bid_management_tender_status_bidders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `bid_management_work_order_communication_files`
+--
+ALTER TABLE `bid_management_work_order_communication_files`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `bid_management_work_order_mobilization_advances`
+--
+ALTER TABLE `bid_management_work_order_mobilization_advances`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `bid_management_work_order_project_details`
+--
+ALTER TABLE `bid_management_work_order_project_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `bid_management_work_order_work_orders`
+--
+ALTER TABLE `bid_management_work_order_work_orders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `city_masters`
 --
 ALTER TABLE `city_masters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5930;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5931;
 
 --
 -- AUTO_INCREMENT for table `competitor_details_branches`
 --
 ALTER TABLE `competitor_details_branches`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `competitor_details_company_net_worths`
+--
+ALTER TABLE `competitor_details_company_net_worths`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `competitor_details_line_of_businesses`
+--
+ALTER TABLE `competitor_details_line_of_businesses`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `competitor_details_pros_cons`
+--
+ALTER TABLE `competitor_details_pros_cons`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `competitor_details_quality_certificates`
+--
+ALTER TABLE `competitor_details_quality_certificates`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `competitor_details_turn_overs`
 --
 ALTER TABLE `competitor_details_turn_overs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `competitor_details_work_orders`
+--
+ALTER TABLE `competitor_details_work_orders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `competitor_profile_creations`
@@ -8467,7 +9149,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -8479,13 +9161,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `project_statuses`
 --
 ALTER TABLE `project_statuses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `project_types`
 --
 ALTER TABLE `project_types`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `state_masters`
@@ -8494,10 +9176,22 @@ ALTER TABLE `state_masters`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
+-- AUTO_INCREMENT for table `tender_creations`
+--
+ALTER TABLE `tender_creations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tender_type_masters`
+--
+ALTER TABLE `tender_type_masters`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `tokens`
 --
 ALTER TABLE `tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `ulb_masters`
@@ -8509,7 +9203,7 @@ ALTER TABLE `ulb_masters`
 -- AUTO_INCREMENT for table `unit_masters`
 --
 ALTER TABLE `unit_masters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -8534,11 +9228,65 @@ ALTER TABLE `u_l_b_details`
 --
 
 --
+-- Constraints for table `bidmanagement_corrigendum_publishes`
+--
+ALTER TABLE `bidmanagement_corrigendum_publishes`
+  ADD CONSTRAINT `bidmanagement_corrigendum_publishes_bidcreationmainid_foreign` FOREIGN KEY (`bidCreationMainId`) REFERENCES `bid_creation__creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `bidmanagement_pre_bid_queries`
+--
+ALTER TABLE `bidmanagement_pre_bid_queries`
+  ADD CONSTRAINT `bidmanagement_pre_bid_queries_bidcreationmainid_foreign` FOREIGN KEY (`bidCreationMainId`) REFERENCES `bid_creation__creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `bid_creation_tender_participations`
+--
+ALTER TABLE `bid_creation_tender_participations`
+  ADD CONSTRAINT `bid_creation_tender_participations_bidcreationmainid_foreign` FOREIGN KEY (`bidCreationMainId`) REFERENCES `bid_creation__creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `bid_creation__creations`
 --
 ALTER TABLE `bid_creation__creations`
   ADD CONSTRAINT `bid_creation__creations_state_foreign` FOREIGN KEY (`state`) REFERENCES `state_masters` (`id`) ON UPDATE NO ACTION,
   ADD CONSTRAINT `bid_creation__creations_ulb_foreign` FOREIGN KEY (`ulb`) REFERENCES `customer_creation_profiles` (`id`) ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `bid_creation__creation__docs`
+--
+ALTER TABLE `bid_creation__creation__docs`
+  ADD CONSTRAINT `bid_creation__creation__docs_bidcreationmainid_foreign` FOREIGN KEY (`bidCreationMainId`) REFERENCES `bid_creation__creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `bid_management_tender_status_bidders`
+--
+ALTER TABLE `bid_management_tender_status_bidders`
+  ADD CONSTRAINT `bid_management_tender_status_bidders_bidid_foreign` FOREIGN KEY (`bidid`) REFERENCES `bid_creation__creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `bid_management_work_order_communication_files`
+--
+ALTER TABLE `bid_management_work_order_communication_files`
+  ADD CONSTRAINT `bid_management_work_order_communication_files_bidid_foreign` FOREIGN KEY (`bidid`) REFERENCES `bid_creation__creations` (`id`) ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `bid_management_work_order_mobilization_advances`
+--
+ALTER TABLE `bid_management_work_order_mobilization_advances`
+  ADD CONSTRAINT `bid_management_work_order_mobilization_advances_bidid_foreign` FOREIGN KEY (`bidid`) REFERENCES `bid_creation__creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `bid_management_work_order_project_details`
+--
+ALTER TABLE `bid_management_work_order_project_details`
+  ADD CONSTRAINT `bid_management_work_order_project_details_bidid_foreign` FOREIGN KEY (`bidid`) REFERENCES `bid_creation__creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `bid_management_work_order_work_orders`
+--
+ALTER TABLE `bid_management_work_order_work_orders`
+  ADD CONSTRAINT `bid_management_work_order_work_orders_bidid_foreign` FOREIGN KEY (`bidid`) REFERENCES `bid_creation__creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `city_masters`
@@ -8559,10 +9307,42 @@ ALTER TABLE `competitor_details_branches`
   ADD CONSTRAINT `competitor_details_branches_state_foreign` FOREIGN KEY (`state`) REFERENCES `state_masters` (`id`) ON UPDATE NO ACTION;
 
 --
+-- Constraints for table `competitor_details_company_net_worths`
+--
+ALTER TABLE `competitor_details_company_net_worths`
+  ADD CONSTRAINT `competitor_details_company_net_worths_compid_foreign` FOREIGN KEY (`compId`) REFERENCES `competitor_profile_creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `competitor_details_line_of_businesses`
+--
+ALTER TABLE `competitor_details_line_of_businesses`
+  ADD CONSTRAINT `competitor_details_line_of_businesses_compid_foreign` FOREIGN KEY (`compId`) REFERENCES `competitor_profile_creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `competitor_details_pros_cons`
+--
+ALTER TABLE `competitor_details_pros_cons`
+  ADD CONSTRAINT `competitor_details_pros_cons_compid_foreign` FOREIGN KEY (`compId`) REFERENCES `competitor_profile_creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `competitor_details_quality_certificates`
+--
+ALTER TABLE `competitor_details_quality_certificates`
+  ADD CONSTRAINT `competitor_details_quality_certificates_compid_foreign` FOREIGN KEY (`compId`) REFERENCES `competitor_profile_creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `competitor_details_turn_overs`
 --
 ALTER TABLE `competitor_details_turn_overs`
   ADD CONSTRAINT `competitor_details_turn_overs_compid_foreign` FOREIGN KEY (`compId`) REFERENCES `competitor_profile_creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `competitor_details_work_orders`
+--
+ALTER TABLE `competitor_details_work_orders`
+  ADD CONSTRAINT `competitor_details_work_orders_compid_foreign` FOREIGN KEY (`compId`) REFERENCES `competitor_profile_creations` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `competitor_details_work_orders_state_foreign` FOREIGN KEY (`state`) REFERENCES `state_masters` (`id`) ON UPDATE NO ACTION,
+  ADD CONSTRAINT `competitor_details_work_orders_unit_foreign` FOREIGN KEY (`unit`) REFERENCES `unit_masters` (`id`) ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `competitor_profile_creations`
