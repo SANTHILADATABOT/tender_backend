@@ -35,6 +35,7 @@ use App\Http\Controllers\BidManagementWorkOrderMobilizationAdvanceController;
 use App\Http\Controllers\BidManagementWorkOrderProjectDetailsController;
 use App\Http\Controllers\BidManagementWorkOrderWorkOrderController;
 use App\Http\Controllers\BidManagementWorkOrderCommunicationFilesController;
+use App\Http\Controllers\BidManagementWorkOrderLetterOfAcceptenceController;
 use App\Http\Controllers\BidManagementTenderStatusBiddersController;
 
 use App\Http\Controllers\BidmanagementPreBidQueriesController;
@@ -201,6 +202,7 @@ Route::resources([
     'bidcreation/tenderparticipation'=> BidCreationTenderParticipationController::class,
     'bidcreation/bidsubmission/tenderfee'=> BidCreationTenderFeeController::class,
     'bidcreation/bidsubmission/bidsubmittedstatus' =>BidCreationBidSubmittedStatusController::class,
+    'letteracceptance/creation' =>BidManagementWorkOrderLetterOfAcceptenceController::class,
 ]);
 
 
