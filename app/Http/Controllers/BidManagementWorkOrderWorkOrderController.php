@@ -27,24 +27,22 @@ class BidManagementWorkOrderWorkOrderController extends Controller
         
         if($request->hasFile('wofile') && $request->hasFile('agfile') && $request->hasFile('shofile')){
 
-            $data= $request->mobilizationData;   
+            $data= $request;   
             $validator = Validator::make($data, [
-            'mobAdvance' => 'required|integer',
-            'bankName' => 'required|string',
-            'bankBranch' => 'required|string',
-            'mobAdvMode' => 'required|string',
-            'dateMobAdv' => 'required|date',
-            'validUpto' => 'required|date'
+            'orderQuantity' => 'required|integer',
+            'PricePerUnit' => 'required|integer',
+            'LoaDate' => 'required|date',
+            'OrderDate' => 'required|date',
+            'SiteHandOverDate' => 'required|date',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
                 'message' =>"Not able to Add Strength/Weakness details now..!",
-                'message' => $validator->messages(),
+                'error' => $validator->messages(),
             ]);
         }
-
             //image one upload 
             $wofile = $request->file('wofile');
             $wofile_original = $wofile->getClientOriginalName();

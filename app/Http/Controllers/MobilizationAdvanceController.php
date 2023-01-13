@@ -52,7 +52,7 @@ class MobilizationAdvanceController extends Controller
             return response()->json([
                 'status' => 400,
                 'message' =>"Not able to Add Strength/Weakness details now..!",
-                'message' => $validator->messages(),
+                'error' => $validator->messages(),
             ]);
         }
         $user = Token::where('tokenid', $request->tokenid)->first();   
