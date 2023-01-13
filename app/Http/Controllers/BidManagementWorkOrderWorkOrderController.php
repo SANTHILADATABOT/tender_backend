@@ -35,7 +35,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->hasFile('file2') && $request->hasFile('file1') && $request->hasFile('file')){
+        if($request->hasFile('wofile') && $request->hasFile('agfile') && $request->hasFile('shofile')){
            //image one upload 
 
             $wofile = $request->file('wofile');
@@ -50,7 +50,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
             else{
                 $FileName_I=$fileName_I;   
             }
-            $wofile->storeAs('BidManagement/WorkOrder/WorkOrder/workorderDocument/', $FileName_I, 'public');
+            //$wofile->storeAs('BidManagement/WorkOrder/WorkOrder/workorderDocument/', $FileName_I, 'public');
             //image two upload
            
             $agfile = $request->file('agfile');
@@ -65,12 +65,12 @@ class BidManagementWorkOrderWorkOrderController extends Controller
             else{
                 $FileName_II=$fileName_II;   
             }
-            $agfile->storeAs('BidManagement/WorkOrder/WorkOrder/agreementDocument/', $FileName_II, 'public');
+            //$agfile->storeAs('BidManagement/WorkOrder/WorkOrder/agreementDocument/', $FileName_II, 'public');
             //image three upload
 
             $shofile = $request->file('shofile');
             $fileExt_III = $shofile->getClientOriginalName();
-            $FieExt_III = $shofile->getClientOriginalExtension();
+            $FileExt_III = $shofile->getClientOriginalExtension();
             $fileName_III=$shofile->hashName();
             $filenameSplited_III=explode(".",$fileName_III);
             if($filenameSplited_III[1]!=$fileExt_III)
@@ -85,21 +85,30 @@ class BidManagementWorkOrderWorkOrderController extends Controller
             $user = Token::where('tokenid', $request->tokenid)->first();   
             $userid =$user['userid'];
             $request->request->remove('tokenid');
+            
             if($userid){
                 $WorkOrder = new BidManagementWorkOrderWorkOrder;
                 $WorkOrder -> bidid = $request->bidid;
-                $WorkOrder -> orderQuantity = $request->orderQuantity;
-                $WorkOrder -> PricePerUnit = $request->PricePerUnit;
-                $WorkOrder -> LoaDate = $request->LoaDate;
-                $WorkOrder -> OrderDate = $request->OrderDate;
-                $WorkOrder -> AgreeDate = $request->AgreeDate;
-                $WorkOrder -> SiteHandOverDate = $request->SiteHandOverDate;
-                $WorkOrder -> woFile = $FileName_I;
-                $WorkOrder -> agFile = $FileName_II;
-                $WorkOrder -> shoFile = $FileName_III;
+                $WorkOrder -> orderquantity = $request->orderQuantity;
+                $WorkOrder -> priceperUnit = $request->PricePerUnit;
+                $WorkOrder -> loadate = $request->LoaDate;
+                $WorkOrder -> orderdate = $request->OrderDate;
+                $WorkOrder -> agreedate = $request->AgreeDate;
+                $WorkOrder -> sitehandoverdate = $request->SiteHandOverDate;
+                $WorkOrder -> wofile = $FileName_I;
+                $WorkOrder -> agfile = $FileName_II;
+                $WorkOrder -> shofile = $FileName_III;
                 $WorkOrder -> createdby_userid = $userid ;
                 $WorkOrder -> updatedby_userid = 0 ;
                 $WorkOrder -> save();
+
+             //image one upload 
+              $wofile->storeAs('BidManagement/WorkOrder/WorkOrder/workorderDocument/', $FileName_I, 'public');
+             //image two upload
+              $agfile->storeAs('BidManagement/WorkOrder/WorkOrder/agreementDocument/', $FileName_II, 'public');
+             //image three upload
+              $shofile->storeAs('BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/', $FileName_III, 'public');
+            
             }
             return response()-> json([
                     'status' => 200,
@@ -111,6 +120,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
                 'message' => 'Unable to save!'
             ]);
         }
+        
     }
 
     /**
@@ -121,7 +131,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
      */
     public function show($id)
     {
-        $WorkOrder = BidManagementWorkOrderWorkOrder::where('id','=',$id)->get();
+        $WorkOrder = BidManagementWorkOrderWorkOrder::where('bidid','=',$id)->get();
         if ($WorkOrder){
             return response()->json([
                 'status' => 200,
@@ -172,10 +182,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
 
     public function getWorkList($workid)
     {
-        $WorkOrder = BidManagementWorkOrderWorkOrder::where("id",$workid)
-        ->select('*')
-        ->get();
-        
+        $WorkOrder = BidManagementWorkOrderWorkOrder::where("id","=",$workid)->get();
         if ($WorkOrder)
         {
             return response()->json([

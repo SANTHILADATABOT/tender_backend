@@ -41,26 +41,42 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
         if($request ->hasFile('file')){
             $file = $request->file('file');
             $fileExt = $file->getClientOriginalName();
+            $FileExt_I = $file->getClientOriginalExtension();
             $fileName1=$file->hashName();
             $filenameSplited=explode(".",$fileName1);
             if($filenameSplited[1]!=$fileExt)
             {
-            $fileName=$filenameSplited[0].".".$fileExt;
+            $fileName=$filenameSplited[0].".".$FileExt_I;
             }
             else{
                 $fileName=$fileName1;   
             }
-            $file->storeAs('BidManagement/WorkOrder/CommunicationFiles/', $fileName, 'public');
-            $user = Token::where('tokenid', $request->tokenid)->first();   
-            $request->request->add(['cr_userid' => $user['userid']]);
-            $request->request->add(['Filepath' => $fileName]);
+           
+            $user = Token::where('tokenid', $request->tokenid)->first(); 
+            $userid = $user['userid'];
             $request->request->remove('tokenid');
-            $request->request->add(['Filetype' => $fileExt]);
-            $request->except(['file']);
-            $CommunicationFiles = BidManagementWorkOrderCommunicationFiles::firstOrCreate($request->all());
+            if($userid){
+              $CommunicationFiles = new BidManagementWorkOrderCommunicationFiles;
+              $CommunicationFiles -> bidid = $request->bidid;
+              $CommunicationFiles -> date = $request->date;
+              $CommunicationFiles -> refrenceno = $request->refrenceno;
+              $CommunicationFiles -> from = $request->from;
+              $CommunicationFiles -> to = $request->to;
+              $CommunicationFiles -> subject = $request->bidid;
+              $CommunicationFiles -> medium = $request->medium;
+              $CommunicationFiles -> med_refrenceno = $request->medrefrenceno;
+              $CommunicationFiles -> comfile = $fileName;
+              $CommunicationFiles -> createdby_userid = $userid;
+              $CommunicationFiles -> updatedby_userid = 0 ;
+              $CommunicationFiles -> save();
+            }
+            $file->storeAs('BidManagement/WorkOrder/CommunicationFiles/', $fileName, 'public'); 
             return response() -> json([
                 'status' => 200,
-                'message' => 'Uploaded Succcessfully'
+                'message' => 'Uploaded Succcessfully',
+                'CommunicationFiles' => $CommunicationFiles,
+                'bidid' => $CommunicationFiles['bidid'],
+                'id' => $CommunicationFiles['id'],
             ]);
         }else{
             return response()->json([
@@ -76,9 +92,21 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
      * @param  \App\Models\BidManagementWorkOrderCommunicationFiles  $bidManagementWorkOrderCommunicationFiles
      * @return \Illuminate\Http\Response
      */
-    public function show(BidManagementWorkOrderCommunicationFiles $bidManagementWorkOrderCommunicationFiles)
+    public function show($id)
     {
-        //
+        $CommunicationFiles = BidManagementWorkOrderCommunicationFiles::where('id','=',$id)->get();
+        if ($CommunicationFiles){
+            return response()->json([
+                'status' => 200,
+                'CommunicationFiles' => $CommunicationFiles,
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.'
+            ]);
+        }
     }
 
     /**
@@ -125,7 +153,7 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
            
             $user = Token::where("tokenid", $request->tokenId)->first();   
             $request->request->add(['edited_userid' => $user['userid']]);
-            $request->request->remove('tokenId');
+            $request->request->remove('tokenid');
             $request->request->add(['filepath' => $fileName]);
             $request->request->add(['filetype' => $fileExt]);
            
@@ -154,5 +182,22 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
     public function destroy(BidManagementWorkOrderCommunicationFiles $bidManagementWorkOrderCommunicationFiles)
     {
         //
+    }
+
+    public function getComList($comId){
+        
+        $CommunicationFiles = BidManagementWorkOrderCommunicationFiles::where('id','=',$comId)->get();
+        if ($CommunicationFiles){
+            return response()->json([
+                'status' => 200,
+                'CommunicationFiles' => $CommunicationFiles,
+            ]);
+        }
+        else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.'
+            ]);
+        }
     }
 }

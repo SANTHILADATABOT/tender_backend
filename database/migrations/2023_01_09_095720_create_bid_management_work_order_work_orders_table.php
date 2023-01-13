@@ -17,17 +17,17 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('bidid')->unsigned();
             $table->foreign('bidid')->references('id')->on('bid_creation__creations')->onDelete("cascade")->onUpdate("NO ACTION");
-            $table->string('orderQuantity');
-            $table->string('PricePerUnit');
-            $table->date('LoaDate');
-            $table->date('OrderDate');
-            $table->date('AgreeDate');
-            $table->date('SiteHandOverDate');
-            $table->string('woFile');
-            $table->string('agFile');
-            $table->string('shoFile');
-            $table->string('createdby_userid');
-            $table->string('updatedby_userid');
+            $table->string('orderquantity')->default('');
+            $table->string('priceperunit')->default('');
+            $table->date('loadate')->nullable() ;
+            $table->date('orderdate')->nullable();
+            $table->date('agreedate')->nullable();
+            $table->date('sitehandoverdate')->nullable();
+            $table->string('wofile')->default('');
+            $table->string('agfile')->default('');
+            $table->string('shofile')->default('');
+            $table -> integer('createdby_userid');
+            $table -> integer('updatedby_userid')->nullable()->default(null);
             $table->timestamps();
         });
     }

@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class BidManagementWorkOrderMobilizationAdvance extends Model
 {
     use HasFactory;
-    protected $fillable = ['bidid','mobAdvance','bankName','bankBranch','mobAdvMode','dateMobAdv','validUpto','createdby_userid','updatedby_userid'];
+    protected $fillable = ['bidid','mobadvance','bankname','bankbranch','mobadvMode','datemobadv','validupto','createdby_userid','updatedby_userid'];
 
 }

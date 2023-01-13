@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class BidManagementWorkOrderProjectDetails extends Model
 {
     use HasFactory;
-    protected $fillable = ['bidid','ProPeriod','mobPeriod','monsoonPeriod','monthDuration','supplyScape','supplyDate','erectionStart','commercialProduc','tarCompletion','producCompletion','createdby_userid','updatedby_userid'];
+    protected $fillable = ['bidid','properiod','mobperiod','monsoonperiod','monthduration','supplyscape','supplydate','erectionstart','commercialproduc','tarcompletion','produccompletion','createdby_userid','updatedby_userid'];
 }
