@@ -39,6 +39,8 @@ use App\Http\Controllers\BidManagementWorkOrderCommunicationFilesController;
 use App\Http\Controllers\BidmanagementPreBidQueriesController;
 use App\Http\Controllers\BidmanagementCorrigendumPublishController;
 use App\Http\Controllers\BidCreationTenderParticipationController;
+use App\Http\Controllers\BidCreationTenderFeeController;
+use App\Http\Controllers\BidCreationBidSubmittedStatusController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -126,6 +128,8 @@ Route::post('bidcreation/prebidqueries/docupload/{id}', [BidmanagementPreBidQuer
 Route::post('bidcreation/corrigendumpublish/docupload/list', [BidmanagementCorrigendumPublishController::class, 'getUplodedDocList']);
 Route::get('download/corrigendumpublishdocs/{fileName}', [BidmanagementCorrigendumPublishController::class, 'download']);
 Route::post('bidcreation/corrigendumpublish/docupload/{id}', [BidmanagementCorrigendumPublishController::class, 'update']);
+Route::get('download/tenderfeedocs/{id}', [BidCreationTenderFeeController::class, 'getdocs']);
+Route::get('download/bidsubmittedstatusdocs/{id}', [BidCreationBidSubmittedStatusController::class, 'getdocs']);
 /*
 ## Resource Laravel Routes Example
 
@@ -172,6 +176,8 @@ Route::resources([
     'bidcreation/prebidqueries/docupload'=> BidmanagementPreBidQueriesController::class,
     'bidcreation/corrigendumpublish/docupload'=> BidmanagementCorrigendumPublishController::class,
     'bidcreation/tenderparticipation'=> BidCreationTenderParticipationController::class,
+    'bidcreation/bidsubmission/tenderfee'=> BidCreationTenderFeeController::class,
+    'bidcreation/bidsubmission/bidsubmittedstatus' =>BidCreationBidSubmittedStatusController::class,
 ]);
 
 
