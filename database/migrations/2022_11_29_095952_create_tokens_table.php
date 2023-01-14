@@ -15,18 +15,14 @@ return new class extends Migration
     {
         Schema::create('tokens', function (Blueprint $table) {
             $table->id();
-            $table->string('tokenid');
+            $table->string('tokenid')->collation('utf8mb4_bin'); // Have to check in live
             $table->integer('userid');
             $table->integer('isLoggedIn');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+   
     public function down()
     {
         Schema::dropIfExists('tokens');

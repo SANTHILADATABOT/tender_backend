@@ -60,7 +60,7 @@ class UserControllerTemp extends Controller
     function validateToken(Request $request){
 
         //get the user id 
-        $user = Token::where('tokenid', $request->tokenid)->first();   
+        $user = Token::where('tokenid','=' ,$request->tokenid)->first();   
         
         if($user){
             return response()->json([
