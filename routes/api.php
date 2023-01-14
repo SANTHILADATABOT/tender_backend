@@ -62,6 +62,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('login1', [UserControllerTemp::class, 'login1']);
+Route::post('validtetoken', [UserControllerTemp::class, 'validateToken']);
+
 Route::post('logout', [UserControllerTemp::class, 'logout']);
 Route::post('createState', [UserControllerTemp::class, 'login1']);
 Route::get('country/list', [CountryMasterController::class, 'getList']);
