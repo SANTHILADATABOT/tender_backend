@@ -56,4 +56,20 @@ class UserControllerTemp extends Controller
             ]);
          }
     }
+
+    function validateToken(Request $request){
+
+        //get the user id 
+        $user = Token::where('tokenid', $request->tokenid)->first();   
+        
+        if($user){
+            return response()->json([
+                'isValid' => true
+            ]);
+        }else{
+            return response()->json([
+                'isValid' => false
+            ]);
+        }
+    }
 }
