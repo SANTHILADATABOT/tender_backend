@@ -149,10 +149,11 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
             $path = str_replace("\\","/", $image_path);
             unlink($path);
             $file->storeAs('BidManagement/WorkOrder/CommunicationFiles/', $fileName, 'public'); 
-           
+          
+
             $request->request->add(['comfile' => $fileName]);
             // $request->request->add(['filetype' => $fileExt]);
-            
+            }  
             $dataToUpdate = $request->except(['file','_method']);
             $qcedit = BidManagementWorkOrderCommunicationFiles::where("bidid",$id)->update($dataToUpdate);
 
@@ -167,7 +168,7 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
                 'message' => 'The provided credentials are incorrect.'
             ]);
         }
-    }
+    
     }
     else{
         return response()->json([
