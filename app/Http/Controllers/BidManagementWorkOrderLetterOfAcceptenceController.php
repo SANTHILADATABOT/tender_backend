@@ -38,8 +38,10 @@ class BidManagementWorkOrderLetterOfAcceptenceController extends Controller
      */
     public function store(Request $request)
     {
-        $data= $request->leterAcceptance;   
-        $validator = Validator::make($data, [
+        return $request->wofile;
+        if($request->hasFile('wofile')){
+            $data= $request;   
+            $validator = Validator::make($data, [
             'Date' => 'required|date',
             'refrenceNo' => 'required|string',
             'from' => 'required|string',
@@ -55,36 +57,38 @@ class BidManagementWorkOrderLetterOfAcceptenceController extends Controller
                 'error' => $validator->messages(),
             ]);
         }
+
         $user = Token::where('tokenid', $request->tokenid)->first();   
         $userid = $user['userid'];
         $request->request->remove('tokenid');
+
     if($userid)
     {
-        $MobilizationAdvance = new MobilizationAdvance;
-        $MobilizationAdvance -> bidid = $request->bidid;
-        $MobilizationAdvance -> mobAdvance = $request->leterAcceptance['mobAdvance'];
-        $MobilizationAdvance -> bankName = $request->leterAcceptance['bankName'];
-        $MobilizationAdvance -> bankBranch = $request->leterAcceptance['bankBranch'];
-        $MobilizationAdvance -> mobAdvMode = $request->leterAcceptance['mobAdvMode'];
-        $MobilizationAdvance -> dateMobAdv = $request->leterAcceptance['dateMobAdv'];
-        $MobilizationAdvance -> validUpto = $request->leterAcceptance['validUpto'];
-        $MobilizationAdvance -> createdby_userid = $userid ;
-        $MobilizationAdvance -> updatedby_userid = 0 ;
-        $MobilizationAdvance -> save();
+        $letteracceptance = new BidManagementWorkOrderLetterOfAcceptence;
+        $letteracceptance -> bidid = $request->bidid;
+        $letteracceptance -> date = $request->Date;
+        $letteracceptance -> refrence_no = $request->refrenceNo;
+        $letteracceptance -> from = $request->from;
+        $letteracceptance -> medium = $request->medium;
+        $letteracceptance -> med_refrenceno = $request->medRefrenceNo;
+        $letteracceptance -> medium_select = $request->mediumSelect;
+        $letteracceptance -> wofile = $request->wofile;
+        $letteracceptance -> createdby_userid = $userid;
+        $letteracceptance -> save();
     }
+
         if ($MobilizationAdvance) {
             return response()->json([
                 'status' => 200,
-                'message' => 'Mobilzation Advance Has created Succssfully!',
-                'Mobilization' => $MobilizationAdvance,
-                'bidid' => $MobilizationAdvance['bidid'],
-                'id' => $MobilizationAdvance['id'],
+                'message' => 'Lette Acceptance Has created Succssfully!',
+                'letteracceptance' => $letteracceptance,
             ]);
         }else{
             return response()->json([
                 'status' => 400,
                 'message' => 'Unable to save!'
             ]);
+        }
         }
     }
 

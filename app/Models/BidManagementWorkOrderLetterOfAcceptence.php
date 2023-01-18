@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class BidManagementWorkOrderLetterOfAcceptence extends Model
 {
     use HasFactory;
-    protected $fillable = ['bidid','date','refrenceno','from','medium','medRefrenceno','mediumSelect','createdby_userid','updatedby_userid'];
+    protected $fillable = ['bidid','date','refrence_no','from','medium','med_refrenceno','medium_select','wofile','createdby_userid','updatedby_userid'];
 }

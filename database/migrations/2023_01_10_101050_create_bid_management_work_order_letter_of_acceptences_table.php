@@ -18,11 +18,12 @@ return new class extends Migration
             $table->bigInteger('bidid')->unsigned();
             $table->foreign('bidid')->references('id')->on('bid_creation__creations')->onDelete("cascade")->onUpdate("NO ACTION");
             $table -> date('date')->nullable(); 
-            $table -> string('refrenceno')->default(''); 
+            $table -> string('refrence_no')->default(''); 
             $table -> string('from')->default(''); 
             $table -> string('medium')->default(''); 
-            $table -> string('medRefrenceno')->default(''); 
-            $table -> string('mediumSelect')->default(''); 
+            $table -> string('med_refrenceno')->default(''); 
+            $table -> string('medium_select')->default(''); 
+            $table -> string('wofile')->default(''); 
             $table -> integer('createdby_userid');
             $table -> integer('updatedby_userid')->nullable()->default(null);
             $table->timestamps();
