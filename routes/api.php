@@ -155,6 +155,9 @@ Route::post('workorder/creation/Workorder/update/{workid}', [BidManagementWorkOr
 Route::get('workorder/creation/Workorder/getimagename/{workid}', [BidManagementWorkOrderWorkOrderController::class, 'getimagename']);
 Route::post('download/files', [FileDownloadHandlingController::class, 'download']);
 
+Route::get('download/letterofacceptance/workorderimage/{woid}', [BidManagementWorkOrderLetterOfAcceptenceController::class, 'wodownload']);
+Route::post('letteracceptance/creation/update/{id}', [BidManagementWorkOrderLetterOfAcceptenceController::class, 'update']);
+
 /*
 ## Resource Laravel Routes Example
 

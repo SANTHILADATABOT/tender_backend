@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Token;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class BidManagementWorkOrderLetterOfAcceptenceController extends Controller
 {
@@ -38,16 +39,17 @@ class BidManagementWorkOrderLetterOfAcceptenceController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->wofile;
         if($request->hasFile('wofile')){
-            $data= $request;   
+   
+            $data= $request->all();   
+
             $validator = Validator::make($data, [
             'Date' => 'required|date',
-            'refrenceNo' => 'required|string',
             'from' => 'required|string',
-            'medium' => 'required|string',
             'medRefrenceNo' => 'required|string',
-            'mediumSelect' => 'required|string'
+            'medium' => 'required|string',
+            'mediumSelect' => 'required|string',
+            'refrenceNo' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -57,11 +59,18 @@ class BidManagementWorkOrderLetterOfAcceptenceController extends Controller
                 'error' => $validator->messages(),
             ]);
         }
+       
+            $wofile = $request->file('wofile');
+            $wofile_original = $wofile->getClientOriginalName();
+            $wofile_fileName =intval(microtime(true) * 1000) . $wofile_original;
+            $wofile->storeAs('BidManagement/WorkOrder/LetterOfAcceptence/Document/', $wofile_fileName, 'public');
+            $wofile_mimeType =  $wofile->getMimeType();
+            $wofile_filesize = ($wofile->getSize())/1000;
+            $wofile_ext =  $wofile->extension();
 
         $user = Token::where('tokenid', $request->tokenid)->first();   
         $userid = $user['userid'];
         $request->request->remove('tokenid');
-
     if($userid)
     {
         $letteracceptance = new BidManagementWorkOrderLetterOfAcceptence;
@@ -70,14 +79,14 @@ class BidManagementWorkOrderLetterOfAcceptenceController extends Controller
         $letteracceptance -> refrence_no = $request->refrenceNo;
         $letteracceptance -> from = $request->from;
         $letteracceptance -> medium = $request->medium;
-        $letteracceptance -> med_refrenceno = $request->medRefrenceNo;
+        $letteracceptance -> med_refrence_no = $request->medRefrenceNo;
         $letteracceptance -> medium_select = $request->mediumSelect;
-        $letteracceptance -> wofile = $request->wofile;
+        $letteracceptance -> wofile = $wofile_fileName;
         $letteracceptance -> createdby_userid = $userid;
         $letteracceptance -> save();
     }
 
-        if ($MobilizationAdvance) {
+        if ($letteracceptance) {
             return response()->json([
                 'status' => 200,
                 'message' => 'Lette Acceptance Has created Succssfully!',
@@ -89,6 +98,7 @@ class BidManagementWorkOrderLetterOfAcceptenceController extends Controller
                 'message' => 'Unable to save!'
             ]);
         }
+
         }
     }
 
@@ -98,9 +108,21 @@ class BidManagementWorkOrderLetterOfAcceptenceController extends Controller
      * @param  \App\Models\BidManagementWorkOrderLetterOfAcceptence  $bidManagementWorkOrderLetterOfAcceptence
      * @return \Illuminate\Http\Response
      */
-    public function show(BidManagementWorkOrderLetterOfAcceptence $bidManagementWorkOrderLetterOfAcceptence)
+    public function show($id)
     {
-        //
+        $letterofaccepttance = BidManagementWorkOrderLetterOfAcceptence::where('bidid','=',$id)->get();
+        if ($letterofaccepttance){
+            return response()->json([
+                'status' => 200,
+                'letterofaccepttance' => $letterofaccepttance,
+            ]);
+        }   
+        else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.'
+            ]);
+        }
     }
 
     /**
@@ -121,9 +143,59 @@ class BidManagementWorkOrderLetterOfAcceptenceController extends Controller
      * @param  \App\Models\BidManagementWorkOrderLetterOfAcceptence  $bidManagementWorkOrderLetterOfAcceptence
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BidManagementWorkOrderLetterOfAcceptence $bidManagementWorkOrderLetterOfAcceptence)
+    public function update(Request $request,$id)
     {
-        //
+        if($request->hasFile('wofile')){
+           
+            $doc = BidManagementWorkOrderLetterOfAcceptence::where('id','=',$id)->get();
+            $wofile_filename = $doc[0]['wofile'];
+            $wofile_path = public_path()."/uploads/BidManagement/WorkOrder/LetterOfAcceptence/Document/".$wofile_filename;
+            
+            if(File::exists($wofile_path)) {
+                if(File::delete($wofile_path)){
+               // wofile update
+
+               $wofile = $request->file('wofile');
+               $wofile_original = $wofile->getClientOriginalName();
+               $wofile_fileName =intval(microtime(true) * 1000) . $wofile_original;
+               $wofile->storeAs('BidManagement/WorkOrder/LetterOfAcceptence/Document/', $wofile_fileName, 'public');
+               $wofile_mimeType =  $wofile->getMimeType();
+               $wofile_filesize = ($wofile->getSize())/1000;
+               $wofile_ext =  $wofile->extension();
+               
+
+               $user = Token::where('tokenid', $request->tokenid)->first();   
+               $userid =$user['userid'];
+               $request->request->remove('tokenid');
+                  
+               if($userid){
+                $letteracceptance =  BidManagementWorkOrderLetterOfAcceptence::find($id);
+                $letteracceptance -> bidid = $request->bidid;
+                $letteracceptance -> date = $request->Date;
+                $letteracceptance -> refrence_no = $request->refrenceNo;
+                $letteracceptance -> from = $request->from;
+                $letteracceptance -> medium = $request->medium;
+                $letteracceptance -> med_refrence_no = $request->medRefrenceNo;
+                $letteracceptance -> medium_select = $request->mediumSelect;
+                $letteracceptance -> wofile = $wofile_fileName;
+                $letteracceptance -> updatedby_userid = $userid;
+                $letteracceptance -> save();
+                 }  
+                    if ($letteracceptance) {
+                            return response()->json([
+                                'status' => 200,
+                                'message' => 'Updated Succcessfully'
+                                ]);
+                    }else{
+                        return response()->json([
+                            'status' => 400,
+                            'message' => 'Unable to update!'
+                              ]);
+                    }
+
+              }
+            }
+        }
     }
 
     /**
@@ -135,5 +207,20 @@ class BidManagementWorkOrderLetterOfAcceptenceController extends Controller
     public function destroy(BidManagementWorkOrderLetterOfAcceptence $bidManagementWorkOrderLetterOfAcceptence)
     {
         //
+    }
+
+    public function wodownload($id){
+
+        $doc = BidManagementWorkOrderLetterOfAcceptence::where('bidid','=',$id)->get();
+        
+        if($doc[0]['wofile']!=''){
+           
+            $wofile_name = $doc[0]['wofile'];
+            $wofile = public_path()."/uploads/BidManagement/WorkOrder/LetterOfAcceptence/Document/".$wofile_name;
+
+            return response()->download($wofile);
+        }else{
+            echo "Else";
+        }
     }
 }

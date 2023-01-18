@@ -204,6 +204,25 @@ class BidManagementWorkOrderWorkOrderController extends Controller
     { 
 
         if($request->hasFile('wofile') && $request->hasFile('agfile') && $request->hasFile('shofile')){
+
+
+        //     $data= $request;   
+        //     $validator = Validator::make($data, [
+        //     'orderQuantity' => 'required|integer',
+        //     'PricePerUnit' => 'required|integer',
+        //     'LoaDate' => 'required|date',
+        //     'OrderDate' => 'required|date',
+        //     'SiteHandOverDate' => 'required|date',
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'status' => 400,
+        //         'message' =>"Not able to Add Strength/Weakness details now..!",
+        //         'error' => $validator->messages(),
+        //     ]);
+        // }
+
             $doc = BidManagementWorkOrderWorkOrder::find($id);
             $wofile_filename = $doc['wofile'];
             $wofile_path = public_path()."/uploads/BidManagement/WorkOrder/WorkOrder/workorderDocument/".$wofile_filename;
@@ -214,13 +233,11 @@ class BidManagementWorkOrderWorkOrderController extends Controller
             $shofile_filename = $doc['shofile'];
             $shofile_path = public_path()."/uploads/BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/".$shofile_filename;
             
-            if(File::exists($wofile_path)) {
+            if(File::exists($wofile_path)){
                 if(File::delete($wofile_path)){
-
-                    if(File::exists($agfile_path)) {
+                    if(File::exists($agfile_path)){
                         if(File::delete($agfile_path)){
-
-                            if(File::exists($shofile_path)) {
+                            if(File::exists($shofile_path)){
                                 if(File::delete($shofile_path)){
 
                                     // wofile update
@@ -301,51 +318,28 @@ class BidManagementWorkOrderWorkOrderController extends Controller
     }
 
     public function wodownload($id){
-
         $doc = BidManagementWorkOrderWorkOrder::where('bidid','=',$id)->get();
-        if($doc){
+        if($doc[0]['wofile'] !== ""){
             $wofile_name = $doc[0]['wofile'];
             $wofile = public_path()."/uploads/BidManagement/WorkOrder/WorkOrder/workorderDocument/".$wofile_name;
-            // $file =  storage_path('app/public/BidDocs/'.$filename);
-            // return response()->json([
-            //     'file' =>  $file,
-            //     'message' => 'The provided credentials are incorrect.'
-            // ]);
             return response()->download($wofile);
         }
     }
 
     public function agdownload($id){
-
         $doc = BidManagementWorkOrderWorkOrder::where('bidid','=',$id)->get();
-
-        if($doc){
+        if($doc[0]['agfile'] !== ""){
             $agfile_name = $doc[0]['agfile'];
-            
             $agfile = public_path()."/uploads/BidManagement/WorkOrder/WorkOrder/agreementDocument/".$agfile_name;
-
-            // $file =  storage_path('app/public/BidDocs/'.$filename);
-            // return response()->json([
-            //     'file' =>  $file,
-            //     'message' => 'The provided credentials are incorrect.'
-            // ]);
-            
             return response()->download($agfile);
         }
     }
 
     public function shodownload($id){
         $doc = BidManagementWorkOrderWorkOrder::where('bidid','=',$id)->get();
-        if($doc){
+        if($doc[0]['shofile'] !== ""){
              $shofile_name = $doc[0]['shofile'];
-
              $shofile = public_path()."/uploads/BidManagement/WorkOrder/WorkOrder/siteHandOverDocumet/".$shofile_name;
-
-            // $file =  storage_path('app/public/BidDocs/'.$filename);
-            // return response()->json([
-            //     'file' =>  $file,
-            //     'message' => 'The provided credentials are incorrect.'
-            // ]);
             return response()->download($shofile);
         }
     }
