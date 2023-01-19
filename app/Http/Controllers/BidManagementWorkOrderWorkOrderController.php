@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Token;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-
+use Illuminate\Support\Facades\Validator;
 class BidManagementWorkOrderWorkOrderController extends Controller
 {
     
@@ -27,7 +27,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
         
         if($request->hasFile('wofile') && $request->hasFile('agfile') && $request->hasFile('shofile')){
 
-            $data= $request;   
+            $data=(array) $request->all();   
             $validator = Validator::make($data, [
             'orderQuantity' => 'required|integer',
             'PricePerUnit' => 'required|integer',
@@ -202,28 +202,30 @@ class BidManagementWorkOrderWorkOrderController extends Controller
      */
     public function update(Request $request, $id)
     { 
+        
 
         if($request->hasFile('wofile') && $request->hasFile('agfile') && $request->hasFile('shofile')){
 
+            $data=(array) $request->all();   
+            $validator = Validator::make($data, [
+                'orderQuantity' => 'required|integer',
+                'PricePerUnit' => 'required|integer',
+                'LoaDate' => 'required|date',
+                'OrderDate' => 'required|date',
+                'SiteHandOverDate' => 'required|date',
+        ]);
 
-        //     $data= $request;   
-        //     $validator = Validator::make($data, [
-        //     'orderQuantity' => 'required|integer',
-        //     'PricePerUnit' => 'required|integer',
-        //     'LoaDate' => 'required|date',
-        //     'OrderDate' => 'required|date',
-        //     'SiteHandOverDate' => 'required|date',
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'status' => 400,
-        //         'message' =>"Not able to Add Strength/Weakness details now..!",
-        //         'error' => $validator->messages(),
-        //     ]);
-        // }
+        
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'message' =>"Not able to Add Strength/Weakness details now..!",
+                'error' => $validator->messages(),
+            ]);
+        }
 
             $doc = BidManagementWorkOrderWorkOrder::find($id);
+            
             $wofile_filename = $doc['wofile'];
             $wofile_path = public_path()."/uploads/BidManagement/WorkOrder/WorkOrder/workorderDocument/".$wofile_filename;
 
@@ -239,7 +241,7 @@ class BidManagementWorkOrderWorkOrderController extends Controller
                         if(File::delete($agfile_path)){
                             if(File::exists($shofile_path)){
                                 if(File::delete($shofile_path)){
-
+                                    
                                     // wofile update
                                   $wofile = $request->file('wofile');
                                   $wofile_original = $wofile->getClientOriginalName();

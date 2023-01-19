@@ -36,13 +36,17 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function store1(Request $request)
+    {
+        echo "Request :".$request;
+    }
     public function store(Request $request)
     {
-        
+       
         if($request ->hasFile('file')){
             $file = $request->file('file');
             $originalfileName = $file->getClientOriginalName();
-            // $FileExt = $file->getClientOriginalExtension();
+            $FileExt = $file->getClientOriginalExtension();
             $filenameSplited=explode(".",$originalfileName);
             $hasfileName=$file->hashName();
             $hasfilenameSplited=explode(".",$hasfileName);
@@ -63,6 +67,7 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
               $CommunicationFiles -> medium = $request->medium;
               $CommunicationFiles -> med_refrenceno = $request->medrefrenceno;
               $CommunicationFiles -> comfile = $fileName;
+              $CommunicationFiles -> filetype = $FileExt;
               $CommunicationFiles -> createdby_userid = $user['userid'];
             //$CommunicationFiles -> updatedby_userid = 0 ;
               
@@ -135,6 +140,7 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
                 
             $file = $request->file('file');
             $originalfileName = $file->getClientOriginalName();
+            $FileExt = $file->getClientOriginalExtension();
             $filenameSplited=explode(".",$originalfileName);
             $hasfileName=$file->hashName();
             $hasfilenameSplited=explode(".",$hasfileName);
@@ -152,7 +158,7 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
           
 
             $request->request->add(['comfile' => $fileName]);
-            // $request->request->add(['filetype' => $fileExt]);
+            $request->request->add(['filetype' => $FileExt]);
             }  
             $dataToUpdate = $request->except(['file','_method']);
             $qcedit = BidManagementWorkOrderCommunicationFiles::where("bidid",$id)->update($dataToUpdate);
@@ -189,13 +195,13 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
         //
     }
 
-    public function getComList($comId){
+    public function getComList($id){
         
-        $CommunicationFiles = BidManagementWorkOrderCommunicationFiles::where('id','=',$comId)->get();
+        $CommunicationFiles = BidManagementWorkOrderCommunicationFiles::where('bidid','=',$id)->get();
         if ($CommunicationFiles){
             return response()->json([
                 'status' => 200,
-                'CommunicationFiles' => $CommunicationFiles,
+                'comm' => $CommunicationFiles,
             ]);
         }
         else {

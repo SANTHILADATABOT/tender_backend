@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('subject')->default('');
             $table->string('medium')->default('');
             $table->string('comfile')->default('');
+            $table->string('filetype')->default('');
             $table->integer('createdby_userid');
             $table->integer('updatedby_userid')->nullable()->default(null);
             $table->timestamp('created_at')->useCurrent();

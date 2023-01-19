@@ -158,6 +158,10 @@ Route::post('download/files', [FileDownloadHandlingController::class, 'download'
 Route::get('download/letterofacceptance/workorderimage/{woid}', [BidManagementWorkOrderLetterOfAcceptenceController::class, 'wodownload']);
 Route::post('letteracceptance/creation/update/{id}', [BidManagementWorkOrderLetterOfAcceptenceController::class, 'update']);
 
+Route::post('/workorder/creation/communicationfiles/{id}', [BidManagementWorkOrderCommunicationFilesController::class,'store']);
+Route::get('/competitordetails/commFilesList/{id}', [BidManagementWorkOrderCommunicationFilesController::class,'getComList']);
+
+
 /*
 ## Resource Laravel Routes Example
 
@@ -198,7 +202,7 @@ Route::resources([
     'bidcreation/creation'=> BidCreationCreationController::class,
     'bidcreation/creation/docupload'=> BidCreationCreationDocsController::class,
     'tenderstatus'=>BidManagementTenderStatusBiddersController::class,
-    'workorder/creation/communicationfiles' => BidManagementWorkOrderCommunicationFilesController::class,
+    // 'workorder/creation/communicationfiles' => BidManagementWorkOrderCommunicationFilesController::class,
     'mobilization/creation' => BidManagementWorkOrderMobilizationAdvanceController::class,
     'ProjectDetails/Creation'=>BidManagementWorkOrderProjectDetailsController::class,
     'workorder/creation/Workorder'=>BidManagementWorkOrderWorkOrderController::class,

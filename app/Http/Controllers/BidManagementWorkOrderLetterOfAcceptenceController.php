@@ -41,7 +41,7 @@ class BidManagementWorkOrderLetterOfAcceptenceController extends Controller
     {
         if($request->hasFile('wofile')){
    
-            $data= $request->all();   
+            $data=(array) $request->all();   
 
             $validator = Validator::make($data, [
             'Date' => 'required|date',
@@ -146,7 +146,24 @@ class BidManagementWorkOrderLetterOfAcceptenceController extends Controller
     public function update(Request $request,$id)
     {
         if($request->hasFile('wofile')){
-           
+            $data=(array) $request->all();   
+
+            $validator = Validator::make($data, [
+            'Date' => 'required|date',
+            'from' => 'required|string',
+            'medRefrenceNo' => 'required|string',
+            'medium' => 'required|string',
+            'mediumSelect' => 'required|string',
+            'refrenceNo' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'message' =>"Not able to Add Strength/Weakness details now..!",
+                'error' => $validator->messages(),
+            ]);
+        }
             $doc = BidManagementWorkOrderLetterOfAcceptence::where('id','=',$id)->get();
             $wofile_filename = $doc[0]['wofile'];
             $wofile_path = public_path()."/uploads/BidManagement/WorkOrder/LetterOfAcceptence/Document/".$wofile_filename;
