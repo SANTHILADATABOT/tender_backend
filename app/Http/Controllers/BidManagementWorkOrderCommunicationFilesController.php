@@ -134,7 +134,7 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
         $request->request->add(['updatedby_userid' => $user['userid']]);
         if($user['userid']){
 
-        
+   
         $request->request->remove('tokenid');
             if($request->hasFile('file')){
                 
@@ -144,10 +144,11 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
             $filenameSplited=explode(".",$originalfileName);
             $hasfileName=$file->hashName();
             $hasfilenameSplited=explode(".",$hasfileName);
+
             $fileName=$hasfilenameSplited[0].".".$filenameSplited[1];
-            
+          
             //to delete Existing Image from storage
-            $data = BidManagementWorkOrderCommunicationFiles::where("bidid","=",$id)->select("*")->get();
+            $data = BidManagementWorkOrderCommunicationFiles::where("id","=",$id)->select("*")->get();
             
             $image_path = public_path('uploads/BidManagement/WorkOrder/CommunicationFiles').'/'.$data[0]->comfile;
             // $image_path = public_path('uploads/BidManagement/WorkOrder/CommunicationFiles').'/MwT5orH0qO9KxKSSCSHNVNgdByc2JK3IWUWeAd51.jpg';
@@ -161,7 +162,7 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
             $request->request->add(['filetype' => $FileExt]);
             }  
             $dataToUpdate = $request->except(['file','_method']);
-            $qcedit = BidManagementWorkOrderCommunicationFiles::where("bidid",$id)->update($dataToUpdate);
+            $qcedit = BidManagementWorkOrderCommunicationFiles::where("id",$id)->update($dataToUpdate);
 
         if ($qcedit)
             return response()->json([
@@ -190,9 +191,37 @@ class BidManagementWorkOrderCommunicationFilesController extends Controller
      * @param  \App\Models\BidManagementWorkOrderCommunicationFiles  $bidManagementWorkOrderCommunicationFiles
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BidManagementWorkOrderCommunicationFiles $bidManagementWorkOrderCommunicationFiles)
+    public function destroy($id)
     {
-        //
+        try{
+        
+            //to delete Existing Image from storage
+            $data = BidManagementWorkOrderCommunicationFiles::find($id);
+            
+            $image_path = public_path()."/uploads/BidManagement/WorkOrder/CommunicationFiles/".$data->comfile;
+            unlink($image_path);
+    
+                $comm = BidManagementWorkOrderCommunicationFiles::destroy($id);
+                if($comm)    
+                {
+                    return response()->json([
+                    'status' => 200,
+                    'message' => "Deleted Successfully!",
+                ]);}
+                else
+                {return response()->json([
+                    'status' => 404,
+                    'message' => 'The provided credentials are incorrect!?',
+                    "errormessage" => "",
+                ]);}
+            }catch(\Illuminate\Database\QueryException $ex){
+                $error = $ex->getMessage(); 
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Unable to delete! This data is used in another file/form/table.',
+                    "errormessage" => $error,
+                ]);
+            }
     }
 
     public function getComList($id){
