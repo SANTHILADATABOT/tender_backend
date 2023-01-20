@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BidCreation_Creation;
 use App\Models\BidCreation_Creation_Docs;
+use App\Models\TenderCreation;
 use App\Models\BidmanagementPreBidQueries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,10 +24,20 @@ class BidCreationCreationController extends Controller
     public function index()
     {
         //
-        $bidCreation = DB::table('bid_creation__creations')->select('*')->orderBy('id', 'DESC')->get();
+        // $bidCreation = DB::table('bid_creation__creations')->select('*')->orderBy('id', 'DESC')->get();
+
+       
+        $tenderCreation = DB::table('tender_creations')
+        ->leftjoin('bid_creation__creations','tender_creations.id','bid_creation__creations.tendercreation')
+        ->join('customer_creation_profiles','tender_creations.customername','customer_creation_profiles.id')
+        ->select('tender_creations.id AS tenderid', 'bid_creation__creations.id AS bidid', 'tender_creations.nitdate', 'tender_creations.customername', 'bid_creation__creations.quality', 'bid_creation__creations.unit', 'bid_creation__creations.submissiondate', 'customer_creation_profiles.customer_name')
+        ->orderBy('tender_creations.nitdate', 'DESC')
+        ->get();
+          
 
         return response()->json([
-            'bidcreationList' =>   $bidCreation
+            'tenderCreationList' =>   $tenderCreation,
+            'bidcreationList' => []
         ]);
 
 
@@ -81,7 +92,8 @@ class BidCreationCreationController extends Controller
             $bidCreation -> dumpsiter = $request->bidcreationData['dumpsiter'];
             $bidCreation -> prebiddate = $request->bidcreationData['prebiddate'];
             $bidCreation -> EMD = $request->bidcreationData['EMD']; 
-            $bidCreation->location = $request->bidcreationData['location'];
+            $bidCreation -> location = $request->bidcreationData['location'];
+            $bidCreation -> tendercreation= $request->tenderid;
             $bidCreation -> createdby_userid = $userid ;
             $bidCreation -> updatedby_userid = 0 ;
             $bidCreation -> save();
@@ -188,44 +200,52 @@ class BidCreationCreationController extends Controller
      * @param  \App\Models\BidCreation_Creation  $bidCreation_Creation
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($tender_creaton_id)
     {
         //
         try{
-            $docs = BidCreation_Creation_Docs::where("bidCreationMainId",$id)->get();
 
-            if($docs){
-                foreach($docs as $doc){
-                    $document = BidCreation_Creation_Docs::find($doc['id']);
+            // $bidcreation = BidCreation_Creation::where("tendercreation",$tender_creaton_id)->get();
 
-                    $filename = $document['file_new_name'];
-                    $file_path = public_path()."/uploads/BidManagement/biddocs/".$filename;
-                    // $file_path =  storage_path('app/public/BidDocs/'.$filename);
-        
-                    if(File::exists($file_path)) {
-                        File::delete($file_path);
-                    }
-                }
-            }
+            // if(count($bidcreation) > 0){
 
-            $prebiddocs = BidmanagementPreBidQueries::where("bidCreationMainId",$id)->get();
+            //     $docs = BidCreation_Creation_Docs::where("bidCreationMainId",$bidcreation[0]['id'])->get();
+                
+            //     if($docs){
+            //         foreach($docs as $doc){
+            //             $document = BidCreation_Creation_Docs::find($doc['id']);
+    
+            //             $filename = $document['file_new_name'];
+            //             $file_path = public_path()."/uploads/BidManagement/biddocs/".$filename;
+            //             // $file_path =  storage_path('app/public/BidDocs/'.$filename);
+            
+            //             if(File::exists($file_path)) {
+            //                 File::delete($file_path);
+            //             }
+            //         }
+            //     }
+    
+            //     $prebiddocs = BidmanagementPreBidQueries::where("bidCreationMainId",$id)->get();
+    
+            //     if($prebiddocs){
+            //         foreach($prebiddocs as $doc){
+            //             $document = BidmanagementPreBidQueries::find($doc['id']);
+    
+            //             $filename = $document['file_new_name'];
+            //             $file_path = public_path()."/uploads/BidManagement/prebidqueries/".$filename;
+            //             // $file_path =  storage_path('app/public/BidDocs/'.$filename);
+            
+            //             if(File::exists($file_path)) {
+            //                 File::delete($file_path);
+            //             }
+            //         }
+            //     }
+            // }
 
-            if($prebiddocs){
-                foreach($prebiddocs as $doc){
-                    $document = BidmanagementPreBidQueries::find($doc['id']);
-
-                    $filename = $document['file_new_name'];
-                    $file_path = public_path()."/uploads/BidManagement/prebidqueries/".$filename;
-                    // $file_path =  storage_path('app/public/BidDocs/'.$filename);
-        
-                    if(File::exists($file_path)) {
-                        File::delete($file_path);
-                    }
-                }
-            }
 
 
-            $deleteBid = BidCreation_Creation::destroy($id);
+
+            $deleteBid = TenderCreation::destroy($tender_creaton_id);
 
             if($deleteBid)
             {return response()->json([
@@ -253,15 +273,26 @@ class BidCreationCreationController extends Controller
 
           //
           if($request->fromdate && $request->todate){
-            $bidCreation = DB::table('bid_creation__creations')
-            ->whereBetween('NITdate', [$request->fromdate, $request->todate])
-            ->select('*')
-            ->orderBy('NITdate', 'DESC')
+            // $tenderCreation = DB::table('tender_creations')
+            // ->join('bid_creation__creations','tender_creations.id','bid_creation__creations.id')
+            // ->whereBetween('tender_creations.nitdate', [$request->fromdate, $request->todate])
+            // ->select('*')
+            // ->orderBy('NITdate', 'DESC')
+            // ->get();
+
+            $tenderCreation = DB::table('tender_creations')
+            ->leftjoin('bid_creation__creations','tender_creations.id','bid_creation__creations.tendercreation')
+            ->join('customer_creation_profiles','tender_creations.customername','customer_creation_profiles.id')
+            ->whereBetween('tender_creations.nitdate', [$request->fromdate, $request->todate])
+            ->select('tender_creations.id AS tenderid', 'bid_creation__creations.id AS bidid', 'tender_creations.nitdate', 'tender_creations.customername', 'bid_creation__creations.quality', 'bid_creation__creations.unit', 'bid_creation__creations.submissiondate', 'customer_creation_profiles.customer_name')
+            ->orderBy('tender_creations.nitdate', 'DESC')
             ->get();
           }
 
+          
+
           return response()->json([
-              'bidcreationList' => $bidCreation 
+              'tenderCreationList' => $tenderCreation 
           ]);
 
     }
