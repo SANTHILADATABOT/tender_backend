@@ -162,6 +162,9 @@ Route::post('/workorder/creation/communicationfiles/{id}', [BidManagementWorkOrd
 Route::get('/competitordetails/commFilesList/{id}', [BidManagementWorkOrderCommunicationFilesController::class,'getComList']);
 
 
+Route::get('/file-import',[ImportCustomerController::class,
+'importView'])->name('import-view');
+
 /*
 ## Resource Laravel Routes Example
 

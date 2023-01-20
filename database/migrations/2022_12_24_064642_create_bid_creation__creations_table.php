@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('bid_creation__creations', function (Blueprint $table) {
             $table->id();
+            $table -> bigInteger("tendercreation")->unsigned();
+            $table -> foreign("tendercreation")->references("id")->on("tender_creations")->onDelete("cascade")->onUpdate("NO ACTION");
             $table -> string('bidno')->default(''); 
             $table -> string('customername')->default(''); 
             $table -> string('bidcall')->default(''); 
