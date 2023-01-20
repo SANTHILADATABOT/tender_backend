@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('tender_creations', function (Blueprint $table) {
             $table->id();
             $table->string('organisation');
-            $table->string('customername');    
+            $table->bigInteger('customername')->unsigned();
+            $table->foreign("customername")->references("id")->on("customer_creation_profiles")->onDelete("restrict")->onUpdate("NO ACTION");
             $table->date('nitdate');
             $table->bigInteger('tendertype')->unsigned();
             $table->foreign("tendertype")->references("id")->on("tender_type_masters")->onDelete("restrict")->onUpdate("NO ACTION");

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TenderCreation;
+use App\Models\CustomerCreationProfile;
 use App\Models\TenderTypeMaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -39,7 +40,7 @@ class TenderCreationController extends Controller
         $request->request->remove('tokenId');
     
     if( $user['userid']){
-        $validator = Validator::make($request->all(), ['organisation' => 'required|string', 'customername' => 'required|string',  'tendertype' => 'required|integer', 'nitdate'=>'required', 'cr_userid'=>'required']);
+        $validator = Validator::make($request->all(), ['organisation' => 'required|string', 'customername' => 'required|integer',  'tendertype' => 'required|integer', 'nitdate'=>'required', 'cr_userid'=>'required']);
         if ($validator->fails()) {
             return response()->json([
                 'status' => 400,
@@ -70,11 +71,18 @@ class TenderCreationController extends Controller
     {try{
         $tender = TenderCreation::find($id);
 
-        if ($tender)
+        if ($tender){
+
+            $customer_name = CustomerCreationProfile::find($tender['customername']);
+            if ($customer_name){
+                $tender['nameOfCustomer'] = $customer_name['customer_name'] ; 
+            }
+
             return response()->json([
                 'status' => 200,
                 'tender' => $tender
             ]);
+        }
         else {
             return response()->json([
                 'status' => 404,
@@ -222,7 +230,7 @@ class TenderCreationController extends Controller
         ]);
     }
 
-    public function getTenderListOptions( $customerId, $savedstate){
+    public function getTenderListOptions($customerId, $savedstate){
         // if($category === "state"){$cat = "State";}
         // if($category === "unionterritory"){$cat = "Union Territory";}
 
