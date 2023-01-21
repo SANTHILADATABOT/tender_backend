@@ -247,5 +247,8 @@ class BidCreationCreationDocsController extends Controller
         }
 
     }
+
+  
+
 }
     

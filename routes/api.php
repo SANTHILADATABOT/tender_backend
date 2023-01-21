@@ -142,6 +142,9 @@ Route::post('tenderstatus/updatestatus/{id}',[BidManagementTenderStatusBiddersCo
 Route::post('bidcreation/corrigendumpublish/docupload/list', [BidmanagementCorrigendumPublishController::class, 'getUplodedDocList']);
 Route::get('download/corrigendumpublishdocs/{fileName}', [BidmanagementCorrigendumPublishController::class, 'download']);
 Route::post('bidcreation/corrigendumpublish/docupload/{id}', [BidmanagementCorrigendumPublishController::class, 'update']);
+//brindha updated on 21-01-2023
+Route::get('bidcreation/creation/live_tenders',[BidCreationCreationController::class,'live_tender']);
+Route::get('bidcreation/creation/fresh_tenders',[BidCreationCreationController::class,'fresh_tender']);
 
 Route::get('download/tenderfeedocs/{id}', [BidCreationTenderFeeController::class, 'getdocs']);
 Route::get('download/bidsubmittedstatusdocs/{id}', [BidCreationBidSubmittedStatusController::class, 'getdocs']);
@@ -164,6 +167,9 @@ Route::get('/competitordetails/commFilesList/{id}', [BidManagementWorkOrderCommu
 
 Route::get('/file-import',[ImportCustomerController::class,
 'importView'])->name('import-view');
+
+Route::get('/bidcreation/creation/getlastbidno', [ BidCreationCreationController::class,'getLastBidno']);
+// Route::get('/customercreation/getcustno/{id}', [ BidCreationCreationDocsController::class,'getCustno']);
 
 /*
 ## Resource Laravel Routes Example
@@ -225,3 +231,4 @@ Route::resources([
 
 //Can create a new folder inside public/uploads path
 //$file->storeAs('competitor/qc', $fileName, 'public');  
+
