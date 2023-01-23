@@ -109,6 +109,7 @@ Route::post('customercreationcontact/getlist', [CustomerCreationContactPersonCon
 Route::post('customercreationbankdetails/getlist', [CustomerCreationBankDetailsController::class, 'getlist']);
 Route::post('customercreationsmwprojectstatus/getlist', [CustomerCreationSWMProjectStatusController::class, 'getlist']);
 Route::get('projecttype/list/{profileid}', [ProjectTypeController::class, 'getList']);
+Route::get('projecttype/list', [ProjectTypeController::class, 'getListofProjectType']);
 Route::get('projectstatus/list/{profileid}', [ProjectStatusController::class, 'getList']);
 Route::get('competitorprofile/getcompno/{compid}', [CompetitorProfileCreationController::class, 'getCompNo']);
 Route::get('competitorbranch/branchlist/{compid}', [CompetitorDetailsBranchesController::class, 'getbranchList']);
@@ -162,8 +163,9 @@ Route::post('/workorder/creation/communicationfiles/{id}', [BidManagementWorkOrd
 Route::get('/competitordetails/commFilesList/{id}', [BidManagementWorkOrderCommunicationFilesController::class,'getComList']);
 
 
-Route::get('/file-import',[ImportCustomerController::class,
-'importView'])->name('import-view');
+Route::get('/file-import',[ImportCustomerController::class,'importView'])->name('import-view');
+
+Route::post('/legacystatement',[BidCreationCreationController::class,'getlegacylist']);
 
 /*
 ## Resource Laravel Routes Example
