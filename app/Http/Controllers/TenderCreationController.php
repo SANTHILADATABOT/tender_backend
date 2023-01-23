@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
 
 use App\Models\TenderCreation;
@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Token;
 use Illuminate\Support\Facades\DB;
+use App\Models\BidCreation_Creation;
 class TenderCreationController extends Controller
 {
    
@@ -103,6 +104,89 @@ class TenderCreationController extends Controller
     public function edit(TenderCreation $tenderCreation)
     {
         //
+    }
+
+    public function gettendertrack(){
+
+
+       
+        $tendertracker = BidCreation_Creation::join('state_masters', 'bid_creation__creations.state', '=', 'state_masters.id')
+        
+         ->select('bid_creation__creations.*', 'state_masters.state_code')
+        ->orderBy('created_at', 'desc')
+        ->get();
+        if ($tendertracker)
+            return response()->json([
+                'status' => 200,
+                'tendertracker' => $tendertracker
+            ]);
+        else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.'
+            ]);
+        }
+
+
+
+        
+
+
+
+
+
+
+    }
+    public function gettrackList(Request $request){
+
+$qty_type= $request->quality;
+$state= $request->state;      
+
+        $tendertracker = BidCreation_Creation::join('state_masters', 'bid_creation__creations.state', '=', 'state_masters.id')
+        
+         ->select('bid_creation__creations.*', 'state_masters.state_code')
+         ->where(function($query) use ($qty_type, $request) {
+            if($qty_type=='morethan50'){
+                return $query->where('quality','>',50000);
+                }
+                else if($qty_type=='between'){
+                    return $query->whereBetween('quality',['50000','100000']);
+                }
+                else{
+                    return $query->where('quality','<',100000);
+                }
+                      
+        })
+
+            ->where('state',$state)
+
+
+
+
+         
+        ->orderBy('created_at', 'desc')
+        ->get();
+        if ($tendertracker)
+            return response()->json([
+                'status' => 200,
+                'tendertracker' => $tendertracker
+            ]);
+        else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'The provided credentials are incorrect.'
+            ]);
+        }
+
+
+
+        
+
+
+
+
+
+
     }
 
     

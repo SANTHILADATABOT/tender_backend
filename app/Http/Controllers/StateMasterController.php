@@ -280,4 +280,15 @@ class StateMasterController extends Controller
     }
 
 
+    public function getStateCode($id){
+        $statecode = StateMaster::where("id",$id)
+        ->select('state_code')
+        ->get();
+        return  $statecode[0];
+        
+        // return  response()->json([
+        //     'statecode' =>  $statecode
+        // ]);
+    }
+
 }
