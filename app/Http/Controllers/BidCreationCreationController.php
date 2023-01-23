@@ -318,7 +318,8 @@ class BidCreationCreationController extends Controller
         ->join('customer_creation_profiles','tender_creations.customername','customer_creation_profiles.id')
         ->leftjoin('bid_creation_tender_participations', 'bid_creation__creations.id', 'bid_creation_tender_participations.bidCreationMainId')
         ->leftjoin('customer_creation_s_w_m_project_statuses', 'customer_creation_profiles.id', 'customer_creation_s_w_m_project_statuses.mainid' )
-        ->where('tender_creations.nitdate' , '<', $todaydate)
+        ->where('bid_creation__creations.submissiondate' , '<', $todaydate)
+        // ->where('tender_creations.nitdate' , '<', $todaydate)
         ->when($formdate, function($query) use ($formdate) {
             return $query->where('tender_creations.nitdate','>=',$formdate);
         })
