@@ -271,7 +271,7 @@ class BidCreationCreationController extends Controller
 
     public function getBidList(Request $request){
 
-          //
+           //
           if($request->fromdate && $request->todate){
             // $tenderCreation = DB::table('tender_creations')
             // ->join('bid_creation__creations','tender_creations.id','bid_creation__creations.id')
@@ -335,7 +335,7 @@ public function fresh_tender()
     
     public function getLastBidno(){
 
-        $lastbidno = BidCreation_Creation::select('id')
+        $lastbidno = BidCreation_Creation::select('bidno')
         ->get()
         ->last();
             
@@ -347,6 +347,7 @@ public function fresh_tender()
         else {
             return response()->json([
                 'status' => 404,
+                'lastbidno' => $lastbidno,
                 'message' => 'The provided credentials are incorrect.'
             ]);
         }

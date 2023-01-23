@@ -169,8 +169,9 @@ Route::get('/file-import',[ImportCustomerController::class,
 'importView'])->name('import-view');
 
 Route::get('/bidcreation/creation/getlastbidno', [ BidCreationCreationController::class,'getLastBidno']);
-// Route::get('/customercreation/getcustno/{id}', [ BidCreationCreationDocsController::class,'getCustno']);
-
+Route::get('/customercreation/getstatecode/{id}', [ StateMasterController::class,'getStateCode']);
+Route::get('/tendertrack/list', [ TenderCreationController::class,'gettendertrack']);
+Route::post('/tendertrack/creation/tracklist',[TenderCreationController::class,'gettrackList']);
 /*
 ## Resource Laravel Routes Example
 
