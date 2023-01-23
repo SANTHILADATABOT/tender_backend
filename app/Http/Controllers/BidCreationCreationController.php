@@ -375,9 +375,9 @@ class BidCreationCreationController extends Controller
      // Created by Brindha on 21.01.2023 for dashboard count
     public function live_tender()
     {
-        $live_tender_count = BidCreation_Creation::whereDate('submissiondate', '<', now())->count();
+        $live_tender_count = BidCreation_Creation::whereDate('submissiondate', '>=', now())->count();
         // $live_tender = BidCreation_Creation::where('created_at', 'desc')->get();
-      
+     
         if ($live_tender_count)
             return response()->json([
                 'status' => 200,
