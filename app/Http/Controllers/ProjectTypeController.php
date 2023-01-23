@@ -213,4 +213,31 @@ class ProjectTypeController extends Controller
             'sqlquery' => $query
         ]);
     }
+
+    public function getListofProjectType(){
+        
+        DB::enableQueryLog(); 
+
+        $projectypes = ProjectType::where("status", "=", "Active")
+        // ->orWhere('id', function($query)  use ($profileid){
+        //     $query->select('customer_sub_category')
+        //     ->from(with(new CustomerCreationProfile)->getTable())
+        //     ->where('id',$profileid);
+        // })
+        ->get();
+
+        $sqlquery = DB::getQueryLog();
+        
+        $query = str_replace(array('?'), array('\'%s\''),  $sqlquery[0]['query']);
+        $query = vsprintf($query, $sqlquery[0]['bindings']);
+        
+        $producttypeList = [];
+        foreach($projectypes as $projectype){
+            $producttypeList[] = ["value" => $projectype['id'], "label" =>  $projectype['projecttype']] ;
+        }
+        return  response()->json([
+            'projectTypeList' =>  $producttypeList,
+            'sqlquery' => $query
+        ]);
+    }
 }
