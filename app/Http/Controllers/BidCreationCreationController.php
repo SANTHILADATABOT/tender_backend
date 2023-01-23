@@ -333,9 +333,10 @@ public function fresh_tender()
         }
     }
     
-    public function getLastBidno(){
+    public function getLastBidno($code){
 
         $lastbidno = BidCreation_Creation::select('bidno')
+        ->where('bidno','Like',"%$code%") 
         ->get()
         ->last();
             

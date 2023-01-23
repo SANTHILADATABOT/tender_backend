@@ -152,13 +152,20 @@ $state= $request->state;
                 else if($qty_type=='between'){
                     return $query->whereBetween('quality',['50000','100000']);
                 }
-                else{
+                else if($qty_type=='lessthan1lk'){
                     return $query->where('quality','<',100000);
                 }
                       
         })
+        ->where(function($query1) use ($state, $request) {
+            if($state!=''||$state!=null){
+                return $query1->where('state',$state);
+                }
+               
+                      
+        })
 
-            ->where('state',$state)
+           
 
 
 
